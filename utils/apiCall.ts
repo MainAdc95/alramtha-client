@@ -1,9 +1,9 @@
 import axios, { Method } from "axios";
 
 export const isProduction: boolean = false;
-
+// https://www.alramsah.com
 export const domain = isProduction
-    ? "https://www.alramsah.com"
+    ? "http://128.199.80.85:5000"
     : `http://localhost:5000`;
 
 export const apiImage = (

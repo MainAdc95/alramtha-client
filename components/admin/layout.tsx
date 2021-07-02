@@ -55,3 +55,21 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 export default Layout;
+
+// public
+
+// username = doadmin
+// password = pw8qmic44c907kxj
+// host = alramsah-do-user-9442462-0.b.db.ondigitalocean.com
+// port = 25060
+// database = defaultdb
+// sslmode = require
+
+// private
+
+// username = doadmin
+// password = pw8qmic44c907kxj
+// host = private-alramsah-do-user-9442462-0.b.db.ondigitalocean.com
+// port = 25060
+// database = defaultdb
+// sslmode = require
