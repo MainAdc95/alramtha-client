@@ -1,0 +1,18 @@
+.page {
+    width: 100%;
+    min-height: 100vh;
+    margin: 2rem 0;
+
+    // Text Styles
+    .contactInfo {
+        margin-bottom: 25px;
+        p {
+            padding: 0 20px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .contactForm {
+        margin-bottom: 30px;
+    }
+}
