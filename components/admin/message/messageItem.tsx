@@ -190,12 +190,12 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                     <Link
                         href={`/admin/messages/sendMessage?messageId=${message.message_id}&replay=${message.created_by?.user_id}`}
                     >
-                        <MenuItem onClick={delAction}>Replay</MenuItem>
+                        <MenuItem onClick={delAction}>رد</MenuItem>
                     </Link>
                     <Link
                         href={`/admin/messages/sendMessage?messageId=${message.message_id}#forward`}
                     >
-                        <MenuItem onClick={delAction}>Forward</MenuItem>
+                        <MenuItem onClick={delAction}>نقل</MenuItem>
                     </Link>
                 </Menu>
             </TableCell>

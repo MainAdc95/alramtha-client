@@ -155,7 +155,7 @@ const UserItem = ({ user, handleOpenEdit }: IProps) => {
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleEdit}>Edit</MenuItem>
+                    <MenuItem onClick={handleEdit}>تعديل</MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>

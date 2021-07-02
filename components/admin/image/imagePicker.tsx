@@ -195,7 +195,7 @@ const ImagePicker = ({
                         mb={3}
                     >
                         <Typography variant="h6">
-                            Please pick at least one image.
+                            الرجاء اختيار صورة واحدة على الأقل
                         </Typography>
                         <Box display="flex">
                             <div>
@@ -244,7 +244,7 @@ const ImagePicker = ({
                                         color: "white",
                                     }}
                                 >
-                                    save changes
+                                    حفظ التغييرات
                                 </Button>
                             </Box>
                             <Button
@@ -255,7 +255,7 @@ const ImagePicker = ({
                                 onClick={openImageForm}
                                 variant="contained"
                             >
-                                add image
+                                أضافة الصورة
                             </Button>
                         </Box>
                     </Box>

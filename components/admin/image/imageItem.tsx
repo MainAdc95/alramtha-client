@@ -96,7 +96,7 @@ const ImageItem = ({ image, handleOpenDel }: IProps) => {
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={delAction}>Delete</MenuItem>
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
                     {/* <MenuItem onClick={delAction}>Edit</MenuItem> */}
                 </Menu>
             </div>

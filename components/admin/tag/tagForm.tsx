@@ -97,7 +97,7 @@ const TagForm = ({ tag }: IProps) => {
                     <div className={classes.formGroup}>
                         <TextField
                             name="tag_name"
-                            label="Name"
+                            label="اسم العلامة"
                             state={state}
                             setState={setState}
                             required={true}
@@ -112,7 +112,7 @@ const TagForm = ({ tag }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={tag ? "edit tag" : "add tag"}
+                            text={tag ? "تحرير العلامة" : "اضافة العلامة"}
                         />
                     </div>
                 </div>

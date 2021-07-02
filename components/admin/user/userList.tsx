@@ -99,28 +99,28 @@ const UserList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                Avatar
+                                الصورة الرمزية
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Username
+                                اسم المستخدم
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                First name
+                                الأسم الأول
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Last name
+                                الأسم الأخير
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Email
+                                البريد الالكتروني
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Phone
+                                رقم الهاتف
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Created at
+                                أنشئت في
                             </TableCell>
                             <TableCell style={{ minWidth: "50px" }}>
-                                Actions
+                                أجراءات
                             </TableCell>
                         </TableRow>
                     </TableHead>

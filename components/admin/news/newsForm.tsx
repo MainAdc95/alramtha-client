@@ -255,7 +255,7 @@ const NewsForm = ({ news }: IProps) => {
                             <div className={classes.formGroup}>
                                 <TextField
                                     name="intro"
-                                    label="Introduction"
+                                    label="المقدمة"
                                     state={state}
                                     setState={setState}
                                     required={true}
@@ -269,7 +269,7 @@ const NewsForm = ({ news }: IProps) => {
                             <div className={classes.formGroup}>
                                 <TextField
                                     name="title"
-                                    label="Title"
+                                    label="العنوان"
                                     state={state}
                                     setState={setState}
                                     required={true}
@@ -283,7 +283,7 @@ const NewsForm = ({ news }: IProps) => {
                             <div className={classes.formGroup}>
                                 <Select
                                     name="section"
-                                    label="Section"
+                                    label="القسم"
                                     errors={errors}
                                     state={state}
                                     setState={setState}
@@ -307,7 +307,7 @@ const NewsForm = ({ news }: IProps) => {
                                                 onClick={() =>
                                                     removeSubTitle(i)
                                                 }
-                                                text="delete"
+                                                text="حذف"
                                                 startIcon={<RemoveIcon />}
                                                 color="red"
                                             />
@@ -318,7 +318,7 @@ const NewsForm = ({ news }: IProps) => {
                             <div className={classes.formGroup}>
                                 <TextField
                                     name="sub_title"
-                                    label="Sub title"
+                                    label="عنوان فرعي"
                                     value={subTitle.sub_title}
                                     onChange={handleSubTitle}
                                     onKeyDown={(e: any) => {
@@ -341,14 +341,14 @@ const NewsForm = ({ news }: IProps) => {
                                         variant="contained"
                                         onClick={addSubTitle}
                                         loading={loading}
-                                        text={"add sub title"}
+                                        text={"أضافة عنوان فرعي"}
                                     />
                                 </Box>
                             </div>
                         </div>
                         <div className={classes.formGroup}>
                             <ImageInput
-                                text="Pick Some Images"
+                                text="أختر بعض الصور"
                                 errors={errors}
                                 name="images"
                                 handler={handlePick}
@@ -373,9 +373,9 @@ const NewsForm = ({ news }: IProps) => {
                                             {...params}
                                             name="tag"
                                             variant="outlined"
-                                            label="Tags"
+                                            label="العلامات"
                                             onChange="none"
-                                            placeholder="Pick some tags"
+                                            placeholder="أختر بعض العلامات"
                                         />
                                     )}
                                 />
@@ -389,7 +389,7 @@ const NewsForm = ({ news }: IProps) => {
                         <TextEditor
                             name="text"
                             id="text"
-                            label="Text"
+                            label="نص الخبر"
                             state={state}
                             setState={setState}
                             errors={errors}
@@ -402,7 +402,7 @@ const NewsForm = ({ news }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={news ? "edit news" : "add news"}
+                            text={news ? "تحرير الخبر" : "أضافة الخبر"}
                         />
                     </div>
                 </div>

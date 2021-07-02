@@ -172,7 +172,7 @@ const ImageForm = ({ close }: IProps) => {
         >
             <div>
                 <Typography variant="h6">
-                    Supported files extensions: (jpg, jpeg, svg, png, gif, webp)
+                    الملفات المدعومة (jpg, jpeg, svg, png, gif, webp)
                 </Typography>
                 <Box
                     display="flex"
@@ -197,7 +197,7 @@ const ImageForm = ({ close }: IProps) => {
                         />
                     </Box>
                     <Typography style={{ margin: "0 15px" }}>
-                        Selected files {state.images.length}
+                        الملفات المختارة {state.images.length}
                     </Typography>
                 </Box>
                 <Error errors={errors.image} />
@@ -260,7 +260,7 @@ const ImageForm = ({ close }: IProps) => {
                                     <Button
                                         color="error"
                                         startIcon={<DeleteIcon />}
-                                        text="remove"
+                                        text="أزالة"
                                         onClick={() => handleRemove(i)}
                                     />
                                 </Grid>
@@ -274,7 +274,7 @@ const ImageForm = ({ close }: IProps) => {
                     style={{ marginTop: "20px" }}
                 >
                     <Button
-                        text="Submit"
+                        text="تأكيد"
                         type="submit"
                         variant="contained"
                         onClick={handleSubmit}

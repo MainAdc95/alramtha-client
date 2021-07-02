@@ -123,8 +123,8 @@ const ImageList = ({ images, sortOption }: IProps) => {
                 {isDel && (
                     <ActionModal
                         close={handleCloseDel}
-                        title="Delete image"
-                        msg={`Are you sure you want delete this image?`}
+                        title="حذف صورة"
+                        msg={`هل انت متأكد انك تريد حذف هذه الصورة`}
                         handler={handleDelete}
                         error={delErr ? [delErr] : []}
                         loading={delLoading}

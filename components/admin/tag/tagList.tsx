@@ -117,22 +117,22 @@ const TagList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                Name
+                                اسم العلامة
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Created at
+                                أنشئت في
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Created by
+                                تم الأنشاء بواسطة
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Updated at
+                                تم التحديث في
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Updated by
+                                تم التحديث بواسطة
                             </TableCell>
                             <TableCell style={{ minWidth: "50px" }}>
-                                Actions
+                                أجراءات
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -159,8 +159,8 @@ const TagList = () => {
             {isDel && (
                 <ActionModal
                     close={handleCloseDel}
-                    title="Delete tag"
-                    msg={`Are you sure you want to delete ${isDel.tag_name}?`}
+                    title="مسح العلامة"
+                    msg={`؟${isDel.tag_name} هل انت متاكد انك تريد مسح`}
                     handler={handleDelete}
                     loading={delLoading}
                 />

@@ -134,7 +134,7 @@ const SectionForm = ({ section }: IProps) => {
                         <div className={classes.formGroup}>
                             <TextField
                                 name="section_name"
-                                label="Title"
+                                label="عنوان القسم"
                                 state={state}
                                 setState={setState}
                                 required={true}
@@ -176,7 +176,7 @@ const SectionForm = ({ section }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={section ? "edit section" : "add section"}
+                            text={section ? "تحرير القسم" : "أضافة القسم"}
                         />
                     </div>
                 </div>

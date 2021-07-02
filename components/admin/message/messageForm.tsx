@@ -144,7 +144,7 @@ const MessageForm = ({ message }: IProps) => {
                             <div className={classes.formGroup}>
                                 <TextField
                                     name="subject"
-                                    label="Subject"
+                                    label="الموضوع"
                                     state={state}
                                     setState={setState}
                                     required={true}
@@ -155,7 +155,7 @@ const MessageForm = ({ message }: IProps) => {
                             <div className={classes.formGroup}>
                                 <Select
                                     name="to"
-                                    label="To"
+                                    label="الى"
                                     errors={errors}
                                     state={state}
                                     setState={setState}
@@ -170,7 +170,7 @@ const MessageForm = ({ message }: IProps) => {
                         </div>
                         <div>
                             <ImageInput
-                                text="Pick Some Images"
+                                text="اختر بعض الصور"
                                 name="images"
                                 handler={handlePick}
                                 type="multiple"
@@ -182,7 +182,7 @@ const MessageForm = ({ message }: IProps) => {
                         <TextEditor
                             name="text"
                             id="text"
-                            label="Text"
+                            label="نص الرسالة"
                             state={state}
                             setState={setState}
                             errors={errors}
@@ -195,7 +195,7 @@ const MessageForm = ({ message }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={"send message"}
+                            text={"ارسال رسالة"}
                         />
                     </div>
                 </div>

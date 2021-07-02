@@ -120,25 +120,25 @@ const SectionList = ({ sections, loading }: IProps) => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                Name
+                                أسم القسم
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Color
+                                اللون
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Created at
+                                أنشئت في
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Created by
+                                تم الأنشاء بواسطة
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Updated at
+                                تم التحديث في
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Updated by
+                                تم التحديث بواسطة
                             </TableCell>
                             <TableCell style={{ minWidth: "50px" }}>
-                                Actions
+                                أجراءات
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -172,7 +172,7 @@ const SectionList = ({ sections, loading }: IProps) => {
                 <ActionModal
                     close={handleCloseDel}
                     title="Delete section"
-                    msg={`Are you sure you want to delete ${isDel.section_name}?`}
+                    msg={`؟${isDel.section_name} هل انت متاكد انك تريد مسح`}
                     handler={handleDelete}
                     loading={delLoading}
                 />

@@ -6,8 +6,6 @@ export const domain = isProduction
     ? "https://www.alramsah.com"
     : `http://localhost:5000`;
 
-// changed this line
-
 export const apiImage = (
     image: string,
     size?: "s" | "m" | "l",

@@ -142,9 +142,9 @@ const TagItem = ({ tag, handleOpenDel }: IProps) => {
                     onClose={handleClose}
                 >
                     <Link href={`/admin/tags/addTag?tagId=${tag.tag_id}`}>
-                        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+                        <MenuItem onClick={handleEdit}>تعديل</MenuItem>
                     </Link>
-                    <MenuItem onClick={delAction}>Delete</MenuItem>
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>

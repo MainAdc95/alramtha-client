@@ -168,7 +168,7 @@ const NewsList = () => {
                 </Tabs>
             </Box>
             {!data.news?.length ? (
-                <p>There were no news found.</p>
+                <p>لم يتم العثور على أخبار</p>
             ) : (
                 <>
                     {" "}
@@ -185,28 +185,28 @@ const NewsList = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell className={classes.smallCell}>
-                                        Title
+                                        عنوان الخبر
                                     </TableCell>
                                     <TableCell className={classes.mediumCell}>
-                                        Image
+                                        صورة
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        Published
+                                        نشرت
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        Created at
+                                        أنشئت في
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        Created by
+                                        تم الأنشاء بواسطة
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        Updated at
+                                        تم التحديث في
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        Updated by
+                                        تم التحديث بواسطة
                                     </TableCell>
                                     <TableCell style={{ minWidth: "50px" }}>
-                                        Actions
+                                        أجراءات
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -236,8 +236,8 @@ const NewsList = () => {
             {isDel && (
                 <ActionModal
                     close={handleCloseDel}
-                    title="Delete news"
-                    msg={`Are you sure you want to delete ${isDel.title} ?`}
+                    title="حذف الخبر"
+                    msg={`${isDel.title} ؟هل انت متاكد انك تريد مسح`}
                     handler={handleDelete}
                     loading={delLoading}
                 />
@@ -248,8 +248,8 @@ const NewsList = () => {
                     btnIcon={<CheckIcon />}
                     type="confirmation"
                     btnTxt="publish"
-                    title="Publish news"
-                    msg={`Are you sure you want to publish ${isPublish.title} ?`}
+                    title="نشر الخبر"
+                    msg={` ${isPublish.title} ؟هل انت متاكد انك تريد نشر`}
                     handler={handlePublish}
                     loading={publishLoading}
                 />
