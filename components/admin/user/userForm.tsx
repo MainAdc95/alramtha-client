@@ -98,7 +98,9 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
             <form onSubmit={handleSubmit}>
                 <Box flexDirection="column" display="flex" width="100%">
                     <FormControl component="fieldset">
-                        <FormLabel component="legend">User roles</FormLabel>
+                        <FormLabel component="legend">
+                            صلاحية المستخدم
+                        </FormLabel>
                         <FormGroup>
                             <FormControlLabel
                                 control={
@@ -108,7 +110,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                                         name="is_editor"
                                     />
                                 }
-                                label="Editor"
+                                label="محرر"
                             />
                             <FormControlLabel
                                 control={
@@ -118,7 +120,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                                         name="is_reporter"
                                     />
                                 }
-                                label="Rporter"
+                                label="مراسل"
                             />
                             <FormControlLabel
                                 control={
@@ -128,7 +130,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                                         name="is_blocked"
                                     />
                                 }
-                                label="Blocked"
+                                label="محظور"
                             />
                             <FormControlLabel
                                 control={
@@ -138,7 +140,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                                         name="is_active"
                                     />
                                 }
-                                label="Active"
+                                label="فعال"
                             />
                         </FormGroup>
                     </FormControl>
@@ -152,7 +154,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                             {loading ? (
                                 <CircularProgress style={{ color: "white" }} />
                             ) : (
-                                "Submit"
+                                "تأكيد"
                             )}
                         </Button>
                     </Box>

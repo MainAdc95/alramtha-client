@@ -182,10 +182,10 @@ const SectionItem = ({ section, handleOpenDel, handleOpenEdit }: IProps) => {
                         href={`/admin/sections/addSection?sectionId=${section.section_id}`}
                     >
                         <a>
-                            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+                            <MenuItem onClick={handleEdit}>تعجيل</MenuItem>
                         </a>
                     </Link>
-                    <MenuItem onClick={delAction}>Delete</MenuItem>
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>

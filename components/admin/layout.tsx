@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) => {
             maxWidth: "100%",
             minHeight: "100vh",
             padding: theme.spacing(5),
+            paddingTop: "0",
         },
     });
 });

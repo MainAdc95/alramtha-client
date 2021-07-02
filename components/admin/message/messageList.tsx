@@ -94,19 +94,19 @@ const MessageList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                Subject
+                                الموضوع
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Images
+                                الصور
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Sent at
+                                مرسل في
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                Sent by
+                                ارسلت بواسطة
                             </TableCell>
                             <TableCell style={{ minWidth: "50px" }}>
-                                Actions
+                                أجراءات
                             </TableCell>
                         </TableRow>
                     </TableHead>

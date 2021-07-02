@@ -205,12 +205,12 @@ const NewsItem = ({ news, handleOpenDel, handleOpenPublish }: IProps) => {
                 >
                     <Link href={`/admin/news/addNews?newsId=${news.news_id}`}>
                         <MenuItem>
-                            <a>Edit</a>
+                            <a>تعديل</a>
                         </MenuItem>
                     </Link>
-                    <MenuItem onClick={delAction}>Delete</MenuItem>
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
                     {!news.is_published && (
-                        <MenuItem onClick={publishAction}>Publish</MenuItem>
+                        <MenuItem onClick={publishAction}>نشر</MenuItem>
                     )}
                 </Menu>
             </TableCell>
