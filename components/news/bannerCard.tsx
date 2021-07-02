@@ -4,7 +4,6 @@ import ImageOpt from "../imageOpt";
 
 import Slider from "../slider";
 import { INews } from "../../types/news";
-import { ISection } from "../../types/section";
 
 interface IProps {
     data: any;
@@ -12,10 +11,10 @@ interface IProps {
 }
 
 const BannerCard = ({ data, type }: IProps) => {
-    if (data.news.length > 0)
-        return (
-            <div className="banner-card">
-                {type ? (
+    return (
+        <div className="banner-card">
+            {data?.news ? (
+                type ? (
                     <Slider>
                         {data.news.map((news: INews) => (
                             <SwiperSlide key={news.news_id}>
@@ -51,31 +50,35 @@ const BannerCard = ({ data, type }: IProps) => {
                 ) : (
                     <>
                         <ImageOpt
-                            src={data.news[0].images[0].image_name}
+                            src={data.news[0]?.images[0]?.image_name}
                             objectFit="cover"
                             layout="fill"
                         />
 
                         <div className="overlay">
                             <div className="card-content">
-                                <a style={{ backgroundColor: `${data.color}` }}>
+                                <a
+                                    style={{
+                                        backgroundColor: `${data.color}`,
+                                    }}
+                                >
                                     {data.section_name}
                                 </a>
-                                <Link href={`/news/${data.news[0].id}`}>
-                                    <h2>{data.news[0].title}</h2>
+                                <Link href={`/news/${data.news[0]?.news_id}`}>
+                                    <h2>{data.news[0]?.title}</h2>
                                 </Link>
 
                                 <ul>
-                                    <li>04 Dec, 2020</li>
-                                    <li>0 comments</li>
+                                    <li>{data.news[0]?.created_at}</li>
+                                    <li>0 readers</li>
                                 </ul>
                             </div>
                         </div>
                     </>
-                )}
-            </div>
-        );
-    else return null;
+                )
+            ) : null}
+        </div>
+    );
 };
 
 export default BannerCard;

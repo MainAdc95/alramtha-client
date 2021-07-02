@@ -26,7 +26,7 @@ const UrgentNewsStrip = () => {
     return (
         <Box display="flex" className={classes.root}>
             <Box className={classes.badge} display="flex">
-                <Typography>Urgent news</Typography>
+                <Typography>أخبار عاجلة</Typography>
                 <div className={classes.imgContainer}>
                     <img className={classes.img} src="/urgent.svg" />
                 </div>

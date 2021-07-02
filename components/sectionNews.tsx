@@ -1,9 +1,5 @@
-// Main
-import Link from "next/link";
-import ImageOpt from "./imageOpt";
 import HoverBox from "./hoverBox";
 import SmallNews from "./news/smallNews";
-import { Grid } from "@material-ui/core";
 import Slider from "./slider";
 import { SwiperSlide } from "swiper/react";
 
@@ -13,7 +9,7 @@ interface IProps {
 }
 
 const SectionNews = ({ data, styles }: IProps) => {
-    if (data.news.length > 0)
+    if (data?.news?.length)
         return (
             <div style={{ marginBottom: "25px" }}>
                 <div className="author-title">

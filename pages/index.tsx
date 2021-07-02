@@ -1,5 +1,4 @@
 import { Grid } from "@material-ui/core";
-import parse from "html-react-parser";
 import useSWR from "swr";
 import { apiCall } from "../utils/apiCall";
 import HeadLayout from "../components/headLayout";
@@ -10,12 +9,8 @@ import { SwiperSlide } from "swiper/react";
 // components
 import UrgentNewsStrip from "../components/home/urgentNewsStrip";
 import LargeNews from "../components/news/largeNews";
-import MediumNews from "../components/news/mediumNews";
-import SmallNews from "../components/news/smallNews";
-import HoverBox from "../components/hoverBox";
 import BannerCard from "../components/news/bannerCard";
 import SideBar from "../components/sideBar";
-import { swiper2 } from "../utils/seeds"; // Delete this replace with IProps interface
 import Image from "next/image";
 import { GetServerSideProps } from "next";
 
@@ -35,10 +30,6 @@ const Home = ({ info }: IProps) => {
             results: number;
             news: INews[];
         }>("/news");
-
-    // const sectionJsx = (sectionName: ) => {
-
-    // }
 
     return (
         <>
@@ -245,8 +236,6 @@ const Home = ({ info }: IProps) => {
         </>
     );
 };
-
-// "sport econme culture turisom tech politc art mix authors investg"
 
 // ("رياضة, اقتصاد, ثقافة, سياحة, تكنولوجيا, سياسة, تحقيق, منوعات, كتاب وآراء");
 

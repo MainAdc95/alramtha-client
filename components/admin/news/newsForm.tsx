@@ -28,6 +28,7 @@ import TextEditor from "../../form/textEditor";
 
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
+import Error from "../../form/error";
 
 interface IProps {
     news?: INews;
@@ -50,6 +51,7 @@ interface IError {
     text: string[];
     images: string[];
     intro: string[];
+    tags: string[];
     section: string[];
 }
 
@@ -72,6 +74,7 @@ const NewsForm = ({ news }: IProps) => {
         images: [],
         intro: [],
         section: [],
+        tags: [],
     });
     const [state, setState] = useState<IState>({
         title: "",
@@ -202,6 +205,7 @@ const NewsForm = ({ news }: IProps) => {
             is_published: [],
             text: [],
             section: [],
+            tags: [],
         };
 
         if (!state.intro.trim()) {
@@ -222,6 +226,10 @@ const NewsForm = ({ news }: IProps) => {
 
         if (!state.images.length) {
             TmpErrors.images.push("Please pick at least one image.");
+        }
+
+        if (!state.tags.length) {
+            TmpErrors.tags.push("Please pick at least one tag.");
         }
 
         setErrors(TmpErrors);
@@ -361,7 +369,7 @@ const NewsForm = ({ news }: IProps) => {
                             <div className={classes.formGroup}>
                                 <Autocomplete
                                     multiple
-                                    options={data?.tags || []}
+                                    options={data || []}
                                     getOptionLabel={(option) =>
                                         option?.tag_name
                                     }
@@ -371,7 +379,8 @@ const NewsForm = ({ news }: IProps) => {
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
-                                            name="tag"
+                                            name="tags"
+                                            errors={errors}
                                             variant="outlined"
                                             label="Tags"
                                             onChange="none"
