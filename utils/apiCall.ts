@@ -3,7 +3,7 @@ import axios, { Method } from "axios";
 export const isProduction: boolean = false;
 // https://www.alramsah.com
 export const domain = isProduction
-    ? "http://www.alshamkhacoop.com"
+    ? "https://www.alshamkhacoop.com"
     : `http://localhost:5000`;
 
 export const apiImage = (

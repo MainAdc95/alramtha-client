@@ -55,7 +55,6 @@ const BannerCard = ({ data, type }: IProps) => {
                             objectFit="cover"
                             layout="fill"
                         />
-
                         <div className="overlay">
                             <div className="card-content">
                                 <a
@@ -68,7 +67,6 @@ const BannerCard = ({ data, type }: IProps) => {
                                 <Link href={`/news/${data.news[0]?.news_id}`}>
                                     <h2>{data.news[0]?.title}</h2>
                                 </Link>
-
                                 <ul>
                                     <li>{data.news[0]?.created_at}</li>
                                     <li>0 القراء</li>
