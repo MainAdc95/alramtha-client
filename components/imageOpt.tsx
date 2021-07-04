@@ -54,6 +54,8 @@ const ImageOpt = ({
                         pointer-events: none;
                         `
                         : ""}
+                    ${width ? `width: ${width}px;` : ""}
+                    ${height ? `height: ${height}px;` : ""}
                 }
             `}</style>
         </>

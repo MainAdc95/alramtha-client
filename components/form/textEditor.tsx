@@ -47,6 +47,7 @@ const TextEditor = ({
                 apiKey="p2f3wrzpsomvt0lvr2uphccyzhlnxzopddrmptrb4addcxon"
                 init={{
                     height: 400,
+                    language: "ar",
                     min_height: 200,
                     branding: false,
                     menubar: true,

@@ -15,7 +15,7 @@ const locale = (
                     expires: new Date("9999, 9, 9"),
                 });
 
-                // document.body.dir = "ltr";
+                document.body.dir = "ltr";
             }
 
             return "en";
@@ -25,7 +25,7 @@ const locale = (
                     expires: new Date("9999, 9, 9"),
                 });
 
-                // document.body.dir = "rtl";
+                document.body.dir = "rtl";
             }
 
             return "ar";
@@ -35,7 +35,7 @@ const locale = (
 
                 if (locale) {
                     if (locale === "ar") {
-                        // document.body.dir = "rtl";
+                        document.body.dir = "rtl";
                     }
 
                     return locale;
@@ -45,7 +45,7 @@ const locale = (
                     expires: new Date("9999, 9, 9"),
                 });
 
-                // document.body.dir = "rtl";
+                document.body.dir = "rtl";
 
                 return "ar";
             }

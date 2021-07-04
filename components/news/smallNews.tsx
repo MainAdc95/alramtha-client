@@ -10,6 +10,13 @@ interface IProps {
 const SmallNews = ({ data }: IProps) => {
     return (
         <li className="small-news">
+            <div className="news-img">
+                <ImageOpt
+                    src={data.images[0].image_name}
+                    layout="fill"
+                    objectFit="cover"
+                />
+            </div>
             <div className="news-info">
                 <h2>
                     <Link href={`/news/${data.news_id}`}>
@@ -18,13 +25,6 @@ const SmallNews = ({ data }: IProps) => {
 
                     <span>{data.created_at}</span>
                 </h2>
-            </div>
-            <div className="news-img">
-                <ImageOpt
-                    src={data.images[0].image_name}
-                    layout="fill"
-                    objectFit="cover"
-                />
             </div>
         </li>
     );

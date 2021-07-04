@@ -77,12 +77,12 @@ const ImageList = ({ images, sortOption }: IProps) => {
     };
 
     const handleSort = (a: any, b: any) => {
-        if (sortOption === "Latest") {
+        if (sortOption === "الأحدث") {
             return (
                 new Date(b.created_at).valueOf() -
                 new Date(a.created_at).valueOf()
             );
-        } else if (sortOption === "Oldest") {
+        } else if (sortOption === "الأقدم") {
             return (
                 new Date(a.created_at).valueOf() -
                 new Date(b.created_at).valueOf()

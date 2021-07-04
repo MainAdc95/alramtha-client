@@ -45,7 +45,7 @@ const Form = () => {
                             </IconButton>
                         </div>
                         <div>
-                            <h1 className={classes.title}>Message form</h1>
+                            <h1 className={classes.title}>نموذج الرسالة</h1>
                         </div>
                     </div>
                     <div className={classes.body}>

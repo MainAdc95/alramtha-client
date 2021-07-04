@@ -1,6 +1,7 @@
 // Main
 import useSWR from "swr";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@material-ui/core";
@@ -34,8 +35,8 @@ const SideBar = () => {
         useSWR<{
             results: number;
             tags: ITag[];
-        }>(`/tags?p=1&r=50`);
-    const { data: news } = useSWR("/news");
+        }>(`/tags?p=1&r=20`);
+    const { data: news } = useSWR("/news?p=1&r=5&type=published");
 
     const [value, setValue] = useState(0);
 
@@ -106,7 +107,9 @@ const SideBar = () => {
                 <div className="side-bar-tags">
                     {data &&
                         data.tags.map((i) => (
-                            <a key={i.tag_id}>{i.tag_name}</a>
+                            <Link href={`/tags/${i.tag_name}`} key={i.tag_id}>
+                                <a>{i.tag_name}</a>
+                            </Link>
                         ))}
                 </div>
             </div>

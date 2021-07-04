@@ -25,9 +25,9 @@ import ImageForm from "./imageForm";
 import SortIcon from "@material-ui/icons/Sort";
 import { IImage } from "../../../types/image";
 
-type Sort = "Latest" | "Oldest";
+type Sort = "الأحدث" | "الأقدم";
 
-const sortOptions: Sort[] = ["Latest", "Oldest"];
+const sortOptions: Sort[] = ["الأحدث", "الأقدم"];
 
 function a11yProps(index: any) {
     return {
@@ -86,7 +86,7 @@ const ImagePicker = ({
     const [loading, setLoading] = useState(true);
     const { data, error } = useSWR("/images");
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedSort, setSelectedSort] = useState<Sort | null>("Latest");
+    const [selectedSort, setSelectedSort] = useState<Sort | null>("الأحدث");
 
     useEffect(() => {
         if (type === "single") {
@@ -163,12 +163,12 @@ const ImagePicker = ({
     };
 
     const handleSort = (a: any, b: any) => {
-        if (selectedSort === "Latest") {
+        if (selectedSort === "الأحدث") {
             return (
                 new Date(b.created_at).valueOf() -
                 new Date(a.created_at).valueOf()
             );
-        } else if (selectedSort === "Oldest") {
+        } else if (selectedSort === "الأقدم") {
             return (
                 new Date(a.created_at).valueOf() -
                 new Date(b.created_at).valueOf()
@@ -199,7 +199,7 @@ const ImagePicker = ({
                         </Typography>
                         <Box display="flex">
                             <div>
-                                <Box mr={2}>
+                                <Box className="ltr" ml={2}>
                                     <Button
                                         startIcon={<SortIcon />}
                                         variant="outlined"
@@ -235,7 +235,7 @@ const ImagePicker = ({
                                     ))}
                                 </Menu>
                             </div>
-                            <Box mr={2}>
+                            <Box ml={2}>
                                 <Button
                                     onClick={handleSave}
                                     variant="contained"
@@ -267,8 +267,8 @@ const ImagePicker = ({
                         variant="fullWidth"
                         aria-label="full width tabs example"
                     >
-                        <Tab label="All images" {...a11yProps(0)} />
-                        <Tab label="Selected images" {...a11yProps(1)} />
+                        <Tab label="جميع الصور" {...a11yProps(0)} />
+                        <Tab label="الصور مختارة" {...a11yProps(1)} />
                     </Tabs>
                     <Divider />
                     {loading ? (

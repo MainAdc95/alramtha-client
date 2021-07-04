@@ -131,7 +131,11 @@ const TagList = () => {
                             <TableCell className={classes.smallCell}>
                                 تم التحديث بواسطة
                             </TableCell>
-                            <TableCell style={{ minWidth: "50px" }}>
+                            <TableCell
+                                style={{
+                                    minWidth: "50px",
+                                }}
+                            >
                                 أجراءات
                             </TableCell>
                         </TableRow>

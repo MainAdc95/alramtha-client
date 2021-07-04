@@ -10,13 +10,9 @@ import { apiCall } from "../../utils/apiCall";
 import { INews } from "../../types/news";
 import useSWR from "swr";
 
-interface IProps {
-    news: INews[];
-}
-
 const SectionTags = () => {
     const router = useRouter();
-    const { data, error } = useSWR<{ news: INews[] }>(
+    const { data } = useSWR<{ news: INews[] }>(
         `/news?tag=${router.query.tagName}`
     );
 

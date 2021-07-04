@@ -38,23 +38,25 @@ const News = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>Sections</h1>
+                                <h1 className={classes.title}>الأقسام</h1>
                             </div>
                             <Link href="/admin/sections/addSection">
-                                <Button
-                                    startIcon={<AddIcon />}
-                                    text="Add section"
-                                />
+                                <a className="ltr">
+                                    <Button
+                                        startIcon={<AddIcon />}
+                                        text="اضافة قسم"
+                                    />
+                                </a>
                             </Link>
                         </Box>
                     </div>
                     <div className={classes.body}>
                         {error ? (
-                            <p>An error has occured while fetching sections.</p>
+                            <p>حدث خطأ أثناء جلب الأقسام.</p>
                         ) : !sections ? (
-                            <p>Loading...</p>
+                            <p>تحميل...</p>
                         ) : !sections.length ? (
-                            <p>There is no sections added yet.</p>
+                            <p>لا توجد أقسام أضيفت حتى الآن.</p>
                         ) : (
                             <SectionList
                                 sections={sections}

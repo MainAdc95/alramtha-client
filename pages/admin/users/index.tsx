@@ -27,7 +27,7 @@ const Users = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>Users</h1>
+                                <h1 className={classes.title}>المستخدمون</h1>
                             </div>
                         </Box>
                     </div>

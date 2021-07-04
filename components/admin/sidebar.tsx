@@ -74,7 +74,7 @@ const Sidebar = () => {
                                 height={40}
                             />
                         </div>
-                        <a>Back to Home page</a>
+                        <a>العودة إلى الرمسة</a>
                     </div>
                 </a>
             </Link>
@@ -110,7 +110,7 @@ const Sidebar = () => {
                                             height={40}
                                         />
                                     </div>
-                                    <a>{tab[`${locale}_name`]}</a>
+                                    <a>{tab.name}</a>
                                 </div>
                             </a>
                         </Link>
@@ -129,7 +129,7 @@ const Sidebar = () => {
                         height={40}
                     />
                 </div>
-                <a>Signout</a>
+                <a>تسجيل خروج</a>
             </div>
         </div>
     );
@@ -158,7 +158,7 @@ const useStyles = makeStyles((theme: Theme) => {
             },
         },
         listImgContainer: {
-            [theme.direction === "ltr" ? "marginRight" : "marginLeft"]:
+            [theme.direction === "ltr" ? "marginLeft" : "marginRight"]:
                 theme.spacing(2),
         },
         active: {

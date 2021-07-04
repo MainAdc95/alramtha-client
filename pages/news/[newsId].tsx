@@ -1,43 +1,25 @@
-// Main
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { apiCall } from "../../utils/apiCall";
-// import { getStaticProps, getStaticPath } from "next";
 import parse from "html-react-parser";
-import useSWR from "swr";
+import { apiCall } from "../../utils/apiCall";
+import { GetServerSideProps } from "next";
+import Link from "next/link";
 
 // Components
-import Author from "../../components/news/author";
 import ShareNews from "../../components/news/shareNews";
 import SideBar from "../../components/sideBar";
 import { Grid, Box } from "@material-ui/core";
-import { small_4, swiper2 } from "../../utils/seeds"; // Delete this replace with IProps interface
 
 // Styles
 import styles from "../../styles/News.module.scss";
+import { INews } from "../../types/news";
+import ImageOpt from "../../components/imageOpt";
+import Slider from "../../components/slider";
+import { SwiperSlide } from "swiper/react";
 
-// interface IProps {
-//     relatedNews: INews[];
-//     news: INews;
-//     tags: ICategory[];
-// }
-// {relatedNews, news, tags}
-// PUT HERE-------!
-//                !
-//                !
-const NewsPage = () => {
-    const [news, setState] = useState(null);
-    const router = useRouter();
-    const { newsId } = router.query;
+interface IProps {
+    news: INews;
+}
 
-    useEffect(() => {
-        if (swiper2) {
-            const find = swiper2.find((i) => i.id === newsId);
-            setState(find);
-        }
-    }, [newsId]);
-
+const NewsPage = ({ news }: IProps) => {
     if (news)
         return (
             <>
@@ -49,53 +31,62 @@ const NewsPage = () => {
                                     <div className={styles.newsHeading}>
                                         <h1>{news.title}</h1>
                                         <ul>
-                                            <li>30 Nov, 2020</li>
-                                            <li>by jane Smith</li>
-                                            <li>news Num 0</li>
-                                            <li>view 331</li>
+                                            <li>
+                                                {new Date(
+                                                    news.created_at
+                                                ).toLocaleDateString()}
+                                            </li>
+                                            <li>0 القراء</li>
                                         </ul>
                                     </div>
-
                                     <ShareNews />
                                     <Box width="100%">
-                                        <div className={styles.newsImg}>
-                                            <Image
-                                                src={news.src}
-                                                layout="fill"
-                                            />
+                                        <div className={styles.newsImgsWrapper}>
+                                            <Slider>
+                                                {news.images.map((img) => (
+                                                    <SwiperSlide
+                                                        key={img.image_id}
+                                                        className={
+                                                            styles.newsImgContainer
+                                                        }
+                                                    >
+                                                        <ImageOpt
+                                                            src={img.image_name}
+                                                            layout="fill"
+                                                            objectFit="cover"
+                                                        />
+                                                    </SwiperSlide>
+                                                ))}
+                                            </Slider>
                                         </div>
-
                                         <blockquote
                                             className={styles.newsQoute}
                                         >
-                                            <p>
-                                                معدل المواليد في أستراليا بشكل
-                                                حاد خلال العقود الأربعة المقبلة
-                                                ، مما يؤدي إلى مشاكل وطنية إذا
-                                                لم تعد الهجرة قوية
-                                            </p>
+                                            <p>{news.intro}</p>
                                         </blockquote>
 
-                                        <Box width="100%" p="0 20px">
-                                            <p style={{ marginBottom: "20px" }}>
-                                                {/* {parse(news.content)} */}
-                                                {news.text}
-                                            </p>
+                                        <Box
+                                            width="100%"
+                                            className={styles.newsContent}
+                                        >
+                                            {parse(news.text)}
                                         </Box>
                                         <div className={styles.newsTags}>
                                             <ul>
-                                                <li>
-                                                    <a>{news.category}</a>
-                                                </li>
+                                                {news.tags.map((tag) => (
+                                                    <li>
+                                                        <Link
+                                                            href={`/tags/${tag.tag_name}`}
+                                                        >
+                                                            <a>
+                                                                {tag.tag_name}
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
                                         <ShareNews />
-                                        <Box mt={3}>
-                                            {/* <Author
-                                                data={small_4}
-                                                styles={styles}
-                                            /> */}
-                                        </Box>
                                     </Box>
                                 </div>
                             </Grid>
@@ -112,14 +103,14 @@ const NewsPage = () => {
     return null;
 };
 
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//     const info = await apiCall("get", `/homeInfo`);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const news = await apiCall("get", `/news/${ctx.params.newsId}`);
 
-//     return {
-//         props: {
-//             info,
-//         },
-//     };
-// };
+    return {
+        props: {
+            news,
+        },
+    };
+};
 
 export default NewsPage;

@@ -32,13 +32,15 @@ const Messages = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>Messages</h1>
+                                <h1 className={classes.title}>الرسائل</h1>
                             </div>
                             <Link href="/admin/messages/sendMessage">
-                                <Button
-                                    startIcon={<SendIcon />}
-                                    text="send message"
-                                />
+                                <a className="ltr">
+                                    <Button
+                                        startIcon={<SendIcon />}
+                                        text="ارسال رسالة"
+                                    />
+                                </a>
                             </Link>
                         </Box>
                     </div>

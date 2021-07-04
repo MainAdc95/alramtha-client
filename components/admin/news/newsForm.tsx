@@ -396,6 +396,7 @@ const NewsForm = ({ news }: IProps) => {
                     </Box>
                     <div className={classes.formGroup}>
                         <TextEditor
+                            direction="rtl"
                             name="text"
                             id="text"
                             label="نص الخبر"

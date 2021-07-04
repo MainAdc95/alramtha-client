@@ -140,9 +140,7 @@ const Navbar = () => {
                                     className={classes.tabColorStrip}
                                     style={{ backgroundColor: section.color }}
                                 ></div>
-                                <Link
-                                    href={`/sections/${section.section_name}`}
-                                >
+                                <Link href={`/sections/${section.section_id}`}>
                                     <a className={classes.tabLink}>
                                         {section.section_name}
                                     </a>
@@ -155,7 +153,7 @@ const Navbar = () => {
                             <SearchIcon />
                         </div>
                         <InputBase
-                            placeholder="Search…"
+                            placeholder="بحث…"
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
@@ -245,6 +243,9 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.direction === "ltr"
                 ? "paddingLeft"
                 : "paddingRight"]: `calc(${theme.spacing(5)}px)`,
+            [theme.direction === "ltr"
+                ? "paddingRight"
+                : "paddingLeft"]: `calc(${theme.spacing(1)}px)`,
         },
         logoContianer: {
             position: "relative",

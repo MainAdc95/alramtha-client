@@ -34,13 +34,14 @@ const BannerCard = ({ data, type }: IProps) => {
                                         >
                                             {data.section_name}
                                         </a>
-                                        <Link href={`/news/${data.news[0].id}`}>
+                                        <Link
+                                            href={`/news/${data.news[0].news_id}`}
+                                        >
                                             <h2>{data.news[0].title}</h2>
                                         </Link>
-
                                         <ul>
-                                            <li>04 Dec, 2020</li>
-                                            <li>0 comments</li>
+                                            <li>{data.news[0].created_at}</li>
+                                            <li>0 القراء</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -70,7 +71,7 @@ const BannerCard = ({ data, type }: IProps) => {
 
                                 <ul>
                                     <li>{data.news[0]?.created_at}</li>
-                                    <li>0 readers</li>
+                                    <li>0 القراء</li>
                                 </ul>
                             </div>
                         </div>

@@ -89,7 +89,7 @@ const SectionList = ({ sections, loading }: IProps) => {
             );
 
             mutate(
-                "/section",
+                "/sections",
                 (section: ISection[]) => {
                     return section.filter(
                         (p) => p.section_id !== isDel.section_id

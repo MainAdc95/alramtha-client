@@ -32,13 +32,15 @@ const News = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>News archive</h1>
+                                <h1 className={classes.title}>أرشيف الأخبار</h1>
                             </div>
                             <Link href="/admin/news/addNews">
-                                <Button
-                                    startIcon={<AddIcon />}
-                                    text="add news"
-                                />
+                                <a className="ltr">
+                                    <Button
+                                        startIcon={<AddIcon />}
+                                        text="أضافة خبر"
+                                    />
+                                </a>
                             </Link>
                         </Box>
                     </div>

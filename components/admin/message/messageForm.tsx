@@ -181,6 +181,7 @@ const MessageForm = ({ message }: IProps) => {
                     <div className={classes.formGroup}>
                         <TextEditor
                             name="text"
+                            direction="rtl"
                             id="text"
                             label="نص الرسالة"
                             state={state}

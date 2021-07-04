@@ -163,8 +163,8 @@ const NewsList = () => {
         <>
             <Box mb={3}>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                    <Tab label="Published" {...a11yProps(0)} />
-                    <Tab label="Draft" {...a11yProps(1)} />
+                    <Tab label="نشرت" {...a11yProps(0)} />
+                    <Tab label="مسودة" {...a11yProps(1)} />
                 </Tabs>
             </Box>
             {!data.news?.length ? (

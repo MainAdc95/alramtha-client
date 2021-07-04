@@ -1,24 +1,21 @@
 import { useRouter } from "next/router";
+import { INews } from "../../types/news";
+import useSWR from "swr";
 
 // Components
 import LargeNews from "../../components/news/largeNews";
 import SideBar from "../../components/sideBar";
 import { Grid } from "@material-ui/core";
-import { small_4, swiper2 } from "../../utils/seeds";
-import { GetServerSideProps } from "next";
-import { apiCall } from "../../utils/apiCall";
-import { INews } from "../../types/news";
-import useSWR from "swr";
-
-interface IProps {
-    news: INews[];
-}
 
 const SectionTags = () => {
     const router = useRouter();
-    const { data, error } = useSWR<{ news: INews[] }>(
-        `/news?section=${router.query.sectionName}`
+    const { data } = useSWR<{ news: INews[] }>(
+        router.query.sectionId
+            ? `/news?p=1&type=published&sectionId=${router.query.sectionId}`
+            : null
     );
+
+    console.log(data);
 
     return (
         <>

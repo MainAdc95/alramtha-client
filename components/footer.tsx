@@ -11,6 +11,7 @@ import useSWR from "swr";
 import styles from "../styles/Footer.module.scss";
 import ImageOpt from "./imageOpt";
 import { ITag } from "../types/tag";
+import { INews } from "../types/news";
 
 const Footer = () => {
     const { data, error, isValidating } =
@@ -18,7 +19,23 @@ const Footer = () => {
             results: number;
             tags: ITag[];
         }>(`/tags?p=1&r=10`);
-    const { data: news } = useSWR("/news");
+    const { data: news } = useSWR<{
+        results: number;
+        news: INews[];
+    }>("/news?p=1&r=3&type=published");
+
+    const tagNews = (tag_id) => {
+        if (news) {
+            const tempState = [];
+            const find = news.news.map((n) => {
+                n.tags.map((i) => {
+                    if (i.tag_id === tag_id) tempState.push(tag_id);
+                });
+            });
+
+            return tempState.length;
+        }
+    };
 
     return (
         <footer className={styles.footer}>
@@ -27,48 +44,11 @@ const Footer = () => {
                     <Grid container className="grid-root">
                         <Grid item xs={12} md={4}>
                             <div className={styles.footerItem}>
-                                <h2 className={styles.footerTitle}>
-                                    الاكثر قراءة
-                                </h2>
-
-                                <div className={styles.randomNews}>
-                                    <ul>
-                                        {news &&
-                                            news.news.map((item) => (
-                                                <SmallNews
-                                                    key={item.news_id}
-                                                    data={item}
-                                                />
-                                            ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <div className={styles.footerItem}>
-                                <h2 className={styles.footerTitle}>القائمة</h2>
-
-                                <div className={styles.hotCategories}>
-                                    <ul>
-                                        {data &&
-                                            data.tags.map((i) => (
-                                                <li key={i.tag_id}>
-                                                    <a>{i.tag_name}</a>
-                                                    <span>(0)</span>
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </Grid>
-
-                        <Grid item xs={12} md={4}>
-                            <div className={styles.footerItem}>
                                 <Box
                                     mt="25px"
                                     mb="30px"
                                     display="flex"
-                                    justifyContent="flex-end"
+                                    justifyContent="flex-start"
                                 >
                                     <div
                                         style={{
@@ -90,7 +70,7 @@ const Footer = () => {
                                     height="80px"
                                     display="flex"
                                     flexDirection="column"
-                                    alignItems="flex-end"
+                                    alignItems="flex-start"
                                     justifyContent="space-between"
                                 >
                                     <p style={{ color: "white" }}>
@@ -103,6 +83,51 @@ const Footer = () => {
                                         className="form-input"
                                     />
                                 </Box>
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={12} md={4}>
+                            <div className={styles.footerItem}>
+                                <h2 className={styles.footerTitle}>القائمة</h2>
+
+                                <div className={styles.hotCategories}>
+                                    <ul>
+                                        {data &&
+                                            data.tags.map((i) => (
+                                                <Link
+                                                    href={`/tags/${i.tag_name}`}
+                                                    key={i.tag_id}
+                                                >
+                                                    <li>
+                                                        <a>{i.tag_name}</a>
+                                                        <span>
+                                                            ({tagNews(i.tag_id)}
+                                                            )
+                                                        </span>
+                                                    </li>
+                                                </Link>
+                                            ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <div className={styles.footerItem}>
+                                <h2 className={styles.footerTitle}>
+                                    الاكثر قراءة
+                                </h2>
+
+                                <div className={styles.randomNews}>
+                                    <ul>
+                                        {news &&
+                                            news.news.map((item) => (
+                                                <SmallNews
+                                                    key={item.news_id}
+                                                    data={item}
+                                                />
+                                            ))}
+                                    </ul>
+                                </div>
                             </div>
                         </Grid>
                     </Grid>

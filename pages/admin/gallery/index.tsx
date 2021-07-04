@@ -25,15 +25,15 @@ import ImageForm from "../../../components/admin/image/imageForm";
 import AddIcon from "@material-ui/icons/Add";
 import SortIcon from "@material-ui/icons/Sort";
 
-type Sort = "Latest" | "Oldest";
+type Sort = "الأحدث" | "الأقدم";
 
-const sortOptions: Sort[] = ["Latest", "Oldest"];
+const sortOptions: Sort[] = ["الأحدث", "الأقدم"];
 
 const Gallery = () => {
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });
     const { data: images, error, isValidating } = useSWR<IImage[]>(`/images`);
-    const [selectedSort, setSelectedSort] = useState<Sort | null>("Latest");
+    const [selectedSort, setSelectedSort] = useState<Sort | null>("الأحدث");
     const [isAdd, setAdd] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -73,10 +73,10 @@ const Gallery = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>Gallery</h1>
+                                <h1 className={classes.title}>صالة العرض</h1>
                             </div>
                             <Box display="flex" alignItems="center">
-                                <Box mr={2}>
+                                <Box ml={2} style={{ direction: "ltr" }}>
                                     <MuButton
                                         startIcon={<SortIcon />}
                                         variant="outlined"
@@ -111,33 +111,23 @@ const Gallery = () => {
                                         </MenuItem>
                                     ))}
                                 </Menu>
-                                {/* <Button
-                                    startIcon={<Add />}
-                                    variant="contained"
-                                    type="button"
-                                    onClick={openAdd}
-                                    color="primary"
-                                >
-                                    add images
-                                </Button> */}
-                                <Button
-                                    startIcon={<AddIcon />}
-                                    onClick={openAdd}
-                                    text="add images"
-                                />
+                                <a className="ltr">
+                                    <Button
+                                        startIcon={<AddIcon />}
+                                        onClick={openAdd}
+                                        text="أضافة صورة"
+                                    />
+                                </a>
                             </Box>
                         </Box>
                     </div>
                     <div className={classes.body}>
                         {error ? (
-                            <p>
-                                An error has occured while fetching image
-                                gallery.
-                            </p>
+                            <p>حدث خطأ أثناء إحضار معرض الصور.</p>
                         ) : !images ? (
                             <p>Loading...</p>
                         ) : !images.length ? (
-                            <p>There is no images added yet.</p>
+                            <p>لا توجد صور المضافة حتى الان.</p>
                         ) : (
                             <ImageList
                                 images={images}

@@ -52,7 +52,7 @@ const TextField = ({
     };
 
     return (
-        <Box width={width ? width : "100%"}>
+        <Box dir="ltr" width={width ? width : "100%"}>
             <MuTextField
                 {...params}
                 onKeyDown={onKeyDown}

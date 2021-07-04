@@ -42,7 +42,7 @@ const Form = () => {
                             </IconButton>
                         </div>
                         <div>
-                            <h1 className={classes.title}>News form</h1>
+                            <h1 className={classes.title}>نموذج الأخبار</h1>
                         </div>
                     </div>
                     <div className={classes.body}>
