@@ -73,7 +73,6 @@ const ImageForm = ({ close }: IProps) => {
         }
     };
 
-    console.log(state);
     const toBase64 = (file: any): Promise<string | ArrayBuffer | null> =>
         new Promise((resolve, reject) => {
             const reader = new FileReader();

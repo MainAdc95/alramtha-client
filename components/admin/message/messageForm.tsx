@@ -69,12 +69,20 @@ const MessageForm = ({ message }: IProps) => {
 
     useEffect(() => {
         if (message) {
-            setState({
-                ...state,
-                subject: message.subject,
-                text: message.text,
-                to: replay || "",
-            });
+            if (router.query.replay) {
+                setState({
+                    ...state,
+                    to: replay || "",
+                });
+            } else {
+                setState({
+                    ...state,
+                    subject: message.subject,
+                    text: message.text,
+                    images: message.images,
+                    to: replay || "",
+                });
+            }
         }
     }, [message, replay]);
 

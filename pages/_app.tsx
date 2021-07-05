@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import cookie from "cookie";
 import App, { AppInitialProps } from "next/app";
 import { wrapper } from "../store";
@@ -101,8 +101,19 @@ const DataHandler = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // loading instagram embed script
+        const instagramScript = document.createElement("script");
+        instagramScript.src = "https://www.instagram.com/embed.js";
+
+        instagramScript.addEventListener("load", () => {
+            // @ts-ignore
+            window.instgrm.Embeds.process();
+        });
+
+        document.body.appendChild(instagramScript);
+
         const { isAuth } = cookie.parse(document.cookie);
-        console.log(isAuth);
+
         if (isAuth) {
             dispatch(authOnloadCall());
         }

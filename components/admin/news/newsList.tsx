@@ -76,7 +76,6 @@ const NewsList = () => {
     const [isDel, setDel] = useState<INews | null>(null);
     const [delLoading, setDelLoading] = useState(false);
     const [publishLoading, setPublishLoading] = useState(false);
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -225,7 +224,7 @@ const NewsList = () => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25, 50, 100]}
                         component="div"
-                        count={data.news.length}
+                        count={data.results}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onChangePage={handleChangePage}
@@ -237,7 +236,7 @@ const NewsList = () => {
                 <ActionModal
                     close={handleCloseDel}
                     title="حذف الخبر"
-                    msg={`${isDel.title} ؟هل انت متاكد انك تريد مسح`}
+                    msg={`هل انت متاكد انك تريد مسح ${isDel.title}؟`}
                     handler={handleDelete}
                     loading={delLoading}
                 />
@@ -247,9 +246,9 @@ const NewsList = () => {
                     close={togglePublish}
                     btnIcon={<CheckIcon />}
                     type="confirmation"
-                    btnTxt="publish"
+                    btnTxt="نشر"
                     title="نشر الخبر"
-                    msg={` ${isPublish.title} ؟هل انت متاكد انك تريد نشر`}
+                    msg={`هل انت متاكد انك تريد نشر  ${isPublish.title}؟`}
                     handler={handlePublish}
                     loading={publishLoading}
                 />

@@ -1,4 +1,4 @@
-// Main
+import HeadLayout from "../components/headLayout";
 import { useState } from "react";
 
 // Components
@@ -62,6 +62,7 @@ const Contact = () => {
 
     return (
         <>
+            <HeadLayout title="تواصل بنا"></HeadLayout>
             <div className={styles.page}>
                 <div className="container">
                     <Grid container className="grid-root" spacing={1}>

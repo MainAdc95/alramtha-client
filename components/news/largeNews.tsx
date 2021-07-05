@@ -20,7 +20,7 @@ const LargeNews = ({ data, styles }: IProps) => {
                     />
                 </div>
 
-                <Link href={`/sections/${data.section.section_name}`}>
+                <Link href={`/sections/${data.section.section_id}`}>
                     <a style={{ backgroundColor: `${data.section.color}` }}>
                         {data.section.section_name}
                     </a>

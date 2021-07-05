@@ -100,7 +100,7 @@ const MessageList = () => {
                                 الصور
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                مرسل في
+                                تاريخ الإرسال
                             </TableCell>
                             <TableCell className={classes.smallCell}>
                                 ارسلت بواسطة
@@ -148,7 +148,7 @@ const MessageDetails = ({
     close: any;
 }) => {
     return (
-        <Modal width="90%" type="parent" closeInfo={{ close, check: false }}>
+        <Modal width="1000px" type="parent" closeInfo={{ close, check: false }}>
             <Typography variant="h6">{message.subject}</Typography>
             <Box>
                 <Box mb={2} mt={2}>

@@ -57,16 +57,20 @@ const ActionModal = ({
                 </Box>
                 <Box display="flex" justifyContent="flex-end">
                     <Button variant="outlined" onClick={close}>
-                        cancel
+                        إلغاء
                     </Button>
-                    <Box ml={2}>
+                    <Box mr={2}>
                         <Button
                             variant="contained"
                             color={"primary"}
                             style={
                                 type === "warning" || !type
-                                    ? { backgroundColor: "red", color: "white" }
-                                    : null
+                                    ? {
+                                          direction: "ltr",
+                                          backgroundColor: "red",
+                                          color: "white",
+                                      }
+                                    : { direction: "ltr" }
                             }
                             onClick={handler}
                             startIcon={
@@ -91,7 +95,7 @@ const ActionModal = ({
                                 )
                             }
                         >
-                            {btnTxt || "delete"}
+                            {btnTxt || "حذف"}
                         </Button>
                     </Box>
                 </Box>

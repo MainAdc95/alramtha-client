@@ -186,7 +186,7 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleDetails}>View</MenuItem>
+                    <MenuItem onClick={handleDetails}>معاينة</MenuItem>
                     <Link
                         href={`/admin/messages/sendMessage?messageId=${message.message_id}&replay=${message.created_by?.user_id}`}
                     >

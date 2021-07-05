@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@material-ui/core";
 import SmallNews from "./news/smallNews";
 import { ITag } from "../types/tag";
+import StickyBox from "react-sticky-box";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -54,70 +55,77 @@ const SideBar = () => {
     };
 
     return (
-        <div className="news-side-bar">
-            <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                <Tab
-                    label="الاكثر شهره"
-                    style={selected(0)}
-                    className="tabs-styles"
-                />
-                <Tab
-                    label="الاجدد"
-                    style={selected(1)}
-                    className="tabs-styles"
-                />
-            </Tabs>
+        <StickyBox offsetTop={80} offsetBottom={20}>
+            <div className="news-side-bar">
+                <Tabs value={value} onChange={handleChange} variant="fullWidth">
+                    <Tab
+                        label="الاكثر شهره"
+                        style={selected(0)}
+                        className="tabs-styles"
+                    />
+                    <Tab
+                        label="الاجدد"
+                        style={selected(1)}
+                        className="tabs-styles"
+                    />
+                </Tabs>
+                <Box mt="30px">
+                    <TabPanel value={value} index={0}>
+                        <div style={{ minHeight: "100px" }}>
+                            <ul style={{ width: "100%" }}>
+                                {news &&
+                                    news.news.map((item) => (
+                                        <SmallNews
+                                            key={item.news_id}
+                                            data={item}
+                                        />
+                                    ))}
+                            </ul>
+                        </div>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <div style={{ minHeight: "100px" }}>
+                            <ul>
+                                {news &&
+                                    news.news.map((item) => (
+                                        <SmallNews
+                                            key={item.news_id}
+                                            data={item}
+                                        />
+                                    ))}
+                            </ul>
+                        </div>
+                    </TabPanel>
+                </Box>
 
-            <Box mt="30px">
-                <TabPanel value={value} index={0}>
-                    <div style={{ minHeight: "100px" }}>
-                        <ul style={{ width: "100%" }}>
-                            {news &&
-                                news.news.map((item) => (
-                                    <SmallNews key={item.news_id} data={item} />
-                                ))}
-                        </ul>
+                <div style={{ margin: "3rem 0" }}>
+                    <div className="author-title">
+                        <h1>
+                            <span
+                                style={{
+                                    borderColor: "#33a3f1",
+                                }}
+                            >
+                                العلامات
+                            </span>
+                        </h1>
                     </div>
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <div style={{ minHeight: "100px" }}>
-                        <ul>
-                            {news &&
-                                news.news.map((item) => (
-                                    <SmallNews key={item.news_id} data={item} />
-                                ))}
-                        </ul>
-                    </div>
-                </TabPanel>
-            </Box>
 
-            <div style={{ margin: "3rem 0" }}>
-                <div className="author-title">
-                    <h1>
-                        <span
-                            style={{
-                                borderColor: "#33a3f1",
-                            }}
-                        >
-                            العلامات
-                        </span>
-                    </h1>
+                    <div className="side-bar-tags">
+                        {data &&
+                            data.tags.map((i) => (
+                                <Link href={`/tags/${i.tag_id}`} key={i.tag_id}>
+                                    <a>{i.tag_name}</a>
+                                </Link>
+                            ))}
+                    </div>
                 </div>
 
-                <div className="side-bar-tags">
-                    {data &&
-                        data.tags.map((i) => (
-                            <Link href={`/tags/${i.tag_name}`} key={i.tag_id}>
-                                <a>{i.tag_name}</a>
-                            </Link>
-                        ))}
+                <div className="side-bar-adv">
+                    <Image src="/news1.jpg" layout="fill" objectFit="cover" />
                 </div>
             </div>
-
-            <div className="side-bar-adv">
-                <Image src="/news1.jpg" layout="fill" objectFit="cover" />
-            </div>
-        </div>
+        </StickyBox>
     );
 };
 

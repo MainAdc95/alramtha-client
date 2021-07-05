@@ -28,7 +28,6 @@ import TextEditor from "../../form/textEditor";
 
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
-import Error from "../../form/error";
 
 interface IProps {
     news?: INews;
@@ -86,7 +85,6 @@ const NewsForm = ({ news }: IProps) => {
         subTitles: [],
         tags: [],
     });
-    console.log(state);
     // _________________________________________ seed state with news data
     useEffect(() => {
         if (news) {

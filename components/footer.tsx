@@ -95,7 +95,7 @@ const Footer = () => {
                                         {data &&
                                             data.tags.map((i) => (
                                                 <Link
-                                                    href={`/tags/${i.tag_name}`}
+                                                    href={`/tags/${i.tag_id}`}
                                                     key={i.tag_id}
                                                 >
                                                     <li>

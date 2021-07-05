@@ -102,7 +102,6 @@ const ImagePicker = ({
 
     const handleSelect = (image: IImage) => {
         const imageIds = images.map((i) => i.image_id);
-        console.log(imageIds, image.image_id);
         if (type === "single") {
             if (imageIds.includes(image.image_id)) {
                 setImages([]);

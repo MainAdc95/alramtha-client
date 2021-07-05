@@ -2,6 +2,7 @@ import parse from "html-react-parser";
 import { apiCall } from "../../utils/apiCall";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import HeadLayout from "../../components/headLayout";
 
 // Components
 import ShareNews from "../../components/news/shareNews";
@@ -23,6 +24,7 @@ const NewsPage = ({ news }: IProps) => {
     if (news)
         return (
             <>
+                <HeadLayout title={news.title} />
                 <div className={styles.page}>
                     <div className={`container ${styles.container}`}>
                         <Grid container className="grid-root">
@@ -76,7 +78,7 @@ const NewsPage = ({ news }: IProps) => {
                                                 {news.tags.map((tag) => (
                                                     <li>
                                                         <Link
-                                                            href={`/tags/${tag.tag_name}`}
+                                                            href={`/tags/${tag.tag_id}`}
                                                         >
                                                             <a>
                                                                 {tag.tag_name}
