@@ -10,10 +10,14 @@ import {
     MenuItem,
     Box,
 } from "@material-ui/core";
-import { IMessage } from "../../../types/message";
+import Link from "next/link";
+import { IArticle } from "../../../types/article";
 import { apiImage } from "../../../utils/apiCall";
 import ImageOpt from "../../imageOpt";
-import Link from "next/link";
+
+// icons
+import CheckIcon from "@material-ui/icons/Check";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles({
     root: {
@@ -27,14 +31,6 @@ const useStyles = makeStyles({
         maxWidth: "200px",
         whiteSpace: "nowrap",
         overflowX: "hidden",
-        textOverflow: "ellipsis",
-    },
-    largeCell: {
-        width: "40%",
-        maxWidth: "400px",
-        whiteSpace: "nowrap",
-        overflowX: "hidden",
-
         textOverflow: "ellipsis",
     },
     sticky: {
@@ -70,11 +66,12 @@ const useStyles = makeStyles({
 });
 
 interface IProps {
-    message: IMessage;
-    handleToggleDetails: any;
+    article: IArticle;
+    handleOpenDel: any;
+    handleOpenPublish: any;
 }
 
-const MessageItem = ({ message, handleToggleDetails }: IProps) => {
+const NewsItem = ({ article, handleOpenDel, handleOpenPublish }: IProps) => {
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -88,6 +85,12 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
     };
 
     const delAction = () => {
+        handleOpenDel(article);
+        handleClose();
+    };
+
+    const publishAction = () => {
+        handleOpenPublish(article);
         handleClose();
     };
 
@@ -99,55 +102,54 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
         setHover(false);
     };
 
-    const handleDetails = () => {
-        handleToggleDetails(message);
-        handleClose();
-    };
-
     return (
         <TableRow
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
             classes={{ root: classes.root }}
-            key={message.message_id}
+            key={article.article_id}
         >
             <TableCell
                 classes={{
-                    root: classes.largeCell,
+                    root: classes.tableCell,
                 }}
             >
-                {message.subject}
+                {article.title}
             </TableCell>
             <TableCell>
-                {message.images.length ? (
-                    <div className={classes.imgsContainer}>
-                        {message.images.map((image) => (
-                            <div
-                                key={image.image_id}
-                                className={classes.imgContainer}
-                            >
-                                <a
-                                    href={apiImage(image?.sizes?.m)}
-                                    target="_blank"
-                                >
-                                    <ImageOpt
-                                        src={image?.sizes?.m}
-                                        objectFit="cover"
-                                        layout="fill"
-                                    />
-                                </a>
-                            </div>
-                        ))}
-                    </div>
+                <div className={classes.imgsContainer}>
+                    {article.images.map((image) => (
+                        <div
+                            key={image.image_id}
+                            className={classes.imgContainer}
+                        >
+                            <a href={apiImage(image?.sizes?.l)} target="_blank">
+                                <ImageOpt
+                                    src={image?.sizes?.s}
+                                    objectFit="cover"
+                                    layout="fill"
+                                />
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
+                {article.is_published ? (
+                    <CheckIcon color="primary" />
                 ) : (
-                    <p>No selected images</p>
+                    <ClearIcon color="secondary" />
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
                 {`${new Date(
-                    message.created_at
+                    article.created_at
                 ).toLocaleDateString()}, ${new Date(
-                    message.created_at
+                    article.created_at
                 ).toLocaleTimeString()}`}
             </TableCell>
             <TableCell
@@ -155,7 +157,23 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                     root: classes.tableCell,
                 }}
             >
-                {message.created_by?.username || (
+                {article.created_by?.username || (
+                    <Typography align="center">-</Typography>
+                )}
+            </TableCell>
+            <TableCell style={{ whiteSpace: "nowrap" }}>
+                {`${new Date(
+                    article.updated_at
+                ).toLocaleDateString()}, ${new Date(
+                    article.updated_at
+                ).toLocaleTimeString()}`}
+            </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
+                {article.updated_by?.username || (
                     <Typography align="center">-</Typography>
                 )}
             </TableCell>
@@ -186,21 +204,21 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleDetails}>معاينة</MenuItem>
                     <Link
-                        href={`/admin/messages/sendMessage?messageId=${message.message_id}&replay=${message.created_by?.user_id}`}
+                        href={`/admin/article/addNews?articleId=${article.article_id}`}
                     >
-                        <MenuItem onClick={delAction}>رد</MenuItem>
+                        <MenuItem>
+                            <a>تعديل</a>
+                        </MenuItem>
                     </Link>
-                    <Link
-                        href={`/admin/messages/sendMessage?messageId=${message.message_id}#forward`}
-                    >
-                        <MenuItem onClick={delAction}>نقل</MenuItem>
-                    </Link>
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
+                    {!article.is_published && (
+                        <MenuItem onClick={publishAction}>نشر</MenuItem>
+                    )}
                 </Menu>
             </TableCell>
         </TableRow>
     );
 };
 
-export default MessageItem;
+export default NewsItem;

@@ -54,10 +54,10 @@
         grid-template-rows: 1fr 1fr 1fr 1fr;
         grid-gap: 1px;
         grid-template-areas:
-            "b a a c d e"
-            "b a a c d e"
-            "f a a g h i"
-            "f a a g h i";
+            "a c c d f h"
+            "a c c d f h"
+            "b c c e g i"
+            "b c c e g i";
 
         .introItem {
             width: 100%;

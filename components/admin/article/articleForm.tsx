@@ -12,7 +12,7 @@ import { apiCall } from "../../../utils/apiCall";
 import { RootReducer } from "../../../store/reducers";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { INews } from "../../../types/news";
+import { IArticle } from "../../../types/article";
 import { IImage } from "../../../types/image";
 import useSWR from "swr";
 import { ITag } from "../../../types/tag";
@@ -21,7 +21,7 @@ import { ISection } from "../../../types/section";
 // components
 import TextField from "../../form/input";
 import Button from "../../form/button";
-import ImagePicker from "../../../components/admin/image/imagePicker";
+import ImagePicker from "../image/imagePicker";
 import ImageInput from "../../form/imageInput";
 import Select from "../../form/select";
 import TextEditor from "../../form/textEditor";
@@ -30,7 +30,7 @@ import TextEditor from "../../form/textEditor";
 import RemoveIcon from "@material-ui/icons/Remove";
 
 interface IProps {
-    news?: INews;
+    article?: IArticle;
 }
 
 interface IState {
@@ -56,7 +56,7 @@ interface IError {
     section: string[];
 }
 
-const NewsForm = ({ news }: IProps) => {
+const NewsForm = ({ article }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const { data: sections } = useSWR<ISection[]>(`/sections`);
@@ -91,25 +91,25 @@ const NewsForm = ({ news }: IProps) => {
         tags: [],
     });
 
-    // _________________________________________ seed state with news data
+    // _________________________________________ seed state with article data
     useEffect(() => {
-        if (news) {
+        if (article) {
             return setState({
                 ...state,
-                thumbnail: news?.thumbnail || null,
-                title: news.title || "",
-                intro: news.intro || "",
-                text: news.text || "",
-                section: news.section?.section_id || "",
-                subTitles: news.sub_titles || [],
-                tags: news.tags || [],
-                images: news.images || [],
-                is_published: news.is_published || false,
+                thumbnail: article?.thumbnail || null,
+                title: article.title || "",
+                intro: article.intro || "",
+                text: article.text || "",
+                section: article.section?.section_id || "",
+                subTitles: article.sub_titles || [],
+                tags: article.tags || [],
+                images: article.images || [],
+                is_published: article.is_published || false,
             });
         }
 
         clear();
-    }, [news]);
+    }, [article]);
 
     const clear = () => {
         setState({
@@ -189,17 +189,17 @@ const NewsForm = ({ news }: IProps) => {
         try {
             setLoading(true);
 
-            if (!news) {
-                await apiCall("post", `/news?authId=${user.user_id}`, state);
+            if (!article) {
+                await apiCall("post", `/article?authId=${user.user_id}`, state);
             } else {
                 await apiCall(
                     "put",
-                    `/news/${news.news_id}?authId=${user.user_id}`,
+                    `/article/${article.article_id}?authId=${user.user_id}`,
                     state
                 );
             }
 
-            router.push("/admin/news");
+            router.push("/admin/article");
         } catch (err) {
             setErrors((prevErrors) => ({ ...prevErrors, ...err }));
         } finally {
@@ -440,7 +440,7 @@ const NewsForm = ({ news }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={news ? "تحرير الخبر" : "أضافة الخبر"}
+                            text={article ? "تحرير الخبر" : "أضافة الخبر"}
                         />
                     </div>
                 </div>

@@ -97,10 +97,9 @@ const ImageItem = ({ image, handleOpenDel }: IProps) => {
                     onClose={handleClose}
                 >
                     <MenuItem onClick={delAction}>حذف</MenuItem>
-                    {/* <MenuItem onClick={delAction}>Edit</MenuItem> */}
                 </Menu>
             </div>
-            <ImageOpt src={image?.image_name} layout="fill" objectFit="cover" />
+            <ImageOpt src={image?.sizes?.m} layout="fill" objectFit="cover" />
         </Grid>
     );
 };

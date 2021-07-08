@@ -5,8 +5,8 @@ import { IUser } from "./user";
 
 type SubTitle = { sub_title_id: string; sub_title: string };
 
-export interface INews {
-    news_id: string;
+export interface IArticle {
+    article_id: string;
     thumbnail: IImage;
     intro: string;
     title: string;

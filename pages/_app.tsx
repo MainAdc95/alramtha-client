@@ -18,6 +18,7 @@ import NProgress from "nprogress";
 import "../styles/globals.scss";
 import "swiper/swiper-bundle.css";
 import "nprogress/nprogress.css";
+import "react-image-crop/dist/ReactCrop.css";
 
 NProgress.configure({ showSpinner: false });
 

@@ -90,7 +90,7 @@ const ImagePicker = ({
 
     useEffect(() => {
         if (type === "single") {
-            setImages([...images, state[fieldName]]);
+            if (state[fieldName]) setImages([...images, state[fieldName]]);
         } else if (type === "multiple") {
             setImages([...images, ...state[fieldName]]);
         }
@@ -316,8 +316,8 @@ const ImagePicker = ({
                                                         />
                                                     </div>
                                                     <ImageOpt
-                                                        src={img.image_name}
-                                                        alt={img.image_name}
+                                                        src={img?.sizes?.m}
+                                                        alt={img?.sizes?.m}
                                                         layout="fill"
                                                         objectFit="contain"
                                                     />
@@ -353,8 +353,8 @@ const ImagePicker = ({
                                                 />
                                             </div>
                                             <ImageOpt
-                                                src={img.image_name}
-                                                alt={img.image_name}
+                                                src={img?.sizes?.m}
+                                                alt={img?.sizes?.m}
                                                 layout="fill"
                                                 objectFit="contain"
                                             />

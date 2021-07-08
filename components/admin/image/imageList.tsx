@@ -57,7 +57,7 @@ const ImageList = ({ images, sortOption }: IProps) => {
             setDelLoading(true);
             await apiCall(
                 "delete",
-                `/image/${isDel.image_name}?authId=${user.user_id}`
+                `/image/${isDel.image_id}?authId=${user.user_id}`
             );
 
             mutate(

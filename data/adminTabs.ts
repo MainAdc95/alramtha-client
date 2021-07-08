@@ -15,6 +15,13 @@ export const tabs = [
     },
     {
         role: "is_admin",
+        name: "أرشيف المقالات",
+        icon: "/draftNews.svg",
+        link: "/admin/articles",
+        isDisabled: false,
+    },
+    {
+        role: "is_admin",
         name: "رسائل",
         icon: "/message.svg",
         link: "/admin/messages",

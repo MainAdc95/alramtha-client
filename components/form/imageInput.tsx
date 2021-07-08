@@ -29,7 +29,13 @@ const ImageInput = ({ text, errors, name, handler, type, images }: IProps) => {
             <div className={classes.root} onClick={handler}>
                 {images.length ? (
                     type === "single" ? (
-                        <div>asdflkj</div>
+                        <div className={classes.imgContainer}>
+                            <ImageOpt
+                                src={images[0]?.sizes?.m}
+                                layout="fill"
+                                objectFit="contain"
+                            />
+                        </div>
                     ) : (
                         <Swiper
                             autoHeight={true}
@@ -41,7 +47,7 @@ const ImageInput = ({ text, errors, name, handler, type, images }: IProps) => {
                                 <SwiperSlide key={image.image_id}>
                                     <div className={classes.imgContainer}>
                                         <ImageOpt
-                                            src={image.image_name}
+                                            src={image?.sizes?.m}
                                             layout="fill"
                                             objectFit="contain"
                                         />

@@ -30,7 +30,7 @@ const Home = ({ info }: IProps) => {
             results: number;
             news: INews[];
         }>("/news");
-
+    console.log(sections);
     return (
         <>
             <HeadLayout />
@@ -41,7 +41,7 @@ const Home = ({ info }: IProps) => {
                             <div
                                 className={`${styles.introItem} ${styles.introItem1}`}
                             >
-                                <BannerCard data={sections[0]} type={true} />
+                                <BannerCard data={sections[0]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem2}`}
@@ -51,7 +51,7 @@ const Home = ({ info }: IProps) => {
                             <div
                                 className={`${styles.introItem} ${styles.introItem3}`}
                             >
-                                <BannerCard data={sections[2]} type={false} />
+                                <BannerCard data={sections[2]} type={true} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem4}`}

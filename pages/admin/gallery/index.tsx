@@ -73,7 +73,7 @@ const Gallery = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>صالة العرض</h1>
+                                <h1 className={classes.title}>معرض الصور</h1>
                             </div>
                             <Box display="flex" alignItems="center">
                                 <Box ml={2} style={{ direction: "ltr" }}>

@@ -14,7 +14,7 @@ const HoverBox = ({ data }: IProps) => {
                 <div className="overlay"></div>
                 <div className="box-img">
                     <ImageOpt
-                        src={data.images[0].image_name}
+                        src={data.images[0]?.sizes?.s}
                         layout="fill"
                         objectFit="cover"
                     />

@@ -82,7 +82,7 @@ const UserItem = ({ user, handleOpenEdit }: IProps) => {
             >
                 <div className={classes.avatarContainer}>
                     <ImageOpt
-                        src={user.avatar?.image_name}
+                        src={user.avatar?.sizes?.s}
                         layout="fill"
                         objectFit="cover"
                     />

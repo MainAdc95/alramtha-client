@@ -123,12 +123,9 @@ const NewsItem = ({ news, handleOpenDel, handleOpenPublish }: IProps) => {
                             key={image.image_id}
                             className={classes.imgContainer}
                         >
-                            <a
-                                href={apiImage(image.image_name)}
-                                target="_blank"
-                            >
+                            <a href={apiImage(image?.sizes?.l)} target="_blank">
                                 <ImageOpt
-                                    src={image.image_name}
+                                    src={image?.sizes?.s}
                                     objectFit="cover"
                                     layout="fill"
                                 />

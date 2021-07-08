@@ -8,13 +8,6 @@ import { Box, Grid, Button } from "@material-ui/core";
 // Style
 import styles from "../styles/Contact.module.scss";
 
-interface IState {
-    name: string;
-    email: string;
-    website: string;
-    message: string;
-}
-
 interface IError {
     name: string[];
     email: string[];

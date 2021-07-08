@@ -1,0 +1,28 @@
+.proportionsContainer {
+    display: flex;
+    margin: 10px 0;
+    .proportionsItem {
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .prop16,
+    .prop1 {
+        width: 150px;
+        height: 100px;
+        border: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid black;
+
+        p {
+            font-size: 25px;
+            font-weight: 300;
+        }
+    }
+
+    .prop1 {
+        width: 100px;
+    }
+}

@@ -90,9 +90,9 @@ const Modal = ({ children, closeInfo, width, type }: IProps) => {
     };
 
     return (
-        <div onClick={handleClose} className={classes.root}>
+        <div onMouseDown={handleClose} className={classes.root}>
             <Paper
-                onClick={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
                 className={classes.wrapper}
             >
                 {children}

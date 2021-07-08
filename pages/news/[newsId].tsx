@@ -53,7 +53,7 @@ const NewsPage = ({ news }: IProps) => {
                                                         }
                                                     >
                                                         <ImageOpt
-                                                            src={img.image_name}
+                                                            src={img?.sizes?.m}
                                                             layout="fill"
                                                             objectFit="cover"
                                                         />
