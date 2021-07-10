@@ -28,6 +28,7 @@ import TextEditor from "../../form/textEditor";
 
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
+import { IFile } from "../../../types/file";
 
 interface IProps {
     news?: INews;
@@ -40,6 +41,7 @@ interface IState {
     text: string;
     images: IImage[];
     section: string;
+    file: string;
     intro: string;
     subTitles: { sub_title: string }[];
     tags: ITag[];
@@ -51,6 +53,7 @@ interface IError {
     is_published: string[];
     text: string[];
     images: string[];
+    file: string[];
     intro: string[];
     tags: string[];
     section: string[];
@@ -60,6 +63,7 @@ const NewsForm = ({ news }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const { data: sections } = useSWR<ISection[]>(`/sections`);
+    const { data: files } = useSWR<IFile[]>(`/files`);
     const [loading, setLoading] = useState<boolean>(false);
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [imagesPick, setImagesPick] = useState(false);
@@ -77,6 +81,7 @@ const NewsForm = ({ news }: IProps) => {
         images: [],
         intro: [],
         section: [],
+        file: [],
         tags: [],
     });
     const [state, setState] = useState<IState>({
@@ -85,6 +90,7 @@ const NewsForm = ({ news }: IProps) => {
         text: "",
         images: [],
         section: "",
+        file: "",
         intro: "",
         is_published: false,
         subTitles: [],
@@ -101,6 +107,7 @@ const NewsForm = ({ news }: IProps) => {
                 intro: news.intro || "",
                 text: news.text || "",
                 section: news.section?.section_id || "",
+                file: news.file?.file_id || "",
                 subTitles: news.sub_titles || [],
                 tags: news.tags || [],
                 images: news.images || [],
@@ -216,12 +223,9 @@ const NewsForm = ({ news }: IProps) => {
             is_published: [],
             text: [],
             section: [],
+            file: [],
             tags: [],
         };
-
-        if (!state.intro.trim()) {
-            TmpErrors.intro.push("Please fill in introduction.");
-        }
 
         if (!state.thumbnail) {
             TmpErrors.thumbnail.push("Please choose a thumbnail.");
@@ -236,7 +240,11 @@ const NewsForm = ({ news }: IProps) => {
         }
 
         if (!state.section) {
-            TmpErrors.section.push("Please fill in section.");
+            TmpErrors.section.push("Please choose a section.");
+        }
+
+        if (!state.file) {
+            TmpErrors.file.push("Please choose a file.");
         }
 
         if (!state.images.length) {
@@ -314,6 +322,24 @@ const NewsForm = ({ news }: IProps) => {
                                     {sections?.map((section) => (
                                         <MenuItem value={section.section_id}>
                                             {section.section_name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </div>
+                            <Box mb={3}>
+                                <Divider />
+                            </Box>
+                            <div className={classes.formGroup}>
+                                <Select
+                                    name="file"
+                                    label="ملف"
+                                    errors={errors}
+                                    state={state}
+                                    setState={setState}
+                                >
+                                    {files?.map((file) => (
+                                        <MenuItem value={file.file_id}>
+                                            {file.text}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -440,7 +466,7 @@ const NewsForm = ({ news }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={news ? "تحرير الخبر" : "أضافة الخبر"}
+                            text={news ? "احفظ التغييرات" : "أضافة الخبر"}
                         />
                     </div>
                 </div>

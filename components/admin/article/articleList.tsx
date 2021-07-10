@@ -69,8 +69,8 @@ const ArticleList = () => {
         results: number;
         articles: IArticle[];
     }>(
-        `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-            value === 0 ? "published" : "draft"
+        `/articles?p=${page + 1}&r=${rowsPerPage}&type=${
+            value === 0 ? "published" : value === 1 ? "draft" : "archived"
         }`
     );
     const [isDel, setDel] = useState<IArticle | null>(null);
@@ -79,26 +79,29 @@ const ArticleList = () => {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
+    // archive
+    const [isArch, setArch] = useState<IArticle | null>(null);
+    const [archiveLoading, setArchiveLoading] = useState(false);
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
 
-    const handleOpenDel = (news: IArticle) => {
-        setDel(news);
+    const handleOpenDel = (article: IArticle) => {
+        setDel(article);
     };
 
     const handleCloseDel = () => {
         setDel(null);
     };
 
-    const togglePublish = (news?: IArticle) => {
+    const togglePublish = (article?: IArticle) => {
         if (isPublish) {
             return setPublish(null);
         }
 
-        setPublish(news);
+        setPublish(article);
     };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -110,17 +113,21 @@ const ArticleList = () => {
             setDelLoading(true);
             await apiCall(
                 "delete",
-                `/news/${isDel.article_id}?authId=${user.user_id}`
+                `/articles/${isDel.article_id}?authId=${user.user_id}`
             );
 
             mutate(
-                `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-                    value === 0 ? "published" : "draft"
+                `/articles?p=${page + 1}&r=${rowsPerPage}&type=${
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
                 }`,
-                (data: { news: IArticle[] }) => {
+                (data: { articles: IArticle[] }) => {
                     return {
                         ...data,
-                        news: data.news.filter(
+                        articles: data.articles.filter(
                             (p) => p.article_id !== isDel.article_id
                         ),
                     };
@@ -140,12 +147,16 @@ const ArticleList = () => {
 
             await apiCall(
                 "put",
-                `/news/publish_news/${isPublish.article_id}?authId=${user.user_id}`
+                `/articles/publish_article/${isPublish.article_id}?authId=${user.user_id}`
             );
 
             mutate(
-                `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-                    value === 0 ? "published" : "draft"
+                `/articles?p=${page + 1}&r=${rowsPerPage}&type=${
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
                 }`
             );
 
@@ -156,18 +167,62 @@ const ArticleList = () => {
         }
     };
 
-    if (error) return <p>An error has occured while fetching news.</p>;
+    // ___________________________________ archive
+    const toggleArchive = (article?: IArticle) => {
+        if (isArch) {
+            return setArch(null);
+        }
+
+        setArch(article);
+    };
+
+    const handleArchive = async () => {
+        try {
+            setArchiveLoading(true);
+            await apiCall(
+                "put",
+                `/articles/archive/${isArch.article_id}?authId=${user.user_id}`
+            );
+
+            mutate(
+                `/articles?p=${page + 1}&r=${rowsPerPage}&type=${
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
+                }`,
+                (data: { articles: IArticle[] }) => {
+                    return {
+                        ...data,
+                        articles: data.articles.filter(
+                            (p) => p.article_id !== isArch.article_id
+                        ),
+                    };
+                }
+            );
+
+            toggleArchive();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setArchiveLoading(false);
+        }
+    };
+
+    if (error) return <p>An error has occured while fetching article.</p>;
     else if (!data) return <p>Loading...</p>;
     return (
         <>
             <Box mb={3}>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                    <Tab label="نشرت" {...a11yProps(0)} />
-                    <Tab label="مسودة" {...a11yProps(1)} />
+                    <Tab label="المقالات المنشورة" {...a11yProps(0)} />
+                    <Tab label="مسودة المقالات" {...a11yProps(1)} />
+                    <Tab label="المقالات المحذوفة" {...a11yProps(2)} />
                 </Tabs>
             </Box>
             {!data.articles?.length ? (
-                <p>لم يتم العثور على أخبار</p>
+                <p>لم يتم العثور على المقالات</p>
             ) : (
                 <>
                     <TableContainer
@@ -183,7 +238,7 @@ const ArticleList = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell className={classes.smallCell}>
-                                        عنوان الخبر
+                                        عنوان المقالة
                                     </TableCell>
                                     <TableCell className={classes.mediumCell}>
                                         صورة
@@ -215,6 +270,7 @@ const ArticleList = () => {
                                         article={article}
                                         handleOpenDel={handleOpenDel}
                                         handleOpenPublish={togglePublish}
+                                        toggleArchive={toggleArchive}
                                     />
                                 ))}
                             </TableBody>
@@ -238,6 +294,15 @@ const ArticleList = () => {
                     msg={`هل انت متاكد انك تريد مسح ${isDel.title}؟`}
                     handler={handleDelete}
                     loading={delLoading}
+                />
+            )}
+            {isArch && (
+                <ActionModal
+                    close={toggleArchive}
+                    title="حذف المقالة"
+                    msg={`هل انت متاكد انك تريد مسح ${isArch.title}؟`}
+                    handler={handleArchive}
+                    loading={archiveLoading}
                 />
             )}
             {isPublish && (

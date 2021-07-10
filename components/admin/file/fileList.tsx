@@ -8,16 +8,15 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TablePagination, LinearProgress } from "@material-ui/core";
 import { useState } from "react";
-import { IUser } from "../../../types/user";
 import { mutate } from "swr";
 import { apiCall } from "../../../utils/apiCall";
+import { IFile } from "../../../types/file";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
 import useSWR from "swr";
 
 // components
-import UserItem from "./userItem";
-import UserForm from "./userForm";
+import FileItem from "./fileItem";
 import ActionModal from "../actionModal";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -43,18 +42,14 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const UserList = () => {
+const FileList = () => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
-    const [isDel, setDel] = useState<IUser | null>(null);
-    const [isEdit, setEdit] = useState<IUser | null>(null);
+    const [isDel, setDel] = useState<IFile | null>(null);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [delLoading, setDelLoading] = useState(false);
     const [page, setPage] = useState(0);
-    const { data, error, isValidating } = useSWR<{
-        results: number;
-        users: IUser[];
-    }>(`/users?p=${page + 1}&r=${rowsPerPage}&authId=${user.user_id}`);
+    const { data: files, error, isValidating } = useSWR<IFile[]>(`/files`);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -65,25 +60,39 @@ const UserList = () => {
         setPage(0);
     };
 
-    const handleOpenDel = (user: IUser) => {
-        setDel(user);
+    const handleOpenDel = (file: IFile) => {
+        setDel(file);
     };
 
     const handleCloseDel = () => {
         setDel(null);
     };
 
-    const handleToggleEdit = (user: IUser) => {
-        if (isEdit) {
-            return setEdit(null);
-        }
+    const handleDelete = async () => {
+        try {
+            setDelLoading(true);
+            await apiCall(
+                "delete",
+                `/file/${isDel.file_id}?authId=${user.user_id}`
+            );
 
-        setEdit(user);
+            mutate(
+                `/files`,
+                (files: IFile[]) =>
+                    files.filter((p) => p.file_id !== isDel.file_id),
+                false
+            );
+
+            setDelLoading(false);
+            handleCloseDel();
+        } catch (err) {
+            setDelLoading(false);
+        }
     };
 
-    if (error) return <p>An error has occured while fetching users.</p>;
-    else if (!data) return <p>Loading...</p>;
-    else if (!data.users?.length) return <p>There were no users found.</p>;
+    if (error) return <p>An error has occured while fetching files.</p>;
+    else if (!files) return <p>Loading...</p>;
+    else if (!files?.length) return <p>There were no files found.</p>;
     return (
         <>
             <TableContainer
@@ -99,35 +108,38 @@ const UserList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                الصوره الشخصيه
+                                الاسم
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                اسم المستخدم
+                                صورة الملف
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                الأسم الأول
+                                تاريخ الانشاء
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                الأسم الأخير
-                            </TableCell>
-                            <TableCell>البريد الالكتروني</TableCell>
-                            <TableCell className={classes.smallCell}>
-                                رقم الهاتف
+                                انشئت بواسطة
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                أنشئت في
+                                تاريخ التحديث
                             </TableCell>
-                            <TableCell style={{ minWidth: "50px" }}>
+                            <TableCell className={classes.smallCell}>
+                                حدثت بواسطة
+                            </TableCell>
+                            <TableCell
+                                style={{
+                                    minWidth: "50px",
+                                }}
+                            >
                                 أجراءات
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.users.map((user) => (
-                            <UserItem
-                                key={user.user_id}
-                                user={user}
-                                handleOpenEdit={handleToggleEdit}
+                        {files.map((file) => (
+                            <FileItem
+                                key={file.file_id}
+                                file={file}
+                                handleOpenDel={handleOpenDel}
                             />
                         ))}
                     </TableBody>
@@ -136,23 +148,23 @@ const UserList = () => {
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
-                count={data.results}
+                count={files.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
-            {isEdit && (
-                <UserForm
-                    close={handleToggleEdit}
-                    user={isEdit}
-                    mutateUrl={`/users?p=${page + 1}&r=${rowsPerPage}&authId=${
-                        user.user_id
-                    }`}
+            {isDel && (
+                <ActionModal
+                    close={handleCloseDel}
+                    title="حذف الملف"
+                    msg={`؟ ${isDel.text} هل انت متاكد انك تريد حذف`}
+                    handler={handleDelete}
+                    loading={delLoading}
                 />
             )}
         </>
     );
 };
 
-export default UserList;
+export default FileList;

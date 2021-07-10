@@ -16,8 +16,6 @@ const Slider = ({ children, spaceBetween, slidesPerView }: IProps) => {
             spaceBetween={spaceBetween || 50}
             navigation
             slidesPerView={slidesPerView || 1}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
         >
             {children}
         </Swiper>

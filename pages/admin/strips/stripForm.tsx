@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { IArticle } from "../../../types/article";
+import { IStrip } from "../../../types/strip";
 
 // components
 import WithRole from "../../../protectors/withRole";
@@ -13,23 +13,23 @@ import HeadLayout from "../../../components/headLayout";
 // icons
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import ArticleForm from "../../../components/admin/article/articleForm";
+import StripForm from "../../../components/admin/strip/stripForm";
 
 const Form = () => {
     const router = useRouter();
-    const { data: article } = useSWR<IArticle>(
-        router.query.articleId ? `/article/${router.query.articleId}` : null
+    const { data: strip } = useSWR<IStrip>(
+        router.query.stripId ? `/strip/${router.query.stripId}` : null
     );
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });
 
     const handleBack = () => {
-        router.push("/admin/articles");
+        router.push("/admin/strips");
     };
 
     return (
         <>
-            <HeadLayout title="Admin article form" />
+            <HeadLayout title="Admin strip form" />
             <WithRole role="is_admin">
                 <Layout>
                     <div className={classes.head}>
@@ -43,11 +43,11 @@ const Form = () => {
                             </IconButton>
                         </div>
                         <div>
-                            <h1 className={classes.title}>نموذج المقالات</h1>
+                            <h1 className={classes.title}>نموذج الشريط</h1>
                         </div>
                     </div>
                     <div className={classes.body}>
-                        <ArticleForm article={article} />
+                        <StripForm strip={strip} />
                     </div>
                 </Layout>
             </WithRole>

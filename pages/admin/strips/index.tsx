@@ -1,8 +1,6 @@
 import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import { IArticle } from "../../../types/article";
-import useSWR from "swr";
 import Link from "next/link";
 
 // components
@@ -10,7 +8,7 @@ import WithRole from "../../../protectors/withRole";
 import Layout from "../../../components/admin/layout";
 import Button from "../../../components/form/button";
 import HeadLayout from "../../../components/headLayout";
-import ArticleList from "../../../components/admin/article/articleList";
+import StripList from "../../../components/admin/strip/stripList";
 
 // icons
 import AddIcon from "@material-ui/icons/Add";
@@ -21,7 +19,7 @@ const News = () => {
 
     return (
         <>
-            <HeadLayout title="Admin article" />
+            <HeadLayout title="Admin strip" />
             <WithRole role="is_admin">
                 <Layout>
                     <div className={classes.head}>
@@ -33,21 +31,21 @@ const News = () => {
                         >
                             <div>
                                 <h1 className={classes.title}>
-                                    أرشيف المقالات
+                                    الشريط الاخباري
                                 </h1>
                             </div>
-                            <Link href="/admin/articles/articleForm">
+                            <Link href="/admin/strips/stripForm">
                                 <a className="ltr">
                                     <Button
                                         startIcon={<AddIcon />}
-                                        text="أضافة مقالة"
+                                        text="إضافة شريط"
                                     />
                                 </a>
                             </Link>
                         </Box>
                     </div>
                     <div className={classes.body}>
-                        <ArticleList />
+                        <StripList />
                     </div>
                 </Layout>
             </WithRole>
@@ -73,4 +71,5 @@ const useStyles = makeStyles((theme: Theme) => {
         },
     });
 });
+
 export default News;

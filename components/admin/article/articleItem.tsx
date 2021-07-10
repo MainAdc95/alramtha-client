@@ -69,9 +69,15 @@ interface IProps {
     article: IArticle;
     handleOpenDel: any;
     handleOpenPublish: any;
+    toggleArchive: any;
 }
 
-const NewsItem = ({ article, handleOpenDel, handleOpenPublish }: IProps) => {
+const ArticleItem = ({
+    article,
+    handleOpenDel,
+    handleOpenPublish,
+    toggleArchive,
+}: IProps) => {
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -100,6 +106,11 @@ const NewsItem = ({ article, handleOpenDel, handleOpenPublish }: IProps) => {
 
     const handleMouseLeave = () => {
         setHover(false);
+    };
+
+    const archiveAction = () => {
+        toggleArchive(article);
+        handleClose();
     };
 
     return (
@@ -211,9 +222,16 @@ const NewsItem = ({ article, handleOpenDel, handleOpenPublish }: IProps) => {
                             <a>تعديل</a>
                         </MenuItem>
                     </Link>
-                    <MenuItem onClick={delAction}>حذف</MenuItem>
+                    {!article.is_archived && (
+                        <MenuItem onClick={archiveAction}>حذف</MenuItem>
+                    )}
                     {!article.is_published && (
                         <MenuItem onClick={publishAction}>نشر</MenuItem>
+                    )}
+                    {article.is_archived && (
+                        <MenuItem onClick={delAction}>
+                            الحذف بشكل نهائي
+                        </MenuItem>
                     )}
                 </Menu>
             </TableCell>
@@ -221,4 +239,4 @@ const NewsItem = ({ article, handleOpenDel, handleOpenPublish }: IProps) => {
     );
 };
 
-export default NewsItem;
+export default ArticleItem;

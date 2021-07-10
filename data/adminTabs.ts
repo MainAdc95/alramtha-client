@@ -1,13 +1,6 @@
 export const tabs = [
     {
         role: "is_admin",
-        name: "أضافة خبر",
-        icon: "/addNews.svg",
-        link: "/admin/news/addNews",
-        isDisabled: false,
-    },
-    {
-        role: "is_admin",
         name: "أرشيف الأخبار",
         icon: "/draftNews.svg",
         link: "/admin/news",
@@ -16,8 +9,22 @@ export const tabs = [
     {
         role: "is_admin",
         name: "أرشيف المقالات",
-        icon: "/draftNews.svg",
+        icon: "/article.svg",
         link: "/admin/articles",
+        isDisabled: false,
+    },
+    {
+        role: "is_admin",
+        name: "الشريط الاخباري",
+        icon: "/strip.svg",
+        link: "/admin/strips",
+        isDisabled: false,
+    },
+    {
+        role: "is_admin",
+        name: "الملفات",
+        icon: "/strip.svg",
+        link: "/admin/files",
         isDisabled: false,
     },
     {
@@ -50,7 +57,7 @@ export const tabs = [
     },
     {
         role: "is_admin",
-        name: "المستخدمون",
+        name: "الاعضاء",
         icon: "/addNews.svg",
         link: "/admin/users",
         isDisabled: false,

@@ -30,7 +30,6 @@ const Home = ({ info }: IProps) => {
             results: number;
             news: INews[];
         }>("/news");
-    console.log(sections);
     return (
         <>
             <HeadLayout />

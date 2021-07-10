@@ -10,14 +10,10 @@ import {
     MenuItem,
     Box,
 } from "@material-ui/core";
-import Link from "next/link";
-import { INews } from "../../../types/news";
 import { apiImage } from "../../../utils/apiCall";
 import ImageOpt from "../../imageOpt";
-
-// icons
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
+import { IFile } from "../../../types/file";
+import Link from "next/link";
 
 const useStyles = makeStyles({
     root: {
@@ -66,18 +62,11 @@ const useStyles = makeStyles({
 });
 
 interface IProps {
-    news: INews;
+    file: IFile;
     handleOpenDel: any;
-    handleOpenPublish: any;
-    toggleArchive: any;
 }
 
-const NewsItem = ({
-    news,
-    handleOpenDel,
-    handleOpenPublish,
-    toggleArchive,
-}: IProps) => {
+const FileItem = ({ file, handleOpenDel }: IProps) => {
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -91,17 +80,7 @@ const NewsItem = ({
     };
 
     const delAction = () => {
-        handleOpenDel(news);
-        handleClose();
-    };
-
-    const publishAction = () => {
-        handleOpenPublish(news);
-        handleClose();
-    };
-
-    const archiveAction = () => {
-        toggleArchive(news);
+        handleOpenDel(file);
         handleClose();
     };
 
@@ -113,52 +92,46 @@ const NewsItem = ({
         setHover(false);
     };
 
+    const handleEdit = () => {
+        handleClose();
+    };
+
     return (
         <TableRow
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
             classes={{ root: classes.root }}
-            key={news.news_id}
+            key={file.file_id}
         >
             <TableCell
                 classes={{
                     root: classes.tableCell,
                 }}
             >
-                {news.title}
+                {file.text}
             </TableCell>
             <TableCell>
                 <div className={classes.imgsContainer}>
-                    {news.images.map((image) => (
-                        <div
-                            key={image.image_id}
-                            className={classes.imgContainer}
+                    <div
+                        key={file.image.image_id}
+                        className={classes.imgContainer}
+                    >
+                        <a
+                            href={apiImage(file.image?.sizes?.l)}
+                            target="_blank"
                         >
-                            <a href={apiImage(image?.sizes?.l)} target="_blank">
-                                <ImageOpt
-                                    src={image?.sizes?.s}
-                                    objectFit="cover"
-                                    layout="fill"
-                                />
-                            </a>
-                        </div>
-                    ))}
+                            <ImageOpt
+                                src={file.image?.sizes?.s}
+                                objectFit="cover"
+                                layout="fill"
+                            />
+                        </a>
+                    </div>
                 </div>
             </TableCell>
-            <TableCell
-                classes={{
-                    root: classes.tableCell,
-                }}
-            >
-                {news.is_published ? (
-                    <CheckIcon color="primary" />
-                ) : (
-                    <ClearIcon color="secondary" />
-                )}
-            </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(news.created_at).toLocaleDateString()}, ${new Date(
-                    news.created_at
+                {`${new Date(file.created_at).toLocaleDateString()}, ${new Date(
+                    file.created_at
                 ).toLocaleTimeString()}`}
             </TableCell>
             <TableCell
@@ -166,13 +139,13 @@ const NewsItem = ({
                     root: classes.tableCell,
                 }}
             >
-                {news.created_by?.username || (
+                {file.created_by?.username || (
                     <Typography align="center">-</Typography>
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(news.updated_at).toLocaleDateString()}, ${new Date(
-                    news.updated_at
+                {`${new Date(file.updated_at).toLocaleDateString()}, ${new Date(
+                    file.updated_at
                 ).toLocaleTimeString()}`}
             </TableCell>
             <TableCell
@@ -180,7 +153,7 @@ const NewsItem = ({
                     root: classes.tableCell,
                 }}
             >
-                {news.updated_by?.username || (
+                {file.updated_by?.username || (
                     <Typography align="center">-</Typography>
                 )}
             </TableCell>
@@ -211,26 +184,14 @@ const NewsItem = ({
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <Link href={`/admin/news/addNews?newsId=${news.news_id}`}>
-                        <MenuItem>
-                            <a>تعديل</a>
-                        </MenuItem>
+                    <Link href={`/admin/files/fileForm?fileId=${file.file_id}`}>
+                        <MenuItem onClick={handleEdit}>تعديل</MenuItem>
                     </Link>
-                    {!news.is_archived && (
-                        <MenuItem onClick={archiveAction}>حذف</MenuItem>
-                    )}
-                    {!news.is_published && (
-                        <MenuItem onClick={publishAction}>نشر</MenuItem>
-                    )}
-                    {news.is_archived && (
-                        <MenuItem onClick={delAction}>
-                            الحذف بشكل نهائي
-                        </MenuItem>
-                    )}
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>
     );
 };
 
-export default NewsItem;
+export default FileItem;

@@ -10,14 +10,8 @@ import {
     MenuItem,
     Box,
 } from "@material-ui/core";
+import { IStrip, StripType } from "../../../types/strip";
 import Link from "next/link";
-import { INews } from "../../../types/news";
-import { apiImage } from "../../../utils/apiCall";
-import ImageOpt from "../../imageOpt";
-
-// icons
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles({
     root: {
@@ -41,43 +35,14 @@ const useStyles = makeStyles({
         right: "0",
         position: "sticky",
     },
-    imgsContainer: {
-        display: "flex",
-        height: "50px",
-    },
-    imgContainer: {
-        width: "50px",
-        boxShadow:
-            "0px 0px 5px 1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
-        height: "50px",
-        borderRadius: "50%",
-        overflow: "hidden",
-        position: "relative",
-        marginLeft: "-10px",
-        transition: "all 1s ease",
-        backgroundColor: "white",
-        "&:hover": {
-            marginTop: "-20px",
-            zIndex: 100,
-            transform: "scale(2)",
-            borderRadius: "0",
-        },
-    },
 });
 
 interface IProps {
-    news: INews;
+    strip: IStrip;
     handleOpenDel: any;
-    handleOpenPublish: any;
-    toggleArchive: any;
 }
 
-const NewsItem = ({
-    news,
-    handleOpenDel,
-    handleOpenPublish,
-    toggleArchive,
-}: IProps) => {
+const StripItem = ({ strip, handleOpenDel }: IProps) => {
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -91,17 +56,7 @@ const NewsItem = ({
     };
 
     const delAction = () => {
-        handleOpenDel(news);
-        handleClose();
-    };
-
-    const publishAction = () => {
-        handleOpenPublish(news);
-        handleClose();
-    };
-
-    const archiveAction = () => {
-        toggleArchive(news);
+        handleOpenDel(strip);
         handleClose();
     };
 
@@ -113,52 +68,29 @@ const NewsItem = ({
         setHover(false);
     };
 
+    const handleEdit = () => {
+        handleClose();
+    };
+
     return (
         <TableRow
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
             classes={{ root: classes.root }}
-            key={news.news_id}
+            key={strip.strip_id}
         >
             <TableCell
                 classes={{
                     root: classes.tableCell,
                 }}
             >
-                {news.title}
-            </TableCell>
-            <TableCell>
-                <div className={classes.imgsContainer}>
-                    {news.images.map((image) => (
-                        <div
-                            key={image.image_id}
-                            className={classes.imgContainer}
-                        >
-                            <a href={apiImage(image?.sizes?.l)} target="_blank">
-                                <ImageOpt
-                                    src={image?.sizes?.s}
-                                    objectFit="cover"
-                                    layout="fill"
-                                />
-                            </a>
-                        </div>
-                    ))}
-                </div>
-            </TableCell>
-            <TableCell
-                classes={{
-                    root: classes.tableCell,
-                }}
-            >
-                {news.is_published ? (
-                    <CheckIcon color="primary" />
-                ) : (
-                    <ClearIcon color="secondary" />
-                )}
+                {strip.title}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(news.created_at).toLocaleDateString()}, ${new Date(
-                    news.created_at
+                {`${new Date(
+                    strip.created_at
+                ).toLocaleDateString()}, ${new Date(
+                    strip.created_at
                 ).toLocaleTimeString()}`}
             </TableCell>
             <TableCell
@@ -166,13 +98,15 @@ const NewsItem = ({
                     root: classes.tableCell,
                 }}
             >
-                {news.created_by?.username || (
+                {strip.created_by?.username || (
                     <Typography align="center">-</Typography>
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(news.updated_at).toLocaleDateString()}, ${new Date(
-                    news.updated_at
+                {`${new Date(
+                    strip.updated_at
+                ).toLocaleDateString()}, ${new Date(
+                    strip.updated_at
                 ).toLocaleTimeString()}`}
             </TableCell>
             <TableCell
@@ -180,7 +114,7 @@ const NewsItem = ({
                     root: classes.tableCell,
                 }}
             >
-                {news.updated_by?.username || (
+                {strip.updated_by?.username || (
                     <Typography align="center">-</Typography>
                 )}
             </TableCell>
@@ -211,26 +145,16 @@ const NewsItem = ({
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <Link href={`/admin/news/addNews?newsId=${news.news_id}`}>
-                        <MenuItem>
-                            <a>تعديل</a>
-                        </MenuItem>
+                    <Link
+                        href={`/admin/strips/stripForm?stripId=${strip.strip_id}`}
+                    >
+                        <MenuItem onClick={handleEdit}>تعديل</MenuItem>
                     </Link>
-                    {!news.is_archived && (
-                        <MenuItem onClick={archiveAction}>حذف</MenuItem>
-                    )}
-                    {!news.is_published && (
-                        <MenuItem onClick={publishAction}>نشر</MenuItem>
-                    )}
-                    {news.is_archived && (
-                        <MenuItem onClick={delAction}>
-                            الحذف بشكل نهائي
-                        </MenuItem>
-                    )}
+                    <MenuItem onClick={delAction}>حذف</MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>
     );
 };
 
-export default NewsItem;
+export default StripItem;

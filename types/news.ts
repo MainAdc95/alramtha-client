@@ -1,3 +1,4 @@
+import { IFile } from "./file";
 import { IImage } from "./image";
 import { ISection } from "./section";
 import { ITag } from "./tag";
@@ -12,10 +13,12 @@ export interface INews {
     title: string;
     text: string;
     section: ISection;
+    file: IFile;
     sub_titles: SubTitle[];
     images: IImage[];
     tags: ITag[];
     is_published: boolean;
+    is_archived: boolean;
     created_by: IUser;
     updated_by: IUser;
     updated_at: Date;

@@ -1,8 +1,6 @@
 import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import { IArticle } from "../../../types/article";
-import useSWR from "swr";
 import Link from "next/link";
 
 // components
@@ -10,7 +8,7 @@ import WithRole from "../../../protectors/withRole";
 import Layout from "../../../components/admin/layout";
 import Button from "../../../components/form/button";
 import HeadLayout from "../../../components/headLayout";
-import ArticleList from "../../../components/admin/article/articleList";
+import FileList from "../../../components/admin/file/fileList";
 
 // icons
 import AddIcon from "@material-ui/icons/Add";
@@ -21,7 +19,7 @@ const News = () => {
 
     return (
         <>
-            <HeadLayout title="Admin article" />
+            <HeadLayout title="Admin file" />
             <WithRole role="is_admin">
                 <Layout>
                     <div className={classes.head}>
@@ -32,22 +30,20 @@ const News = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>
-                                    أرشيف المقالات
-                                </h1>
+                                <h1 className={classes.title}>الملفات</h1>
                             </div>
-                            <Link href="/admin/articles/articleForm">
+                            <Link href="/admin/files/fileForm">
                                 <a className="ltr">
                                     <Button
                                         startIcon={<AddIcon />}
-                                        text="أضافة مقالة"
+                                        text="إضافة ملف"
                                     />
                                 </a>
                             </Link>
                         </Box>
                     </div>
                     <div className={classes.body}>
-                        <ArticleList />
+                        <FileList />
                     </div>
                 </Layout>
             </WithRole>
@@ -73,4 +69,5 @@ const useStyles = makeStyles((theme: Theme) => {
         },
     });
 });
+
 export default News;

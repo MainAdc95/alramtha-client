@@ -70,7 +70,7 @@ const NewsList = () => {
         news: INews[];
     }>(
         `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-            value === 0 ? "published" : "draft"
+            value === 0 ? "published" : value === 1 ? "draft" : "archived"
         }`
     );
     const [isDel, setDel] = useState<INews | null>(null);
@@ -79,6 +79,9 @@ const NewsList = () => {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
+    // archive
+    const [isArch, setArch] = useState<INews | null>(null);
+    const [archiveLoading, setArchiveLoading] = useState(false);
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
@@ -115,7 +118,11 @@ const NewsList = () => {
 
             mutate(
                 `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-                    value === 0 ? "published" : "draft"
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
                 }`,
                 (data: { news: INews[] }) => {
                     return {
@@ -134,6 +141,45 @@ const NewsList = () => {
         }
     };
 
+    // ___________________________________ archive
+    const toggleArchive = (news?: INews) => {
+        if (isArch) {
+            return setArch(null);
+        }
+
+        setArch(news);
+    };
+
+    const handleArchive = async () => {
+        try {
+            setArchiveLoading(true);
+            await apiCall(
+                "put",
+                `/news/archive/${isArch.news_id}?authId=${user.user_id}`
+            );
+
+            mutate(
+                `/news?p=${page + 1}&r=${rowsPerPage}&type=${
+                    value === 0 ? "published" : "draft"
+                }`,
+                (data: { news: INews[] }) => {
+                    return {
+                        ...data,
+                        news: data.news.filter(
+                            (p) => p.news_id !== isArch.news_id
+                        ),
+                    };
+                }
+            );
+
+            toggleArchive();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setArchiveLoading(false);
+        }
+    };
+
     const handlePublish = async () => {
         try {
             setPublishLoading(true);
@@ -145,12 +191,17 @@ const NewsList = () => {
 
             mutate(
                 `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-                    value === 0 ? "published" : "draft"
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
                 }`
             );
 
             togglePublish();
         } catch (err) {
+            console.log(err);
         } finally {
             setPublishLoading(false);
         }
@@ -162,8 +213,9 @@ const NewsList = () => {
         <>
             <Box mb={3}>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                    <Tab label="نشرت" {...a11yProps(0)} />
-                    <Tab label="مسودة" {...a11yProps(1)} />
+                    <Tab label="الاخبار المنشورة" {...a11yProps(0)} />
+                    <Tab label="مسودة الاخبار" {...a11yProps(1)} />
+                    <Tab label="الاخبار المحذوفة" {...a11yProps(2)} />
                 </Tabs>
             </Box>
             {!data.news?.length ? (
@@ -215,6 +267,7 @@ const NewsList = () => {
                                         key={news.news_id}
                                         news={news}
                                         handleOpenDel={handleOpenDel}
+                                        toggleArchive={toggleArchive}
                                         handleOpenPublish={togglePublish}
                                     />
                                 ))}
@@ -239,6 +292,15 @@ const NewsList = () => {
                     msg={`هل انت متاكد انك تريد مسح ${isDel.title}؟`}
                     handler={handleDelete}
                     loading={delLoading}
+                />
+            )}
+            {isArch && (
+                <ActionModal
+                    close={toggleArchive}
+                    title="حذف الخبر"
+                    msg={`هل انت متاكد انك تريد مسح ${isArch.title}؟`}
+                    handler={handleArchive}
+                    loading={archiveLoading}
                 />
             )}
             {isPublish && (

@@ -15,6 +15,7 @@ export interface IArticle {
     sub_titles: SubTitle[];
     images: IImage[];
     tags: ITag[];
+    is_archived: boolean;
     is_published: boolean;
     created_by: IUser;
     updated_by: IUser;

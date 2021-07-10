@@ -109,13 +109,7 @@ const UserItem = ({ user, handleOpenEdit }: IProps) => {
             >
                 {user.username}
             </TableCell>
-            <TableCell
-                classes={{
-                    root: classes.tableCell,
-                }}
-            >
-                {user.email}
-            </TableCell>
+            <TableCell>{user.email}</TableCell>
             <TableCell
                 classes={{
                     root: classes.tableCell,

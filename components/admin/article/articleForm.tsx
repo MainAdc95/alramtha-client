@@ -190,16 +190,20 @@ const NewsForm = ({ article }: IProps) => {
             setLoading(true);
 
             if (!article) {
-                await apiCall("post", `/article?authId=${user.user_id}`, state);
+                await apiCall(
+                    "post",
+                    `/articles?authId=${user.user_id}`,
+                    state
+                );
             } else {
                 await apiCall(
                     "put",
-                    `/article/${article.article_id}?authId=${user.user_id}`,
+                    `/articles/${article.article_id}?authId=${user.user_id}`,
                     state
                 );
             }
 
-            router.push("/admin/article");
+            router.push("/admin/articles");
         } catch (err) {
             setErrors((prevErrors) => ({ ...prevErrors, ...err }));
         } finally {
@@ -218,10 +222,6 @@ const NewsForm = ({ article }: IProps) => {
             section: [],
             tags: [],
         };
-
-        if (!state.intro.trim()) {
-            TmpErrors.intro.push("Please fill in introduction.");
-        }
 
         if (!state.thumbnail) {
             TmpErrors.thumbnail.push("Please choose a thumbnail.");
@@ -282,7 +282,6 @@ const NewsForm = ({ article }: IProps) => {
                                     state={state}
                                     setState={setState}
                                     required={true}
-                                    errors={errors}
                                     variant="outlined"
                                 />
                             </div>
@@ -427,7 +426,7 @@ const NewsForm = ({ article }: IProps) => {
                             direction="rtl"
                             name="text"
                             id="text"
-                            label="نص الخبر"
+                            label="نص المقالة"
                             state={state}
                             setState={setState}
                             errors={errors}
@@ -440,7 +439,7 @@ const NewsForm = ({ article }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={article ? "تحرير الخبر" : "أضافة الخبر"}
+                            text={article ? "احفظ التغييرات" : "أضافة المقالة"}
                         />
                     </div>
                 </div>
