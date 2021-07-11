@@ -7,21 +7,25 @@ import {
 } from "@material-ui/core";
 import Marquee from "react-fast-marquee";
 import Link from "next/link";
+import { IStrip, StripType } from "../../types/strip";
 
-const news = [
-    {
-        title: "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-    },
-    {
-        title: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    },
-    {
-        title: "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
-    },
-];
+interface IProps {
+    strips: IStrip[];
+}
 
-const UrgentNewsStrip = () => {
+const UrgentNewsStrip = ({ strips }: IProps) => {
     const classes = useStyles();
+
+    const getColor = (strip: StripType) => {
+        switch (strip) {
+            case "breakingNews":
+                return "red";
+            case "announcement":
+                return "rgb(2, 135, 254)";
+            default:
+                "#000";
+        }
+    };
 
     return (
         <Box display="flex" className={classes.root}>
@@ -32,10 +36,19 @@ const UrgentNewsStrip = () => {
                 </div>
             </Box>
             <Marquee pauseOnHover speed={60} gradient={false}>
-                {news.map((n, i) => (
-                    <Link key={i} href={n.title}>
-                        <a className={classes.newsLink} title={n.title}>
-                            {n.title}
+                {strips.map((s) => (
+                    <Link key={s.strip_id} href={s.link}>
+                        <a className={classes.newsLink} title={s.title}>
+                            <p>
+                                <span style={{ color: getColor(s.type) }}>
+                                    {s.title}
+                                </span>{" "}
+                                <span className={classes.time}>
+                                    {new Date(
+                                        s.created_at
+                                    ).toLocaleDateString()}
+                                </span>
+                            </p>
                         </a>
                     </Link>
                 ))}
@@ -69,6 +82,10 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "white",
             display: "flex",
             alignItems: "center",
+        },
+        time: {
+            fontSize: "10px",
+            margin: "0 10px",
         },
     })
 );

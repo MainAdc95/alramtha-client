@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import useSWR from "swr";
 import { apiCall } from "../utils/apiCall";
 import HeadLayout from "../components/headLayout";
@@ -13,23 +13,28 @@ import BannerCard from "../components/news/bannerCard";
 import SideBar from "../components/sideBar";
 import Image from "next/image";
 import { GetServerSideProps } from "next";
+import { ISection } from "../types/section";
+import { IStrip } from "../types/strip";
+import { IFile } from "../types/file";
 
 // Styles
 import styles from "../styles/Home.module.scss";
 import SectionNews from "../components/sectionNews";
+import ImageOpt from "../components/imageOpt";
 
 interface IProps {
-    info: any;
+    info: { sections: ISection[]; strips: IStrip[]; files: IFile[] };
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections } = info;
+    const { sections, strips, files } = info;
 
     const { data } =
         useSWR<{
             results: number;
             news: INews[];
         }>("/news");
+
     return (
         <>
             <HeadLayout />
@@ -84,8 +89,63 @@ const Home = ({ info }: IProps) => {
                             </div>
                         </div>
                     </div>
-
-                    <UrgentNewsStrip />
+                    <UrgentNewsStrip strips={strips} />
+                    <Box
+                        mb={2}
+                        mt={2}
+                        display="grid"
+                        gridTemplateColumns={"repeat(4, 1fr)"}
+                        gridGap="10px"
+                        width="1170px"
+                        ml="auto"
+                        mr="auto"
+                    >
+                        {files.map((file) => (
+                            <Box
+                                borderRadius={10}
+                                overflow="hidden"
+                                margin={2}
+                                key={file.file_id}
+                                width="100%"
+                                height="200px"
+                                style={{
+                                    position: "relative",
+                                    boxShadow:
+                                        "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+                                }}
+                            >
+                                <ImageOpt
+                                    src={file.image?.sizes?.m}
+                                    objectFit="cover"
+                                    layout="fill"
+                                />
+                                <p
+                                    style={{
+                                        zIndex: 2,
+                                        color: "white",
+                                        position: "absolute",
+                                        bottom: "10px",
+                                        right: "15px",
+                                        fontWeight: 900,
+                                        fontSize: "20px",
+                                    }}
+                                >
+                                    {file.text}
+                                </p>
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        left: 0,
+                                        top: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        backgroundImage:
+                                            "linear-gradient(360deg, #0000008b 0%, transparent 100%)",
+                                    }}
+                                ></div>
+                            </Box>
+                        ))}
+                    </Box>
                     <div className={styles.swiper}>
                         <div className="container">
                             <div className="author-title">
@@ -186,7 +246,6 @@ const Home = ({ info }: IProps) => {
                             </Grid>
                         </div>
                     </div>
-
                     <div className={styles.section}>
                         <div className="container">
                             <Grid container className="grid-root">

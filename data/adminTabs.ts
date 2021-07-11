@@ -23,7 +23,7 @@ export const tabs = [
     {
         role: "is_admin",
         name: "الملفات",
-        icon: "/file.svg",
+        icon: "/files.svg",
         link: "/admin/files",
         isDisabled: false,
     },
