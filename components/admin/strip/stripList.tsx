@@ -182,6 +182,7 @@ const StripList = () => {
                         page={page}
                         onChangePage={handleChangePage}
                         onChangeRowsPerPage={handleChangeRowsPerPage}
+                        labelRowsPerPage="صفوف لكل صفحة:"
                     />
                 </>
             ))}

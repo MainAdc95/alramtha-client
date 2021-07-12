@@ -1,14 +1,21 @@
 export const tabs = [
     {
         role: "is_admin",
-        name: "أرشيف الأخبار",
+        name: "التغذية الاخبارية",
+        icon: "/newsFeed.svg",
+        link: "/admin/newsFeed",
+        isDisabled: false,
+    },
+    {
+        role: "is_admin",
+        name: "ادارة الأخبار",
         icon: "/draftNews.svg",
         link: "/admin/news",
         isDisabled: false,
     },
     {
         role: "is_admin",
-        name: "أرشيف المقالات",
+        name: "ادارة المقالات",
         icon: "/article.svg",
         link: "/admin/articles",
         isDisabled: false,
@@ -50,7 +57,7 @@ export const tabs = [
     },
     {
         role: "is_admin",
-        name: "العلامات",
+        name: "وسوم",
         icon: "/tag.svg",
         link: "/admin/tags",
         isDisabled: false,

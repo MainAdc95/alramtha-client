@@ -166,6 +166,7 @@ const SectionList = ({ sections, loading }: IProps) => {
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
+                labelRowsPerPage="صفوف لكل صفحة:"
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
             {isDel && (

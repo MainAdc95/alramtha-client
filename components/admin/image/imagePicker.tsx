@@ -69,6 +69,7 @@ interface IProps {
     state: any;
     setState: any;
     lockScroll?: "parent" | "child";
+    openForm?: boolean;
 }
 
 const ImagePicker = ({
@@ -78,6 +79,7 @@ const ImagePicker = ({
     type,
     fieldName,
     lockScroll,
+    openForm,
 }: IProps) => {
     const classes = useStyles();
     const [isImage, setImage] = useState(false);
@@ -94,6 +96,10 @@ const ImagePicker = ({
         } else if (type === "multiple") {
             setImages([...images, ...state[fieldName]]);
         }
+
+        if (openForm) {
+            setImage(true);
+        }
     }, []);
 
     useEffect(() => {
@@ -102,6 +108,7 @@ const ImagePicker = ({
 
     const handleSelect = (image: IImage) => {
         const imageIds = images.map((i) => i.image_id);
+
         if (type === "single") {
             if (imageIds.includes(image.image_id)) {
                 setImages([]);
@@ -117,11 +124,13 @@ const ImagePicker = ({
         }
     };
 
-    const handleSave = () => {
+    const handleSave = (imgs?: any) => {
+        const i = imgs || images;
+
         if (type === "single") {
-            setState({ ...state, [fieldName]: images[0] || "" });
+            setState({ ...state, [fieldName]: i[0] || "" });
         } else if (type === "multiple") {
-            setState({ ...state, [fieldName]: images });
+            setState({ ...state, [fieldName]: i });
         }
 
         close();
@@ -175,6 +184,12 @@ const ImagePicker = ({
         }
     };
 
+    // _______________________________ select multiple
+    const selectMultiple = (images: IImage[]) => {
+        images.forEach((img) => handleSelect(img));
+        handleSave(images);
+    };
+
     return (
         <>
             <Modal
@@ -198,7 +213,7 @@ const ImagePicker = ({
                         </Typography>
                         <Box display="flex">
                             <div>
-                                <Box className="ltr" ml={2}>
+                                <Box mr={2}>
                                     <Button
                                         startIcon={<SortIcon />}
                                         variant="outlined"
@@ -234,9 +249,9 @@ const ImagePicker = ({
                                     ))}
                                 </Menu>
                             </div>
-                            <Box ml={2}>
+                            <Box mr={2}>
                                 <Button
-                                    onClick={handleSave}
+                                    onClick={() => handleSave()}
                                     variant="contained"
                                     style={{
                                         backgroundColor: "#ec008c",
@@ -316,8 +331,8 @@ const ImagePicker = ({
                                                         />
                                                     </div>
                                                     <ImageOpt
-                                                        src={img?.sizes?.m}
-                                                        alt={img?.sizes?.m}
+                                                        src={img?.sizes?.s}
+                                                        alt={img?.sizes?.s}
                                                         layout="fill"
                                                         objectFit="contain"
                                                     />
@@ -366,7 +381,12 @@ const ImagePicker = ({
                     )}
                 </Box>
             </Modal>
-            {isImage && <ImageForm close={closeImageForm} />}
+            {isImage && (
+                <ImageForm
+                    selectMultiple={selectMultiple}
+                    close={closeImageForm}
+                />
+            )}
         </>
     );
 };

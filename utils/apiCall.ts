@@ -29,7 +29,7 @@ export const apiCall = <T>(
                         ? `${domain + "/api"}${url}`
                         : url,
                 data,
-                withCredentials: true,
+                withCredentials: !server ? true : false,
             });
             return resolve(res.data);
         } catch (err) {

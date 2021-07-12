@@ -14,6 +14,9 @@ import { IMessage } from "../../../types/message";
 import { apiImage } from "../../../utils/apiCall";
 import ImageOpt from "../../imageOpt";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCreateNews } from "../../../store/actions/news";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles({
     root: {
@@ -75,6 +78,8 @@ interface IProps {
 }
 
 const MessageItem = ({ message, handleToggleDetails }: IProps) => {
+    const router = useRouter();
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -102,6 +107,11 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
     const handleDetails = () => {
         handleToggleDetails(message);
         handleClose();
+    };
+
+    const handleCreateNews = () => {
+        dispatch(addToCreateNews(message as any));
+        router.push(`/admin/news/addNews#message`);
     };
 
     return (
@@ -197,6 +207,7 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                     >
                         <MenuItem onClick={delAction}>نقل</MenuItem>
                     </Link>
+                    <MenuItem onClick={handleCreateNews}>انشاء خبر</MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>

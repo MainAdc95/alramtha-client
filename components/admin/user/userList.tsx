@@ -139,6 +139,7 @@ const UserList = () => {
                 count={data.results}
                 rowsPerPage={rowsPerPage}
                 page={page}
+                labelRowsPerPage="صفوف لكل صفحة:"
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />

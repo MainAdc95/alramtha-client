@@ -22,15 +22,8 @@ interface IError {
 
 interface IProps {
     close: Function;
+    selectMultiple?: any;
 }
-
-type Image = {
-    img: string | ArrayBuffer;
-    file: any;
-    name: string;
-    category: string;
-    image_description: string;
-};
 
 interface IState {
     images: IFile[];
@@ -45,7 +38,7 @@ interface IFile {
     cropedImg?: string;
 }
 
-const ImageForm = ({ close }: IProps) => {
+const ImageForm = ({ close, selectMultiple }: IProps) => {
     const classes = useStyles();
     const fileInput = useRef<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -118,6 +111,7 @@ const ImageForm = ({ close }: IProps) => {
         }
 
         setLoading(true);
+
         try {
             const data = state.images.map((img) => ({
                 img: img.cropedImg || img.img,
@@ -130,15 +124,13 @@ const ImageForm = ({ close }: IProps) => {
                 { images: data }
             );
 
-            mutate(
-                "/images",
-                (imgs) => {
-                    return [...imgs, ...images];
-                },
-                false
-            );
+            mutate("/images");
 
-            close();
+            if (selectMultiple) {
+                selectMultiple(images);
+            } else {
+                close();
+            }
         } catch (err) {
             setLoading(false);
             setErrors({ ...errors, ...err });

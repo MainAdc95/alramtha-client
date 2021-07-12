@@ -125,6 +125,7 @@ const MessageList = () => {
                 rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
                 count={data.count}
+                labelRowsPerPage="صفوف لكل صفحة:"
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}

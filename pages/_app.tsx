@@ -13,6 +13,9 @@ import { Router } from "next/router";
 import { setLocation } from "../store/actions/location";
 import { ILocation } from "../types/location";
 import NProgress from "nprogress";
+import { create } from "jss";
+import rtl from "jss-rtl";
+import { StylesProvider, jssPreset } from "@material-ui/core/styles";
 
 // style sheets
 import "../styles/globals.scss";
@@ -20,6 +23,10 @@ import "swiper/swiper-bundle.css";
 import "nprogress/nprogress.css";
 import "react-image-crop/dist/ReactCrop.css";
 
+// Configure JSS
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+// NProgress config
 NProgress.configure({ showSpinner: false });
 
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -78,20 +85,22 @@ class Alramsah extends App<AppInitialProps> {
                         rel="stylesheet"
                     />
                 </Head>
-                <Theme>
-                    <SWRConfig
-                        value={{
-                            refreshInterval: 10000,
-                            fetcher: async (url) => {
-                                return await apiCall("get", url);
-                            },
-                        }}
-                    >
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                    </SWRConfig>
-                </Theme>
+                <StylesProvider jss={jss}>
+                    <Theme>
+                        <SWRConfig
+                            value={{
+                                refreshInterval: 10000,
+                                fetcher: async (url) => {
+                                    return await apiCall("get", url);
+                                },
+                            }}
+                        >
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                        </SWRConfig>
+                    </Theme>
+                </StylesProvider>
                 <DataHandler />
             </>
         );

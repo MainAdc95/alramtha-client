@@ -9,7 +9,6 @@ export const cpmcPalette = {
     pink: {
         main: "#9E005D",
         light: "#9E005D90",
-
         text: "black",
     },
     purple: {
@@ -22,6 +21,12 @@ export const cpmcPalette = {
         light: "rgb(255, 43, 43)",
         main: "rgb(252, 0, 0)",
         dark: "rgb(200, 0, 0)",
+        text: "white",
+    },
+    black: {
+        light: "rgb(89, 89, 89)",
+        main: "rgb(56, 56, 56)",
+        dark: "rgb(0, 0, 0)",
         text: "white",
     },
 };

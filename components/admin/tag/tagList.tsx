@@ -117,7 +117,7 @@ const TagList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                اسم العلامة
+                                اسم الوسم
                             </TableCell>
                             <TableCell className={classes.smallCell}>
                                 أنشئت في
@@ -157,13 +157,14 @@ const TagList = () => {
                 count={data.results}
                 rowsPerPage={rowsPerPage}
                 page={page}
+                labelRowsPerPage="صفوف لكل صفحة:"
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
             {isDel && (
                 <ActionModal
                     close={handleCloseDel}
-                    title="مسح العلامة"
+                    title="مسح الوسم"
                     msg={`؟${isDel.tag_name} هل انت متاكد انك تريد مسح`}
                     handler={handleDelete}
                     loading={delLoading}

@@ -370,7 +370,7 @@ const NewsForm = ({ article }: IProps) => {
                         </div>
                         <div className={classes.formGroup}>
                             <ImageInput
-                                text="اختر صورة الغلاف"
+                                text="الرئيسية"
                                 errors={errors}
                                 name="thumbnail"
                                 handler={toggleThumbnail}
@@ -409,9 +409,9 @@ const NewsForm = ({ article }: IProps) => {
                                             name="tags"
                                             errors={errors}
                                             variant="outlined"
-                                            label="العلامات"
+                                            label="وسوم"
                                             onChange="none"
-                                            placeholder="أختر بعض العلامات"
+                                            placeholder="أختر بعض وسوم"
                                         />
                                     )}
                                 />

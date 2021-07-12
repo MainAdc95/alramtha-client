@@ -1,30 +1,34 @@
 import parse from "html-react-parser";
-import { apiCall } from "../../utils/apiCall";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
-import HeadLayout from "../../components/headLayout";
+import HeadLayout from "../../headLayout";
 
 // Components
-import ShareNews from "../../components/news/shareNews";
-import SideBar from "../../components/sideBar";
+import ShareNews from "../../news/shareNews";
+import SideBar from "../../sideBar";
 import { Grid, Box } from "@material-ui/core";
+import Modal from "../modal";
 
 // Styles
-import styles from "../../styles/News.module.scss";
-import { INews } from "../../types/news";
-import ImageOpt from "../../components/imageOpt";
-import Slider from "../../components/slider";
+import styles from "../../../styles/News.module.scss";
+import { INews } from "../../../types/news";
+import ImageOpt from "../../imageOpt";
+import Slider from "../../slider";
 import { SwiperSlide } from "swiper/react";
 
 interface IProps {
     news: INews;
+    close: any;
 }
 
-const NewsPage = ({ news }: IProps) => {
-    if (news)
-        return (
-            <>
-                <HeadLayout title={news.title} />
+const NewsPreview = ({ news, close }: IProps) => {
+    return (
+        <>
+            <HeadLayout title={news.title} />
+            <Modal
+                width="90%"
+                type="parent"
+                closeInfo={{ close, check: false }}
+            >
                 <div className={styles.page}>
                     <div className={`container ${styles.container}`}>
                         <Grid container className="grid-root">
@@ -35,7 +39,8 @@ const NewsPage = ({ news }: IProps) => {
                                         <ul>
                                             <li>
                                                 {new Date(
-                                                    news.created_at
+                                                    news.created_at ||
+                                                        Date.now()
                                                 ).toLocaleDateString()}
                                             </li>
                                             <li>0 القراء</li>
@@ -113,27 +118,15 @@ const NewsPage = ({ news }: IProps) => {
                                     </Box>
                                 </div>
                             </Grid>
-
                             <Grid item xs={12} md={4}>
                                 <SideBar />
                             </Grid>
                         </Grid>
                     </div>
                 </div>
-            </>
-        );
-
-    return null;
+            </Modal>
+        </>
+    );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const news = await apiCall("get", `/news/${ctx.params.newsId}`);
-
-    return {
-        props: {
-            news,
-        },
-    };
-};
-
-export default NewsPage;
+export default NewsPreview;

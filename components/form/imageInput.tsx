@@ -8,6 +8,7 @@ import ImageOpt from "../imageOpt";
 
 // icons
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
+import ComputerIcon from "@material-ui/icons/Computer";
 
 // install Swiper components
 SwiperCore.use([Navigation, Pagination]);
@@ -17,58 +18,103 @@ interface IProps {
     name: string;
     errors?: any;
     handler: any;
+    toForm?: any;
     type: "single" | "multiple";
     images: IImage[];
 }
 
-const ImageInput = ({ text, errors, name, handler, type, images }: IProps) => {
+const ImageInput = ({
+    text,
+    errors,
+    name,
+    handler,
+    type,
+    images,
+    toForm,
+}: IProps) => {
     const classes = useStyles();
 
     return (
         <>
-            <div className={classes.root} onClick={handler}>
-                {images.length ? (
-                    type === "single" ? (
-                        <div className={classes.imgContainer}>
-                            <ImageOpt
-                                src={images[0]?.sizes?.m}
-                                layout="fill"
-                                objectFit="contain"
-                            />
-                        </div>
-                    ) : (
-                        <Swiper
-                            autoHeight={true}
-                            slidesPerGroup={1}
-                            slidesPerView={1}
-                            className={classes.swiper}
-                        >
-                            {images.map((image) => (
-                                <SwiperSlide key={image.image_id}>
-                                    <div className={classes.imgContainer}>
-                                        <ImageOpt
-                                            src={image?.sizes?.m}
-                                            layout="fill"
-                                            objectFit="contain"
+            <div>
+                <Box mb={1}>
+                    <p>{text}</p>
+                </Box>
+                <div className={"img-input-container"}>
+                    <div className={`${classes.wrapper} img-input-wrapper`}>
+                        {images.length ? (
+                            type === "single" ? (
+                                <div className={classes.imgContainer}>
+                                    <ImageOpt
+                                        src={images[0]?.sizes?.m}
+                                        layout="fill"
+                                        objectFit="contain"
+                                    />
+                                </div>
+                            ) : (
+                                <Swiper
+                                    autoHeight={true}
+                                    slidesPerGroup={1}
+                                    slidesPerView={1}
+                                    className={classes.swiper}
+                                    navigation
+                                >
+                                    {images.map((image) => (
+                                        <SwiperSlide
+                                            onClick={
+                                                images.length ? handler : null
+                                            }
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                            }}
+                                            key={image.image_id}
+                                        >
+                                            <div
+                                                className={classes.imgContainer}
+                                            >
+                                                <ImageOpt
+                                                    src={image?.sizes?.m}
+                                                    layout="fill"
+                                                    objectFit="contain"
+                                                />
+                                            </div>
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            )
+                        ) : (
+                            <Box className={classes.emptyContainer}>
+                                <Box
+                                    onClick={handler}
+                                    className={classes.emptyItem}
+                                >
+                                    <Box mb={1}>
+                                        <PhotoLibraryIcon
+                                            className={classes.imageIcon}
                                         />
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    )
-                ) : (
-                    <Box
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Box mb={1}>
-                            <PhotoLibraryIcon className={classes.imageIcon} />
-                        </Box>
-                        <p className={classes.msg}>{text}</p>
-                    </Box>
-                )}
+                                    </Box>
+                                    <p className={classes.msg}>جميع الصور</p>
+                                </Box>
+                                {toForm && (
+                                    <Box
+                                        onClick={toForm}
+                                        className={classes.emptyItem}
+                                    >
+                                        <Box mb={1}>
+                                            <ComputerIcon
+                                                className={classes.imageIcon}
+                                            />
+                                        </Box>
+                                        <p className={classes.msg}>
+                                            تحميل من الجهاز
+                                        </p>
+                                    </Box>
+                                )}
+                            </Box>
+                        )}
+                    </div>
+                </div>
             </div>
             {errors && <Error errors={errors[name]} />}
         </>
@@ -78,31 +124,50 @@ const ImageInput = ({ text, errors, name, handler, type, images }: IProps) => {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            position: "relative",
+            width: "100%",
+            "&::after": {
+                content: '"',
+                display: "block",
+                paddingBottom: "30%",
+            },
+        },
+        wrapper: {
             border: `1px dashed ${cpmcPalette.purple.main}`,
             cursor: "pointer",
-            height: "250px",
-            width: "500px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
         },
         msg: {
             fontSize: 20,
             fontWeight: 300,
             color: cpmcPalette.purple.main,
         },
+        emptyContainer: {
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            height: "100%",
+            width: "100%",
+        },
+        emptyItem: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            "&:hover": {
+                backgroundColor: "rgb(245, 245, 245)",
+            },
+        },
         swiper: {
-            width: "500px",
-            height: "250px",
+            width: "100%",
+            height: "100%",
         },
         imgContainer: {
-            width: "500px",
-            height: "250px",
             position: "relative",
+            width: "100%",
+            height: "100%",
         },
         imageIcon: {
-            width: "40px",
-            height: "40px",
+            width: "70px",
+            height: "70px",
             color: cpmcPalette.purple.main,
         },
     })

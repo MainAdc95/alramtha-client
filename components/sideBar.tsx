@@ -106,7 +106,7 @@ const SideBar = () => {
                                     borderColor: "#33a3f1",
                                 }}
                             >
-                                العلامات
+                                وسوم
                             </span>
                         </h1>
                     </div>

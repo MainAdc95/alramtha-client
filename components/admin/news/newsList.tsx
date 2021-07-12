@@ -277,6 +277,7 @@ const NewsList = () => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25, 50, 100]}
                         component="div"
+                        labelRowsPerPage="صفوف لكل صفحة:"
                         count={data.results}
                         rowsPerPage={rowsPerPage}
                         page={page}

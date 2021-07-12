@@ -13,7 +13,7 @@ const Slider = ({ children, spaceBetween, slidesPerView }: IProps) => {
     return (
         <Swiper
             style={{ width: "100%", height: "100%" }}
-            spaceBetween={spaceBetween || 50}
+            spaceBetween={spaceBetween || 10}
             navigation
             slidesPerView={slidesPerView || 1}
         >

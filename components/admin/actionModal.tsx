@@ -59,18 +59,17 @@ const ActionModal = ({
                     <Button variant="outlined" onClick={close}>
                         إلغاء
                     </Button>
-                    <Box mr={2}>
+                    <Box ml={2}>
                         <Button
                             variant="contained"
                             color={"primary"}
                             style={
                                 type === "warning" || !type
                                     ? {
-                                          direction: "ltr",
                                           backgroundColor: "red",
                                           color: "white",
                                       }
-                                    : { direction: "ltr" }
+                                    : null
                             }
                             onClick={handler}
                             startIcon={

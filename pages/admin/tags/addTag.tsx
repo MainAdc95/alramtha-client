@@ -42,7 +42,7 @@ const Form = () => {
                             </IconButton>
                         </div>
                         <div>
-                            <h1 className={classes.title}>اضافة علامة</h1>
+                            <h1 className={classes.title}>اضافة وسم</h1>
                         </div>
                     </div>
                     <div className={classes.body}>

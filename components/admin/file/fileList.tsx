@@ -152,6 +152,7 @@ const FileList = () => {
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
+                labelRowsPerPage="صفوف لكل صفحة:"
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
             {isDel && (

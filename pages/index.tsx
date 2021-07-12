@@ -90,61 +90,48 @@ const Home = ({ info }: IProps) => {
                         </div>
                     </div>
                     <UrgentNewsStrip strips={strips} />
-                    <Box
-                        mb={2}
-                        mt={2}
-                        display="grid"
-                        gridTemplateColumns={"repeat(4, 1fr)"}
-                        gridGap="10px"
-                        width="1170px"
-                        ml="auto"
-                        mr="auto"
-                    >
-                        {files.map((file) => (
-                            <Box
-                                borderRadius={10}
-                                overflow="hidden"
-                                margin={2}
-                                key={file.file_id}
-                                width="100%"
-                                height="200px"
-                                style={{
-                                    position: "relative",
-                                    boxShadow:
-                                        "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
-                                }}
-                            >
-                                <ImageOpt
-                                    src={file.image?.sizes?.m}
-                                    objectFit="cover"
-                                    layout="fill"
-                                />
-                                <p
-                                    style={{
-                                        zIndex: 2,
-                                        color: "white",
-                                        position: "absolute",
-                                        bottom: "10px",
-                                        right: "15px",
-                                        fontWeight: 900,
-                                        fontSize: "20px",
-                                    }}
+                    <Box mb={2} mt={2} width="1170px" ml="auto" mr="auto">
+                        <Slider slidesPerView={6} spaceBetween={10}>
+                            {files.map((file) => (
+                                <SwiperSlide
+                                    className="file-container"
+                                    key={file.file_id}
                                 >
-                                    {file.text}
-                                </p>
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        left: 0,
-                                        top: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        backgroundImage:
-                                            "linear-gradient(360deg, #0000008b 0%, transparent 100%)",
-                                    }}
-                                ></div>
-                            </Box>
-                        ))}
+                                    <div className="file-wrapper"></div>
+                                    <Box width="100%" height="100%">
+                                        <ImageOpt
+                                            src={file.image?.sizes?.m}
+                                            objectFit="cover"
+                                            layout="fill"
+                                        />
+                                        <p
+                                            style={{
+                                                zIndex: 2,
+                                                color: "white",
+                                                position: "absolute",
+                                                bottom: "5px",
+                                                right: "5px",
+                                                fontWeight: 900,
+                                                fontSize: "18px",
+                                            }}
+                                        >
+                                            {file.text}
+                                        </p>
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                left: 0,
+                                                top: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                backgroundImage:
+                                                    "linear-gradient(360deg, #0000008b 0%, transparent 100%)",
+                                            }}
+                                        ></div>
+                                    </Box>
+                                </SwiperSlide>
+                            ))}
+                        </Slider>
                     </Box>
                     <div className={styles.swiper}>
                         <div className="container">

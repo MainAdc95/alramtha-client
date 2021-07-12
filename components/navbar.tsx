@@ -14,6 +14,7 @@ import GeoLocationInfo from "../components/geoLocationInfo";
 
 // icons
 import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from "@material-ui/icons/Home";
 import ImageOpt from "./imageOpt";
 
 interface IProps {
@@ -131,6 +132,17 @@ const Navbar = () => {
             <div ref={categ} className={classes.sectionsContainer}>
                 <Box className={classes.sections}>
                     <Box className={classes.tabList}>
+                        <div className={classes.tabItem}>
+                            <div className={classes.tabColorStrip}></div>
+                            <Link href={"/"}>
+                                <a
+                                    className={classes.tabLink}
+                                    style={{ color: "black" }}
+                                >
+                                    <HomeIcon />
+                                </a>
+                            </Link>
+                        </div>
                         {sections?.map((section, i) => (
                             <div
                                 className={classes.tabItem}

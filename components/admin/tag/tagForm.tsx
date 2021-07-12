@@ -9,9 +9,12 @@ import { ITag } from "../../../types/tag";
 // components
 import TextField from "../../form/input";
 import Button from "../../form/button";
+import { mutate } from "swr";
 
 interface IProps {
     tag?: ITag;
+    redirect?: boolean;
+    addToSelect?: any;
 }
 
 interface IState {
@@ -22,7 +25,7 @@ interface IError {
     tag_name: string[];
 }
 
-const TagForm = ({ tag }: IProps) => {
+const TagForm = ({ tag, redirect, addToSelect }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
@@ -44,15 +47,30 @@ const TagForm = ({ tag }: IProps) => {
     }, [tag]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
         if (!handleValidate()) return;
 
         try {
             setLoading(true);
 
             if (!tag) {
-                await apiCall("post", `/tags?authId=${user.user_id}`, state);
+                const tag = await apiCall<ITag>(
+                    "post",
+                    `/tags?authId=${user.user_id}`,
+                    state
+                );
+
+                mutate(`/tags`, (tags: ITag[]) => [tag, ...tags], false);
+
+                setState({
+                    ...state,
+                    tag_name: "",
+                });
+
+                if (addToSelect) {
+                    handleAddToSelect(tag);
+                }
+
+                if (redirect) router.push("/admin/tags");
             } else {
                 await apiCall(
                     "put",
@@ -60,8 +78,6 @@ const TagForm = ({ tag }: IProps) => {
                     state
                 );
             }
-
-            router.push("/admin/tags");
         } catch (err) {
             setErrors((prevErrors) => ({ ...prevErrors, ...err }));
         } finally {
@@ -90,14 +106,19 @@ const TagForm = ({ tag }: IProps) => {
         return true;
     };
 
+    // ______________________ handle add to select
+    const handleAddToSelect = (tag: ITag) => {
+        addToSelect(tag);
+    };
+
     return (
         <>
-            <form onSubmit={handleSubmit} noValidate autoComplete="off">
+            <div onSubmit={(e) => e.preventDefault()}>
                 <div>
                     <div className={classes.formGroup}>
                         <TextField
                             name="tag_name"
-                            label="اسم العلامة"
+                            label="اسم الوسم"
                             state={state}
                             setState={setState}
                             required={true}
@@ -108,15 +129,16 @@ const TagForm = ({ tag }: IProps) => {
                     <div>
                         <Button
                             fullWidth
-                            type="submit"
+                            type="button"
                             color="purple"
+                            onClick={handleSubmit}
                             variant="contained"
                             loading={loading}
-                            text={tag ? "تحرير العلامة" : "اضافة العلامة"}
+                            text={tag ? "تحرير الوسم" : "اضافة الوسم"}
                         />
                     </div>
                 </div>
-            </form>
+            </div>
         </>
     );
 };

@@ -30,13 +30,13 @@ const Tags = () => {
                             width="100%"
                         >
                             <div>
-                                <h1 className={classes.title}>العلامات</h1>
+                                <h1 className={classes.title}>وسوم</h1>
                             </div>
                             <Link href="/admin/tags/addTag">
                                 <a className="ltr">
                                     <Button
                                         startIcon={<AddIcon />}
-                                        text="اضافة علامة"
+                                        text="اضافة وسم"
                                     />
                                 </a>
                             </Link>

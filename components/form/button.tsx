@@ -34,6 +34,7 @@ const Button = ({
 
     return (
         <MuButton
+            dir="rtl"
             variant={variant || "text"}
             type={type || "button"}
             className={classes.button}

@@ -6,6 +6,7 @@ interface IProps {
 
 const Theme = ({ children }: IProps) => {
     const theme = createMuiTheme({
+        direction: "rtl",
         palette: {
             type: "light",
             primary: {

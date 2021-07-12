@@ -29,3 +29,7 @@ export const SET_LOCATION = "SET_LOCATION";
 // _____________________________ locale
 export const SET_EN_LOCALE = "SET_EN_LOCALE";
 export const SET_AR_LOCALE = "SET_AR_LOCALE";
+
+// ______________________________________________ news
+export const ADD_TO_CREATE_NEWS = "ADD_TO_CREATE_NEWS";
+export const REMOVE_TO_CREATE_NEWS = "REMOVE_TO_CREATE_NEWS";

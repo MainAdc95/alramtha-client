@@ -283,6 +283,7 @@ const ArticleList = () => {
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onChangePage={handleChangePage}
+                        labelRowsPerPage="صفوف لكل صفحة:"
                         onChangeRowsPerPage={handleChangeRowsPerPage}
                     />
                 </>
