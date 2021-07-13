@@ -11,7 +11,7 @@ const MediumNews = ({ data }: IProps) => {
     return (
         <div className="medium-news">
             <ImageOpt
-                src={data.images[0]?.sizes?.m}
+                src={data.thumbnail?.sizes?.m}
                 layout="fill"
                 objectFit="cover"
             />

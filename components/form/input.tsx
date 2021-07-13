@@ -23,6 +23,7 @@ interface IProps {
     value?: any;
     placeholder?: string;
     onKeyDown?: any;
+    multiline?: boolean;
 }
 
 const TextField = ({
@@ -40,6 +41,7 @@ const TextField = ({
     value,
     placeholder,
     onKeyDown,
+    multiline,
     ...params
 }: IProps) => {
     const classes = useStyles();
@@ -59,6 +61,8 @@ const TextField = ({
                 type={type === "password" ? type : "text"}
                 variant={variant || "outlined"}
                 required={required}
+                multiline={multiline ? true : false}
+                rowsMax={4}
                 size={size || "small"}
                 name={name}
                 label={label}

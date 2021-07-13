@@ -47,7 +47,7 @@ const FileForm = ({ file }: IProps) => {
         text: "",
         image: null,
     });
-    console.log(file);
+
     useEffect(() => {
         if (file) {
             setState({

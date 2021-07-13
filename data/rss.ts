@@ -1,6 +1,21 @@
 export const rss = [
     {
         id: Date.now(),
+        width: 50,
+        height: 50,
+        isDisabled: false,
+        icon: "/sputnik.png",
+        services: [
+            {
+                name: "أرشيف",
+                link: "https://arabic.sputniknews.com/export/rss2/archive/index.xml",
+            },
+        ],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
         isDisabled: false,
         icon: "/unitedNation.jpg",
         services: [
@@ -70,38 +85,201 @@ export const rss = [
             },
             {
                 name: "أهداف التنمية المستدامة",
-                link: "https://news.un.org/feed/subscribe/ar/news/topic/women/feed/rss.xml",
+                link: "https://news.un.org/feed/subscribe/ar/news/topic/sdgs/feed/rss.xml",
             },
         ],
     },
     {
         id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: false,
+        icon: "/alarabya.jpeg",
+        services: [
+            {
+                name: "أخبار الصفحة الرئيسية",
+                link: "https://www.alarabiya.net/.mrss/ar.xml",
+            },
+            {
+                name: "أخبار العرب والعالم",
+                link: "https://www.alarabiya.net/.mrss/ar/arab-and-world.xml",
+            },
+            {
+                name: "أخبار السعودية",
+                link: "https://www.alarabiya.net/.mrss/ar/saudi-today.xml",
+            },
+            {
+                name: "أخبار الاقتصاد (أسواق)",
+                link: "https://www.alarabiya.net/.mrss/ar/aswaq.xml",
+            },
+            {
+                name: "أخبار الرياضة",
+                link: "https://www.alarabiya.net/.mrss/ar/sport.xml",
+            },
+            {
+                name: "أخبار منوعة",
+                link: "https://www.alarabiya.net/.mrss/ar/variety.xml",
+            },
+            {
+                name: "المقالات",
+                link: "https://www.alarabiya.net/.mrss/ar/views.xml",
+            },
+            {
+                name: "أخبار تكنولوجيا",
+                link: "https://www.alarabiya.net/.mrss/ar/technology.xml",
+            },
+            {
+                name: "أخبار الأخيرة",
+                link: "https://www.alarabiya.net/.mrss/ar/last-page.xml",
+            },
+        ],
+    },
+    // {
+    //     id: Date.now(),
+    //     width: 50,
+    //     height: 50,
+    //     isDisabled: false,
+    //     icon: "/ska.jpeg",
+    //     services: [],
+    // },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
         icon: "/bbc.jpg",
-        isDisabled: true,
+        isDisabled: false,
         services: [
             {
                 name: "الصفحة الرئيسية",
-                link: "https://news.un.org/feed/subscribe/ar/news/region/middle-east/feed/rss.xml",
+                link: "https://feeds.bbci.co.uk/arabic/rss.xml",
             },
             {
                 name: "الشرق الأوسط",
-                link: "http://www.bbc.co.uk/arabic/middleeast/index.xml",
+                link: "https://www.bbc.com/arabic/middleeast/index.xml",
+            },
+            {
+                name: "العالم",
+                link: "https://www.bbc.com/arabic/worldnews/index.xml",
+            },
+            {
+                name: "اقتصاد وأعمال",
+                link: "https://www.bbc.com/arabic/business/index.xml",
+            },
+            {
+                name: "علوم وتكنولوجيا",
+                link: "https://www.bbc.co.uk/arabic/scienceandtech/index.xml",
+            },
+            {
+                name: "رياضة",
+                link: "https://www.bbc.co.uk/arabic/sports/index.xml",
+            },
+            {
+                name: "تقارير خاصة",
+                link: "https://www.bbc.co.uk/arabic/indepth/index.xml",
+            },
+            {
+                name: "عرض الصحف",
+                link: "https://www.bbc.co.uk/arabic/inthepress/index.xml",
             },
         ],
     },
-    { id: Date.now(), isDisabled: true, icon: "/byan.jpg", services: [] },
-    { id: Date.now(), isDisabled: true, icon: "/etihad.jpg", services: [] },
-    { id: Date.now(), isDisabled: true, icon: "/welle.jpg", services: [] },
     {
         id: Date.now(),
+        width: 150,
+        height: 38,
+        isDisabled: false,
+        icon: "/wam.png",
+        services: [
+            {
+                name: "الإمارات",
+                link: "https://www.wam.ae/ar/rss/emirates",
+            },
+            {
+                name: "العالم",
+                link: "https://www.wam.ae/ar/rss/world",
+            },
+            {
+                name: "اقتصاد",
+                link: "https://www.wam.ae/ar/rss/business",
+            },
+            {
+                name: "رياضة",
+                link: "https://www.wam.ae/ar/rss/sports",
+            },
+            {
+                name: "التقارير",
+                link: "https://www.wam.ae/ar/rss/reports",
+            },
+            {
+                name: "أخبار السعادة",
+                link: "https://www.wam.ae/ar/rss/happiness",
+            },
+            {
+                name: "أخبار الشباب",
+                link: "https://www.wam.ae/ar/rss/News_of_Youth",
+            },
+            {
+                name: "جرافيكس",
+                link: "https://www.wam.ae/ar/rss/Graphics",
+            },
+            {
+                name: "الأنشطة المحلية",
+                link: "https://www.wam.ae/ar/rss/local_news",
+            },
+        ],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: true,
+        icon: "/byan.jpg",
+        services: [],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: true,
+        icon: "/etihad.jpg",
+        services: [],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: true,
+        icon: "/welle.jpg",
+        services: [],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
         isDisabled: true,
         icon: "/emaritesNews.jpg",
         services: [],
     },
-    { id: Date.now(), isDisabled: true, icon: "/china.jpeg", services: [] },
-    { id: Date.now(), isDisabled: true, icon: "/france.jpg", services: [] },
     {
         id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: true,
+        icon: "/china.jpeg",
+        services: [],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: true,
+        icon: "/france.jpg",
+        services: [],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
         isDisabled: true,
         icon: "/middleEast.jpg",
         services: [],

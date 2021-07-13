@@ -13,7 +13,6 @@ const Sidebar = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const classes = useStyles();
-    const locale = useSelector((state: RootReducer) => state.locale);
     const [active, setActive] = useState<string | null>(null);
     const user = useSelector((state: RootReducer) => state.auth.user);
 
@@ -144,8 +143,8 @@ const useStyles = makeStyles((theme: Theme) => {
             boxShadow: theme.shadows[10],
             overflowY: "auto",
             backgroundColor: "white",
-            position: "sticky",
-            top: 0,
+            // position: "sticky",
+            // top: 0,
         },
         listItem: {
             width: "100%",

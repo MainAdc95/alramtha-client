@@ -14,7 +14,7 @@ const LargeNews = ({ data, styles }: IProps) => {
             <div className="img-wrapper">
                 <div className="news-img">
                     <ImageOpt
-                        src={data.images[0]?.sizes?.m}
+                        src={data.thumbnail?.sizes?.m}
                         layout="fill"
                         objectFit="cover"
                     />

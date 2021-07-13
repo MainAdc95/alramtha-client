@@ -1,6 +1,7 @@
 import parse from "html-react-parser";
 import Link from "next/link";
 import HeadLayout from "../../headLayout";
+import { useEffect } from "react";
 
 // Components
 import ShareNews from "../../news/shareNews";
@@ -21,6 +22,14 @@ interface IProps {
 }
 
 const NewsPreview = ({ news, close }: IProps) => {
+    useEffect(() => {
+        // @ts-ignore
+        window?.twttr?.widgets?.load();
+
+        // @ts-ignore
+        window.instgrm?.Embeds?.process();
+    }, []);
+
     return (
         <>
             <HeadLayout title={news.title} />

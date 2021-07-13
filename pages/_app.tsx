@@ -84,6 +84,11 @@ class Alramsah extends App<AppInitialProps> {
                         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
                         rel="stylesheet"
                     />
+                    {/* <script src="https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456"></script>
+                    <script
+                        async
+                        src="https://platform.twitter.com/widgets.js"
+                    ></script> */}
                 </Head>
                 <StylesProvider jss={jss}>
                     <Theme>
@@ -97,6 +102,25 @@ class Alramsah extends App<AppInitialProps> {
                         >
                             <Layout>
                                 <Component {...pageProps} />
+                                {/* <blockquote
+                                    className="twitter-tweet"
+                                    data-theme="light"
+                                >
+                                    <p lang="und" dir="ltr">
+                                        <a href="https://t.co/97xjWeIHjV">
+                                            https://t.co/97xjWeIHjV
+                                        </a>
+                                    </p>
+                                    &mdash; mahmoud khalil (@zorba222){" "}
+                                    <a href="https://twitter.com/zorba222/status/1414553264457240580?ref_src=twsrc%5Etfw">
+                                        July 12, 2021
+                                    </a>
+                                </blockquote>
+                                <script
+                                    async
+                                    src="https://platform.twitter.com/widgets.js"
+                                    // charset="utf-8"
+                                ></script> */}
                             </Layout>
                         </SWRConfig>
                     </Theme>
@@ -123,6 +147,27 @@ const DataHandler = () => {
         document.body.appendChild(instagramScript);
 
         const { isAuth } = cookie.parse(document.cookie);
+
+        // loading twitter embed script
+        // @ts-ignore
+        window.twttr = (function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0],
+                // @ts-ignore
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        })(document, "script", "twitter-wjs");
 
         if (isAuth) {
             dispatch(authOnloadCall());

@@ -20,7 +20,7 @@ const BannerCard = ({ data, type }: IProps) => {
                             <SwiperSlide key={news.news_id}>
                                 <div className="newsContainer">
                                     <ImageOpt
-                                        src={news.images[0]?.sizes?.m}
+                                        src={news.thumbnail?.sizes?.m}
                                         objectFit="cover"
                                         layout="fill"
                                     />

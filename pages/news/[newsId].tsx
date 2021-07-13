@@ -3,6 +3,7 @@ import { apiCall } from "../../utils/apiCall";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import HeadLayout from "../../components/headLayout";
+import { useEffect } from "react";
 
 // Components
 import ShareNews from "../../components/news/shareNews";
@@ -21,6 +22,14 @@ interface IProps {
 }
 
 const NewsPage = ({ news }: IProps) => {
+    useEffect(() => {
+        // @ts-ignore
+        window?.twttr?.widgets?.load();
+
+        // @ts-ignore
+        window.instgrm?.Embeds?.process();
+    }, []);
+
     if (news)
         return (
             <>

@@ -44,7 +44,10 @@ const ImageInput = ({
                     <div className={`${classes.wrapper} img-input-wrapper`}>
                         {images.length ? (
                             type === "single" ? (
-                                <div className={classes.imgContainer}>
+                                <div
+                                    onClick={images.length ? handler : null}
+                                    className={classes.imgContainer}
+                                >
                                     <ImageOpt
                                         src={images[0]?.sizes?.m}
                                         layout="fill"

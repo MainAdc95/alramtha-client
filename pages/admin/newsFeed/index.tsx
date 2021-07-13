@@ -5,9 +5,8 @@ import {
     Box,
     Tab,
     Tabs,
+    CircularProgress,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
-import { RootReducer } from "../../../store/reducers";
 import { useState } from "react";
 import ImageOpt from "../../../components/imageOpt";
 import { rss } from "../../../data/rss";
@@ -22,7 +21,6 @@ import Layout from "../../../components/admin/layout";
 import HeadLayout from "../../../components/headLayout";
 
 // icons
-import AddIcon from "@material-ui/icons/Add";
 import { apiCall } from "../../../utils/apiCall";
 
 function a11yProps(index: any) {
@@ -33,13 +31,13 @@ function a11yProps(index: any) {
 }
 
 const Tags = () => {
-    const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles();
     const [provider, setProvider] = useState(0);
     const [service, setService] = useState(0);
     const [selectedProvider, seSelectedtProvider] = useState<any>(null);
     const [selectedService, setSelectedService] = useState<any>(null);
     const [news, setNews] = useState<any>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     // ___________________________________ provider
     useEffect(() => {
@@ -54,21 +52,23 @@ const Tags = () => {
     useEffect(() => {
         if (selectedProvider) {
             setSelectedService(selectedProvider?.services[0]);
+            setService(0);
         }
     }, [selectedProvider]);
 
     useEffect(() => {
         (async () => {
             if (selectedService) {
+                setLoading(true);
                 const data = await apiCall<string>(
                     "get",
-                    `https://api.rss2json.com/v1/api.json?api_key=ocutvneiwjjhyv5ui1z2k8co9ktt8jmt5rmk2hhq&rss_url=${selectedService.link}&count=500`,
-                    null,
-                    "out"
+                    `/rss/${selectedService.link}`,
+                    null
                 );
 
                 // @ts-ignore
                 setNews(data?.items || []);
+                setLoading(false);
             }
         })();
     }, [selectedService]);
@@ -103,16 +103,28 @@ const Tags = () => {
                                 value={provider}
                                 variant="scrollable"
                                 onChange={handleProvider}
+                                classes={{
+                                    indicator: classes.indicator,
+                                }}
                             >
                                 {rss.map((rss, i) => (
                                     <Tab
                                         disabled={rss.isDisabled}
+                                        style={
+                                            rss.isDisabled
+                                                ? {
+                                                      filter: "grayscale(100%)",
+                                                      opacity: 0.2,
+                                                  }
+                                                : null
+                                        }
                                         label={
                                             <ImageOpt
+                                                draggable={false}
                                                 src={rss.icon}
                                                 location="local"
-                                                width={100}
-                                                height={38}
+                                                width={rss.width}
+                                                height={rss.height}
                                             />
                                         }
                                         {...a11yProps(i)}
@@ -124,6 +136,9 @@ const Tags = () => {
                                     value={service}
                                     variant="scrollable"
                                     onChange={handleService}
+                                    classes={{
+                                        indicator: classes.indicator,
+                                    }}
                                 >
                                     {selectedProvider.services.map(
                                         (service, i) => (
@@ -137,7 +152,21 @@ const Tags = () => {
                             )}
                         </div>
                         <div style={{ marginTop: "50px" }}>
-                            <UnitedNations news={news} />
+                            {loading ? (
+                                <Box display="flex" justifyContent="center">
+                                    <CircularProgress />
+                                </Box>
+                            ) : !news ? (
+                                <p className={classes.msg}>
+                                    حدث خطأ اثناء استدعاء المعلومات من المصدر.
+                                </p>
+                            ) : !news.length ? (
+                                <p className={classes.msg}>
+                                    لم يتم العثور على اي معلومات.
+                                </p>
+                            ) : (
+                                <Rss news={news} />
+                            )}
                         </div>
                     </div>
                 </Layout>
@@ -146,19 +175,45 @@ const Tags = () => {
     );
 };
 
-const UnitedNations = ({ news }: any) => {
+const Rss = ({ news }: any) => {
+    const [activeImg, setActiveImg] = useState<number | null>(null);
+
+    // _________________________________ active image
+    const handleImg = (index: number) => {
+        setActiveImg(activeImg === null ? index : null);
+    };
+
     return (
         <div>
-            {news.map((news) => (
-                <div className={styles.container}>
-                    <div className={styles.imgContainer}>
-                        <a href={news.enclosure.link} target="_blank">
+            {news.map((news, i) => (
+                <div key={i} className={styles.container}>
+                    <div
+                        className={
+                            news.enclosure?.url
+                                ? `${
+                                      activeImg === i
+                                          ? styles.activeImgContainer
+                                          : ""
+                                  } ${styles.imgContainer}`
+                                : styles.emptyImgContainer
+                        }
+                        onClick={() => handleImg(i)}
+                    >
+                        {news.enclosure?.url ? (
                             <img
-                                src={news.enclosure.link}
-                                className={styles.img}
+                                src={news.enclosure.url}
+                                className={`${
+                                    activeImg === i ? styles.activeImg : ""
+                                } ${styles.img}`}
                                 alt=""
                             />
-                        </a>
+                        ) : (
+                            <img
+                                src="/no-photos.svg"
+                                className={styles.noImg}
+                                alt=""
+                            />
+                        )}
                     </div>
                     <div>
                         <h3 className={styles.title}>{`${news.title}`}</h3>
@@ -170,13 +225,15 @@ const UnitedNations = ({ news }: any) => {
                         >
                             الرابط
                         </a>
-                        <a
-                            href={news.guid}
-                            className={styles.guide}
-                            target="_blank"
-                        >
-                            الدليل
-                        </a>
+                        {news.enclosure?.url && (
+                            <a
+                                href={news.enclosure.url}
+                                className={styles.link}
+                                target="_blank"
+                            >
+                                الصورة
+                            </a>
+                        )}
                         <p className={styles.date}>{news.pubDate}</p>
                     </div>
                 </div>
@@ -201,6 +258,14 @@ const useStyles = makeStyles((theme: Theme) => {
             width: "100%",
             maxWidth: "100%",
         },
+        indicator: {
+            backgroundColor: theme.palette.primary.main,
+        },
+        msg: {
+            textAlign: "center",
+            fontSize: "18px",
+        },
     });
 });
+
 export default Tags;

@@ -1,33 +1,122 @@
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+    -webkit-animation: #{$str};
+    -moz-animation: #{$str};
+    -ms-animation: #{$str};
+    -o-animation: #{$str};
+    animation: #{$str};
+}
+
+@include keyframes(empty) {
+    0%,
+    100% {
+        background-color: rgb(231, 231, 231);
+        transform: translate(0, -15px);
+    }
+    50% {
+        background-color: rgb(200, 200, 200);
+        transform: translate(0, 0);
+    }
+}
+
+@include keyframes(hoverMiddle) {
+    0% {
+        transform: translate(0, -15px);
+        position: fixed;
+    }
+
+    100% {
+        width: 1000px;
+        transform: translate(0, 0);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        zindex: 1000;
+    }
+}
+
 .container {
     display: flex;
-    // align-items: flex-end;
     width: 100%;
     margin-bottom: 30px;
+    align-items: flex-start;
+    border-bottom: 1px solid rgb(202, 202, 202);
+    padding-bottom: 20px;
+    min-height: 220px;
 }
 
 .contentNavbar {
     position: sticky;
-    top: 0;
-    left: 0;
+    top: 20px;
     z-index: 10;
     background: white;
+    box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 20%),
+        0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: 5px;
 }
 
-.imgContainer {
+.imgContainer,
+.emptyImgContainer {
     position: relative;
     box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 20%),
         0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
     width: 400px;
     min-width: 400px;
+    margin-left: 30px;
+    border-radius: 5px;
+    overflow: hidden;
     &:after {
         content: "";
         display: block;
         padding-bottom: 55%;
     }
-    margin-left: 30px;
+
+    transition: all 0.1s ease;
 }
 
-.img {
+.imgContainer {
+    cursor: pointer;
+}
+
+.activeImgContainer {
+    box-shadow: initial;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    overflow-x: initial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    right: 0;
+    top: 0;
+    z-index: 1300;
+}
+
+.emptyImgContainer {
+    animation: none;
+    @include animation("empty 4s infinite");
+}
+
+.img,
+.noImg {
     position: absolute;
     object-fit: cover;
     display: block;
@@ -39,20 +128,47 @@
     max-width: 100%;
 }
 
+.img {
+    transition: all 0s ease;
+    cursor: zoom-in;
+}
+
+.activeImg {
+    min-height: initial;
+    min-width: initial;
+    height: initial;
+    width: initial;
+    object-fit: initial;
+    position: static;
+    cursor: zoom-out;
+    box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 30%),
+        0px 1px 1px 0px rgb(0 0 0 / 24%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.noImg {
+    max-width: 100px;
+    min-height: initial;
+    height: initial;
+    top: 50%;
+    left: 50%;
+    opacity: 0.6;
+    transform: translate(-50%, -50%);
+}
+
 .title {
     margin-bottom: 10px;
 }
 
-.link,
-.guide {
+.link {
     font-weight: 500;
     font-size: 16px;
     margin: 0 10px;
+    color: #007aff;
+    text-decoration: underline;
 }
 
-.link:visited,
-.guide:visited {
-    color: #007aff;
+.link:visited {
+    color: #000000;
 }
 
 .content {

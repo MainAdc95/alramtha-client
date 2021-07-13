@@ -21,13 +21,16 @@ import { ISection } from "../../../types/section";
 // components
 import TextField from "../../form/input";
 import Button from "../../form/button";
-import ImagePicker from "../image/imagePicker";
+import ImagePicker from "../../../components/admin/image/imagePicker";
 import ImageInput from "../../form/imageInput";
 import Select from "../../form/select";
 import TextEditor from "../../form/textEditor";
+import TagForm from "../tag/tagForm";
+// import NewsPreview from "./articlePreview";
 
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
+import { IFile } from "../../../types/file";
 
 interface IProps {
     article?: IArticle;
@@ -40,6 +43,7 @@ interface IState {
     text: string;
     images: IImage[];
     section: string;
+    // file: string;
     intro: string;
     subTitles: { sub_title: string }[];
     tags: ITag[];
@@ -51,6 +55,7 @@ interface IError {
     is_published: string[];
     text: string[];
     images: string[];
+    // file: string[];
     intro: string[];
     tags: string[];
     section: string[];
@@ -60,10 +65,19 @@ const NewsForm = ({ article }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const { data: sections } = useSWR<ISection[]>(`/sections`);
+    // const { data: files } = useSWR<IFile[]>(`/files`);
     const [loading, setLoading] = useState<boolean>(false);
+    // const toCreate: any = useSelector(
+    //     (state: RootReducer) => state.article.toCreate
+    // );
+    const [createFrom, setCreateFrom] =
+        useState<"message" | "rss" | null>(null);
     const user = useSelector((state: RootReducer) => state.auth.user);
-    const [imagesPick, setImagesPick] = useState(false);
-    const [isThumbnail, setThumbnail] = useState(false);
+    const [isPreview, setPreview] = useState<IArticle | null>(null);
+    const [imagesPick, setImagesPick] =
+        useState<null | { toForm: boolean }>(null);
+    const [isThumbnail, setThumbnail] =
+        useState<null | { toForm: boolean }>(null);
     const { data } = useSWR(`/tags`);
     const [subTitle, setSubTitle] = useState({
         sub_title: "",
@@ -77,6 +91,7 @@ const NewsForm = ({ article }: IProps) => {
         images: [],
         intro: [],
         section: [],
+        // file: [],
         tags: [],
     });
     const [state, setState] = useState<IState>({
@@ -85,11 +100,45 @@ const NewsForm = ({ article }: IProps) => {
         text: "",
         images: [],
         section: "",
+        // file: "",
         intro: "",
         is_published: false,
         subTitles: [],
         tags: [],
     });
+
+    // useEffect(() => {
+    //     const from = router.asPath.split("#")[1];
+
+    //     switch (from) {
+    //         case "message":
+    //             return setCreateFrom("message");
+    //         case "rss":
+    //             return setCreateFrom("rss");
+    //         default:
+    //             return;
+    //     }
+    // }, []);
+
+    // _________________________________________ handle type
+    // useEffect(() => {
+    //     if (toCreate) {
+    //         switch (createFrom) {
+    //             case "message":
+    //                 return setState({
+    //                     ...state,
+    //                     images: toCreate.images,
+    //                     title: toCreate.subject,
+    //                     text: toCreate.text,
+    //                 });
+    //             case "rss":
+    //             default:
+    //                 return null;
+    //         }
+    //     }
+
+    //     return () => {};
+    // }, [createFrom]);
 
     // _________________________________________ seed state with article data
     useEffect(() => {
@@ -101,6 +150,7 @@ const NewsForm = ({ article }: IProps) => {
                 intro: article.intro || "",
                 text: article.text || "",
                 section: article.section?.section_id || "",
+                // file: article.file?.file_id || "",
                 subTitles: article.sub_titles || [],
                 tags: article.tags || [],
                 images: article.images || [],
@@ -125,8 +175,13 @@ const NewsForm = ({ article }: IProps) => {
         });
     };
 
-    const handlePick = () => {
-        setImagesPick(!imagesPick);
+    // ____________________________________ handle imagesPick
+    const handlePick = (toForm?: boolean) => {
+        if (imagesPick) {
+            return setImagesPick(null);
+        }
+
+        setImagesPick({ toForm: !!toForm });
     };
 
     // ____________________________________ handle sub title
@@ -177,24 +232,25 @@ const NewsForm = ({ article }: IProps) => {
     };
 
     // _________________________________________________ thumbnail
-    const toggleThumbnail = () => {
-        setThumbnail(!isThumbnail);
+    const toggleThumbnail = (toForm?: boolean) => {
+        if (isThumbnail) {
+            return setThumbnail(null);
+        }
+
+        setThumbnail({ toForm: !!toForm });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async (type: "publish" | "draft") => {
         if (!handleValidate()) return;
 
         try {
             setLoading(true);
 
             if (!article) {
-                await apiCall(
-                    "post",
-                    `/articles?authId=${user.user_id}`,
-                    state
-                );
+                await apiCall("post", `/articles?authId=${user.user_id}`, {
+                    ...state,
+                    is_published: type === "publish" ? true : false,
+                });
             } else {
                 await apiCall(
                     "put",
@@ -220,32 +276,37 @@ const NewsForm = ({ article }: IProps) => {
             is_published: [],
             text: [],
             section: [],
+            // file: [],
             tags: [],
         };
 
-        if (!state.thumbnail) {
-            TmpErrors.thumbnail.push("Please choose a thumbnail.");
-        }
+        // if (!state.thumbnail) {
+        //     TmpErrors.thumbnail.push("Please choose a thumbnail.");
+        // }
 
-        if (!state.title.trim()) {
-            TmpErrors.title.push("Please fill in title.");
-        }
+        // if (!state.title.trim()) {
+        //     TmpErrors.title.push("Please fill in title.");
+        // }
 
-        if (!state.text) {
-            TmpErrors.text.push("Please fill in text.");
-        }
+        // if (!state.text) {
+        //     TmpErrors.text.push("Please fill in text.");
+        // }
 
-        if (!state.section) {
-            TmpErrors.section.push("Please fill in section.");
-        }
+        // if (!state.section) {
+        //     TmpErrors.section.push("Please choose a section.");
+        // }
 
-        if (!state.images.length) {
-            TmpErrors.images.push("Please pick at least one image.");
-        }
+        // if (!state.file) {
+        //     TmpErrors.file.push("Please choose a file.");
+        // }
 
-        if (!state.tags.length) {
-            TmpErrors.tags.push("Please pick at least one tag.");
-        }
+        // if (!state.images.length) {
+        //     TmpErrors.images.push("Please pick at least one image.");
+        // }
+
+        // if (!state.tags.length) {
+        //     TmpErrors.tags.push("Please pick at least one tag.");
+        // }
 
         setErrors(TmpErrors);
 
@@ -259,29 +320,34 @@ const NewsForm = ({ article }: IProps) => {
         return true;
     };
 
+    // ______________________________ preview
+    const togglePreview = () => {
+        if (isPreview) {
+            return setPreview(null);
+        }
+
+        setPreview(state as any);
+    };
+
+    // __________________________ select tag
+    const selectNewTag = (tag: ITag) => {
+        setState({ ...state, tags: [...state.tags, tag] });
+    };
+
     return (
         <>
-            <form
-                onKeyDown={(e) => {
-                    if (e.keyCode == 13) {
-                        e.preventDefault();
-                        return false;
-                    }
-                }}
-                onSubmit={handleSubmit}
-                noValidate
-                autoComplete="off"
-            >
+            <div>
                 <div>
                     <div className={classes.double}>
                         <div>
                             <div className={classes.formGroup}>
                                 <TextField
-                                    name="intro"
-                                    label="المقدمة"
+                                    name="title"
+                                    label="العنوان"
                                     state={state}
                                     setState={setState}
-                                    required={true}
+                                    multiline={true}
+                                    errors={errors}
                                     variant="outlined"
                                 />
                             </div>
@@ -290,11 +356,11 @@ const NewsForm = ({ article }: IProps) => {
                             </Box>
                             <div className={classes.formGroup}>
                                 <TextField
-                                    name="title"
-                                    label="العنوان"
+                                    name="intro"
+                                    label="المقدمة"
+                                    multiline={true}
                                     state={state}
                                     setState={setState}
-                                    required={true}
                                     errors={errors}
                                     variant="outlined"
                                 />
@@ -320,6 +386,24 @@ const NewsForm = ({ article }: IProps) => {
                             <Box mb={3}>
                                 <Divider />
                             </Box>
+                            {/* <div className={classes.formGroup}>
+                                <Select
+                                    name="file"
+                                    label="ملف"
+                                    errors={errors}
+                                    state={state}
+                                    setState={setState}
+                                >
+                                    {files?.map((file) => (
+                                        <MenuItem value={file.file_id}>
+                                            {file.text}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </div>
+                            <Box mb={3}>
+                                <Divider />
+                            </Box> */}
                             <div className={classes.subTitlesWrapper}>
                                 {state.subTitles.map((sub, i) => (
                                     <div className={classes.subTitleContainer}>
@@ -373,7 +457,8 @@ const NewsForm = ({ article }: IProps) => {
                                 text="الرئيسية"
                                 errors={errors}
                                 name="thumbnail"
-                                handler={toggleThumbnail}
+                                handler={() => toggleThumbnail()}
+                                toForm={() => toggleThumbnail(true)}
                                 type="single"
                                 images={
                                     state.thumbnail ? [state.thumbnail] : []
@@ -386,7 +471,8 @@ const NewsForm = ({ article }: IProps) => {
                                 text="اختر بعض الصور الفرعية"
                                 errors={errors}
                                 name="images"
-                                handler={handlePick}
+                                handler={() => handlePick()}
+                                toForm={() => handlePick(true)}
                                 type="multiple"
                                 images={state.images}
                             />
@@ -415,6 +501,12 @@ const NewsForm = ({ article }: IProps) => {
                                         />
                                     )}
                                 />
+                                <Box mt={3}>
+                                    <TagForm
+                                        redirect={false}
+                                        addToSelect={selectNewTag}
+                                    />
+                                </Box>
                             </div>
                         </div>
                     </div>
@@ -426,35 +518,70 @@ const NewsForm = ({ article }: IProps) => {
                             direction="rtl"
                             name="text"
                             id="text"
-                            label="نص المقالة"
+                            label="نص الخبر"
                             state={state}
                             setState={setState}
                             errors={errors}
                         />
                     </div>
-                    <div>
-                        <Button
-                            fullWidth
-                            type="submit"
-                            color="purple"
-                            variant="contained"
-                            loading={loading}
-                            text={article ? "احفظ التغييرات" : "أضافة المقالة"}
-                        />
+                    <div className={classes.triple}>
+                        <div>
+                            <Button
+                                fullWidth
+                                onClick={() => handleSubmit("publish")}
+                                type="submit"
+                                color="purple"
+                                variant="contained"
+                                loading={loading}
+                                text={
+                                    article ? "احفظ التغييرات" : "أضافة المقالة"
+                                }
+                            />
+                        </div>
+                        {!article && (
+                            <div>
+                                <Button
+                                    fullWidth
+                                    onClick={() => handleSubmit("draft")}
+                                    type="submit"
+                                    color="black"
+                                    variant="contained"
+                                    loading={loading}
+                                    text={
+                                        article
+                                            ? "احفظ التغييرات"
+                                            : "رسل الى المسودة"
+                                    }
+                                />
+                            </div>
+                        )}
+                        {/* <div>
+                            <Button
+                                fullWidth
+                                onClick={togglePreview}
+                                type="submit"
+                                color="pink"
+                                variant="contained"
+                                loading={loading}
+                                text={"معاينة الخبر"}
+                            />
+                        </div> */}
                     </div>
                 </div>
-            </form>
+            </div>
             {isThumbnail && (
                 <ImagePicker
                     type="single"
                     close={toggleThumbnail}
                     state={state}
                     setState={setState}
+                    openForm={isThumbnail.toForm}
                     fieldName="thumbnail"
                 />
             )}
             {imagesPick && (
                 <ImagePicker
+                    openForm={imagesPick.toForm}
                     type="multiple"
                     close={handlePick}
                     state={state}
@@ -462,6 +589,9 @@ const NewsForm = ({ article }: IProps) => {
                     fieldName="images"
                 />
             )}
+            {/* {isPreview && (
+                <NewsPreview close={togglePreview} article={isPreview} />
+            )} */}
         </>
     );
 };
@@ -480,6 +610,11 @@ const useStyles = makeStyles((theme: Theme) =>
         double: {
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
+            gridGap: theme.spacing(10),
+        },
+        triple: {
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
             gridGap: theme.spacing(10),
         },
         subTitlesWrapper: {

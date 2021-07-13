@@ -11,7 +11,7 @@ interface IProps {
     styles: any;
 }
 
-const Author = ({ data, styles }: IProps) => {
+const Author = ({ data }: IProps) => {
     return (
         <div>
             <div className="author-title">

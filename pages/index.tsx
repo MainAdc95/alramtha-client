@@ -100,7 +100,7 @@ const Home = ({ info }: IProps) => {
                                     <div className="file-wrapper"></div>
                                     <Box width="100%" height="100%">
                                         <ImageOpt
-                                            src={file.image?.sizes?.m}
+                                            src={file.image?.sizes?.s}
                                             objectFit="cover"
                                             layout="fill"
                                         />

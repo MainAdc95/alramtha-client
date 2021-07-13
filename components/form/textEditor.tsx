@@ -45,6 +45,7 @@ const TextEditor = ({
                     }
                 }}
                 apiKey="p2f3wrzpsomvt0lvr2uphccyzhlnxzopddrmptrb4addcxon"
+                onPaste={(e) => console.log(e.currentTarget)}
                 init={{
                     height: 400,
                     language: "ar",
@@ -52,10 +53,10 @@ const TextEditor = ({
                     branding: false,
                     menubar: true,
                     plugins:
-                        "fullscreen link media preview print charmap emoticons",
+                        "fullscreen code link media preview print charmap emoticons",
                     directionality: direction || "ltr",
                     toolbar:
-                        "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor casechange formatpainter removeformat | pagebreak | charmap emoticons | fullscreen preview save print | media pageembed template link anchor codesample | a11ycheck ltr rtl",
+                        "undo redo | bold italic underline strikethrough | fontselect code fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor casechange formatpainter removeformat | pagebreak | charmap emoticons | fullscreen preview save print | media pageembed template link anchor codesample | a11ycheck ltr rtl",
                 }}
                 onEditorChange={(e) => handleEditorChange(e)}
             />

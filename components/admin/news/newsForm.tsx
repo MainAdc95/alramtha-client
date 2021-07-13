@@ -31,7 +31,6 @@ import NewsPreview from "./newsPreview";
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
 import { IFile } from "../../../types/file";
-import Tags from "../../../pages/admin/tags";
 
 interface IProps {
     news?: INews;
@@ -347,6 +346,7 @@ const NewsForm = ({ news }: IProps) => {
                                     label="العنوان"
                                     state={state}
                                     setState={setState}
+                                    multiline={true}
                                     errors={errors}
                                     variant="outlined"
                                 />
@@ -358,6 +358,7 @@ const NewsForm = ({ news }: IProps) => {
                                 <TextField
                                     name="intro"
                                     label="المقدمة"
+                                    multiline={true}
                                     state={state}
                                     setState={setState}
                                     errors={errors}
@@ -560,7 +561,7 @@ const NewsForm = ({ news }: IProps) => {
                                 color="pink"
                                 variant="contained"
                                 loading={loading}
-                                text={news ? "احفظ التغييرات" : "معاينة الخبر"}
+                                text={"معاينة الخبر"}
                             />
                         </div>
                     </div>

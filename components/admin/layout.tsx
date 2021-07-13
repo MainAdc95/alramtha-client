@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) => {
         sidebar: {
             minWidth: `${sidebarWidth}px`,
             maxWidth: `${sidebarWidth}px`,
+            position: "fixed",
+            right: 0,
+            top: 0,
         },
         children: {
             width: `calc(100% - ${sidebarWidth}px)`,

@@ -129,6 +129,18 @@ const ArticleItem = ({
             </TableCell>
             <TableCell>
                 <div className={classes.imgsContainer}>
+                    <div className={classes.imgContainer}>
+                        <a
+                            href={apiImage(article.thumbnail?.sizes?.l)}
+                            target="_blank"
+                        >
+                            <ImageOpt
+                                src={article.thumbnail?.sizes?.s}
+                                objectFit="cover"
+                                layout="fill"
+                            />
+                        </a>
+                    </div>
                     {article.images.map((image) => (
                         <div
                             key={image.image_id}
