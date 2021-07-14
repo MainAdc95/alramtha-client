@@ -30,7 +30,7 @@ const Form = () => {
     return (
         <>
             <HeadLayout title="Admin article form" />
-            <WithRole role="is_admin">
+            <WithRole role="is_editor">
                 <Layout>
                     <div className={classes.head}>
                         <div className={classes.backContainer}>

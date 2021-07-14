@@ -64,7 +64,7 @@ const Gallery = () => {
     return (
         <>
             <HeadLayout title="Admin image" />
-            <WithRole role="is_admin">
+            <WithRole role="is_editor">
                 <Layout>
                     <div className={classes.head}>
                         <Box

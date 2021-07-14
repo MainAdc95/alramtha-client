@@ -81,7 +81,7 @@ const Tags = () => {
     return (
         <>
             <HeadLayout title="Admin news feed" />
-            <WithRole role="is_admin">
+            <WithRole role="all">
                 <Layout>
                     <div className={classes.head}>
                         <Box
