@@ -1,20 +1,28 @@
-export const tabs = [
+import { Role } from "../types/user";
+
+export const tabs: {
+    role: Role;
+    name: string;
+    icon: string;
+    link: string;
+    isDisabled: boolean;
+}[] = [
     {
-        role: "is_admin",
+        role: "all",
         name: "التغذية الاخبارية",
         icon: "/newsFeed.svg",
         link: "/admin/newsFeed",
         isDisabled: false,
     },
     {
-        role: "is_admin",
+        role: "is_editor",
         name: "ادارة الأخبار",
         icon: "/draftNews.svg",
         link: "/admin/news",
         isDisabled: false,
     },
     {
-        role: "is_admin",
+        role: "is_editor",
         name: "ادارة المقالات",
         icon: "/article.svg",
         link: "/admin/articles",
@@ -35,21 +43,21 @@ export const tabs = [
         isDisabled: false,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "رسائل",
         icon: "/message.svg",
         link: "/admin/messages",
         isDisabled: false,
     },
     {
-        role: "is_admin",
+        role: "is_editor",
         name: "الصور",
         icon: "/gallery.svg",
         link: "/admin/gallery",
         isDisabled: false,
     },
     {
-        role: "is_admin",
+        role: "is_editor",
         name: "الأقسام",
         icon: "/section.svg",
         link: "/admin/sections",
@@ -57,7 +65,7 @@ export const tabs = [
     },
     {
         role: "is_admin",
-        name: "وسوم",
+        name: "is_editor",
         icon: "/tag.svg",
         link: "/admin/tags",
         isDisabled: false,
@@ -70,42 +78,42 @@ export const tabs = [
         isDisabled: false,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "الاشتراكات",
         icon: "/subscriptions.svg",
         link: "/admin",
         isDisabled: true,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "البث المباشر",
         icon: "/liveStream.svg",
         link: "/admin",
         isDisabled: true,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "تغذية الجمهور العودة",
         icon: "/audFeed.svg",
         link: "/admin",
         isDisabled: true,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "إدارة الإعلانات",
         icon: "/advMang.svg",
         link: "/admin",
         isDisabled: true,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "استطلاعات الرأي",
         icon: "/polls.svg",
         link: "/admin",
         isDisabled: true,
     },
     {
-        role: "is_admin",
+        role: "all",
         name: "البث",
         icon: "/podcasting.svg",
         link: "/admin",

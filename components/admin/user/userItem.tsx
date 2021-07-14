@@ -29,11 +29,29 @@ const useStyles = makeStyles({
         position: "sticky",
     },
     avatarContainer: {
-        width: "75px",
-        height: "75px",
+        width: "60px",
+        height: "60px",
         borderRadius: "50%",
         position: "relative",
+        boxShadow:
+            "0px 0px 5px 1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
         overflow: "hidden",
+    },
+    imgContainer: {
+        width: "50px",
+        height: "50px",
+        borderRadius: "50%",
+        overflow: "hidden",
+        position: "relative",
+        marginLeft: "-10px",
+        transition: "all 1s ease",
+        backgroundColor: "white",
+        "&:hover": {
+            marginTop: "-20px",
+            zIndex: 100,
+            transform: "scale(2)",
+            borderRadius: "0",
+        },
     },
 });
 
@@ -93,6 +111,13 @@ const UserItem = ({ user, handleOpenEdit }: IProps) => {
                     root: classes.tableCell,
                 }}
             >
+                {user.username}
+            </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
                 {user.first_name}
             </TableCell>
             <TableCell
@@ -101,13 +126,6 @@ const UserItem = ({ user, handleOpenEdit }: IProps) => {
                 }}
             >
                 {user.last_name}
-            </TableCell>
-            <TableCell
-                classes={{
-                    root: classes.tableCell,
-                }}
-            >
-                {user.username}
             </TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell
