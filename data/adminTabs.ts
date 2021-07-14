@@ -64,8 +64,8 @@ export const tabs: {
         isDisabled: false,
     },
     {
-        role: "is_admin",
-        name: "is_editor",
+        role: "is_editor",
+        name: "وسوم",
         icon: "/tag.svg",
         link: "/admin/tags",
         isDisabled: false,
