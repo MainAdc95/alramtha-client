@@ -541,6 +541,42 @@ td {
     }
 }
 
+
+.privacy-page {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 0 2rem;
+    .container {
+        width: 80%;
+        height: auto;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+}
+
+.announcement-page {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 0 2rem;
+    .container {
+        width: 80%;
+        height: auto;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        .sections {
+            width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            .section-item {
+                width: 100%;
+                padding: 1rem;
+                background-color: red;
+            }
+        }
+    }
+}
+
+
 .page {
     width: 100%;
     min-height: 100vh;
