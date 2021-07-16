@@ -8,15 +8,14 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TablePagination, LinearProgress } from "@material-ui/core";
 import { useState } from "react";
-import { ITag } from "../../../types/tag";
-import { mutate } from "swr";
+import { IPoll } from "../../../types/poll";
+import useSWR, { mutate } from "swr";
 import { apiCall } from "../../../utils/apiCall";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import useSWR from "swr";
 
 // components
-import TagItem from "./tagItem";
+import PollItem from "./pollItem";
 import ActionModal from "../actionModal";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,17 +41,19 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const TagList = () => {
+interface IProps {
+    polls: IPoll[];
+    loading: boolean;
+}
+
+const PollList = ({ polls, loading }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
-    const [isDel, setDel] = useState<ITag | null>(null);
+    const [isDel, setDel] = useState<IPoll | null>(null);
+    const [isEdit, setEdit] = useState<IPoll | null>(null);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [delLoading, setDelLoading] = useState(false);
     const [page, setPage] = useState(0);
-    const { data, error, isValidating } = useSWR<{
-        results: number;
-        tags: ITag[];
-    }>(`/tags?p=${page + 1}&r=${rowsPerPage}`);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -63,12 +64,20 @@ const TagList = () => {
         setPage(0);
     };
 
-    const handleOpenDel = (tag: ITag) => {
-        setDel(tag);
+    const handleOpenDel = (poll: IPoll) => {
+        setDel(poll);
     };
 
     const handleCloseDel = () => {
         setDel(null);
+    };
+
+    const handleOpenEdit = (poll: IPoll) => {
+        setEdit(poll);
+    };
+
+    const handleCloseEdit = () => {
+        setEdit(null);
     };
 
     const handleDelete = async () => {
@@ -76,18 +85,13 @@ const TagList = () => {
             setDelLoading(true);
             await apiCall(
                 "delete",
-                `/tag/${isDel.tag_id}?authId=${user.user_id}`
+                `/poll/${isDel.poll_id}?authId=${user.user_id}`
             );
 
             mutate(
-                `/tags?p=${page + 1}&r=${rowsPerPage}`,
-                (data: any) => {
-                    return {
-                        ...data,
-                        tags: data.tags.filter(
-                            (p) => p.tag_id !== isDel.tag_id
-                        ),
-                    };
+                "/polls",
+                (poll: IPoll[]) => {
+                    return poll.filter((p) => p.poll_id !== isDel.poll_id);
                 },
                 false
             );
@@ -99,9 +103,6 @@ const TagList = () => {
         }
     };
 
-    if (error) return <p>An error has occured while fetching tags.</p>;
-    else if (!data) return <p>Loading...</p>;
-    else if (!data.tags?.length) return <p>There were no tags found.</p>;
     return (
         <>
             <TableContainer
@@ -109,7 +110,7 @@ const TagList = () => {
                 component={Paper}
             >
                 <Table>
-                    {isValidating && (
+                    {loading && (
                         <div className={classes.loading}>
                             <LinearProgress />
                         </div>
@@ -117,7 +118,13 @@ const TagList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell className={classes.smallCell}>
-                                اسم الوسم
+                                السؤال
+                            </TableCell>
+                            <TableCell className={classes.smallCell}>
+                                عدد الاصوات
+                            </TableCell>
+                            <TableCell className={classes.smallCell}>
+                                فعال
                             </TableCell>
                             <TableCell className={classes.smallCell}>
                                 تاريخ الانشاء
@@ -131,41 +138,43 @@ const TagList = () => {
                             <TableCell className={classes.smallCell}>
                                 حدثت بواسطة
                             </TableCell>
-                            <TableCell
-                                style={{
-                                    minWidth: "50px",
-                                }}
-                            >
+                            <TableCell style={{ minWidth: "50px" }}>
                                 أجراءات
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.tags.map((tag) => (
-                            <TagItem
-                                key={tag.tag_id}
-                                tag={tag}
-                                handleOpenDel={handleOpenDel}
-                            />
-                        ))}
+                        {polls
+                            .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                            )
+                            .map((poll) => (
+                                <PollItem
+                                    key={poll.poll_id}
+                                    poll={poll}
+                                    handleOpenDel={handleOpenDel}
+                                    handleOpenEdit={handleOpenEdit}
+                                />
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
-                count={data.results}
+                count={polls.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                labelRowsPerPage="صفوف لكل صفحة:"
                 onChangePage={handleChangePage}
+                labelRowsPerPage="صفوف لكل صفحة:"
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
             {isDel && (
                 <ActionModal
                     close={handleCloseDel}
-                    title="مسح الوسم"
-                    msg={`؟${isDel.tag_name} هل انت متاكد انك تريد مسح`}
+                    title="Delete poll"
+                    msg={`؟${isDel.title} هل انت متاكد انك تريد مسح`}
                     handler={handleDelete}
                     loading={delLoading}
                 />
@@ -174,4 +183,4 @@ const TagList = () => {
     );
 };
 
-export default TagList;
+export default PollList;

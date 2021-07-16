@@ -71,6 +71,13 @@ export const tabs: {
         isDisabled: false,
     },
     {
+        role: "is_editor",
+        name: "استطلاعات الرأي",
+        icon: "/polls.svg",
+        link: "/admin/polls",
+        isDisabled: false,
+    },
+    {
         role: "is_admin",
         name: "الاعضاء",
         icon: "/addNews.svg",
@@ -102,13 +109,6 @@ export const tabs: {
         role: "all",
         name: "إدارة الإعلانات",
         icon: "/advMang.svg",
-        link: "/admin",
-        isDisabled: true,
-    },
-    {
-        role: "all",
-        name: "استطلاعات الرأي",
-        icon: "/polls.svg",
         link: "/admin",
         isDisabled: true,
     },

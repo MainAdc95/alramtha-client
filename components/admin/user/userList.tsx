@@ -115,7 +115,7 @@ const UserList = () => {
                                 رقم الهاتف
                             </TableCell>
                             <TableCell className={classes.smallCell}>
-                                أنشئت في
+                                تاريخ الانشاء
                             </TableCell>
                             <TableCell style={{ minWidth: "50px" }}>
                                 أجراءات

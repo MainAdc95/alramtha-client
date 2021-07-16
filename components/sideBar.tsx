@@ -4,10 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Tabs, Tab, Box } from "@material-ui/core";
+import {
+    Tabs,
+    Tab,
+    Box,
+    Theme,
+    createStyles,
+    makeStyles,
+} from "@material-ui/core";
 import SmallNews from "./news/smallNews";
 import { ITag } from "../types/tag";
 import StickyBox from "react-sticky-box";
+import { IPoll } from "../types/poll";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -38,7 +46,8 @@ const SideBar = () => {
             tags: ITag[];
         }>(`/tags?p=1&r=20`);
     const { data: news } = useSWR("/news?p=1&r=5&type=published");
-
+    const { data: poll } = useSWR<IPoll>("/poll/active");
+    console.log(poll);
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -57,6 +66,7 @@ const SideBar = () => {
     return (
         <StickyBox offsetTop={80} offsetBottom={20}>
             <div className="news-side-bar">
+                <Poll poll={poll} />
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
                     <Tab
                         label="الاكثر شهره"
@@ -97,7 +107,6 @@ const SideBar = () => {
                         </div>
                     </TabPanel>
                 </Box>
-
                 <div style={{ margin: "3rem 0" }}>
                     <div className="author-title">
                         <h1>
@@ -110,7 +119,6 @@ const SideBar = () => {
                             </span>
                         </h1>
                     </div>
-
                     <div className="side-bar-tags">
                         {data &&
                             data.tags.map((i) => (
@@ -120,7 +128,6 @@ const SideBar = () => {
                             ))}
                     </div>
                 </div>
-
                 <div className="side-bar-adv">
                     <Image src="/news1.jpg" layout="fill" objectFit="cover" />
                 </div>
@@ -128,5 +135,81 @@ const SideBar = () => {
         </StickyBox>
     );
 };
+
+const Poll = ({ poll }: { poll: IPoll }) => {
+    const classes = useStyles();
+    const [vote, setVote] = useState<string | null>(null);
+
+    const handleVote = (optionId?: string) => {
+        if (optionId) return setVote(optionId);
+        else if (vote) return setVote(null);
+    };
+
+    if (poll)
+        return (
+            <Box className={classes.root}>
+                <p className={classes.title}>{poll.title}</p>
+                <Box>
+                    {poll.options.map((o) => (
+                        <Box
+                            style={
+                                vote === o.option_id
+                                    ? {
+                                          backgroundColor: `rgb(2, 135, 254)`,
+                                          color: "white",
+                                      }
+                                    : null
+                            }
+                            className={classes.optionContainer}
+                            onClick={() =>
+                                handleVote(
+                                    o.option_id === vote ? null : o.option_id
+                                )
+                            }
+                            key={o.option_id}
+                        >
+                            <Box display="flex" justifyContent="space-between">
+                                <p>{o.name}</p>
+                                {vote && <p>{o.votes}</p>}
+                            </Box>
+                        </Box>
+                    ))}
+                    <p>
+                        عدد الاصوات{" "}
+                        {(() => {
+                            let number = 0;
+
+                            if (vote) number++;
+
+                            poll.options.forEach((o) => (number += o.votes));
+
+                            return number;
+                        })()}
+                    </p>
+                </Box>
+            </Box>
+        );
+
+    return null;
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            marginBottom: "10px",
+        },
+        title: {
+            fontWeight: 800,
+            fontSize: 16,
+            paddingBottom: "15px",
+        },
+        optionContainer: {
+            padding: "10px",
+            border: "1px solid rgb(168, 168, 168)",
+            marginBottom: "10px",
+            cursor: "pointer",
+        },
+    })
+);
 
 export default SideBar;

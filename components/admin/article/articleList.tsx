@@ -247,16 +247,16 @@ const ArticleList = () => {
                                         نشرت
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        أنشئت في
+                                        تاريخ الانشاء
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        تم الأنشاء بواسطة
+                                        انشئت بواسطة
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        تم التحديث في
+                                        تاريخ التحديث
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
-                                        تم التحديث بواسطة
+                                        حدثت بواسطة
                                     </TableCell>
                                     <TableCell style={{ minWidth: "50px" }}>
                                         أجراءات

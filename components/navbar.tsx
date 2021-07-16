@@ -17,10 +17,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import ImageOpt from "./imageOpt";
 
-interface IProps {
-    sections: ISection[];
-}
-
 const Navbar = () => {
     const { data: sections } = useSWR("/sections");
     const classes = useStyles();
@@ -60,7 +56,7 @@ const Navbar = () => {
             window.removeEventListener("scroll", handleCatgBar);
         };
     }, []);
-
+    console.log(sections);
     return (
         <>
             <div className={classes.root}>
@@ -143,22 +139,32 @@ const Navbar = () => {
                                 </a>
                             </Link>
                         </div>
-                        {sections?.map((section, i) => (
-                            <div
-                                className={classes.tabItem}
-                                key={section.section_id}
-                            >
+                        {sections
+                            ?.sort(
+                                (a, b) =>
+                                    Number(a.section_order) -
+                                    Number(b.section_order)
+                            )
+                            ?.map((section, i) => (
                                 <div
-                                    className={classes.tabColorStrip}
-                                    style={{ backgroundColor: section.color }}
-                                ></div>
-                                <Link href={`/sections/${section.section_id}`}>
-                                    <a className={classes.tabLink}>
-                                        {section.section_name}
-                                    </a>
-                                </Link>
-                            </div>
-                        ))}
+                                    className={classes.tabItem}
+                                    key={section.section_id}
+                                >
+                                    <div
+                                        className={classes.tabColorStrip}
+                                        style={{
+                                            backgroundColor: section.color,
+                                        }}
+                                    ></div>
+                                    <Link
+                                        href={`/sections/${section.section_id}`}
+                                    >
+                                        <a className={classes.tabLink}>
+                                            {section.section_name}
+                                        </a>
+                                    </Link>
+                                </div>
+                            ))}
                     </Box>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
