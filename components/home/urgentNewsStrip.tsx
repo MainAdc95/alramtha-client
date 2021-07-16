@@ -57,7 +57,7 @@ const Strip = ({ strip, classes }: { strip?: IStrip; classes: any }) => {
     };
 
     return (
-        <Link href={s.link}>
+        <Link href={strip.link}>
             <a className={classes.newsLink} title={strip.title}>
                 <p>
                     <span

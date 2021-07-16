@@ -34,13 +34,11 @@ const BannerCard = ({ data, type }: IProps) => {
                                         >
                                             {data.section_name}
                                         </a>
-                                        <Link
-                                            href={`/news/${data.news[0].news_id}`}
-                                        >
-                                            <h2>{data.news[0].title}</h2>
+                                        <Link href={`/news/${news.news_id}`}>
+                                            <h2>{news.title}</h2>
                                         </Link>
                                         <ul>
-                                            <li>{data.news[0].created_at}</li>
+                                            <li>{news.created_at}</li>
                                             <li>0 القراء</li>
                                         </ul>
                                     </div>
