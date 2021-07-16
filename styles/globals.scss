@@ -1,3 +1,16 @@
+*,
+::after,
+::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
 html,
 body {
     font-family: "Almarai", sans-serif;
@@ -40,17 +53,18 @@ iframe {
     display: none !important;
 }
 
-*,
-::after,
-::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+.textParserContainer {
+    p {
+        font-size: 20px !important;
+        font-weight: 300 !important;
+        font-family: "Almarai", sans-serif !important;
 
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
+        span {
+            font-size: 20px !important;
+            font-weight: 300 !important;
+            font-family: "Almarai", sans-serif !important;
+        }
+    }
 }
 
 ::-webkit-scrollbar-track {

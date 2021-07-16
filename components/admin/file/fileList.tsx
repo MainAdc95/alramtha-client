@@ -91,7 +91,7 @@ const FileList = () => {
     };
 
     if (error) return <p>An error has occured while fetching files.</p>;
-    else if (!files) return <p>Loading...</p>;
+    else if (!files) return <p>جار التحميل...</p>;
     else if (!files?.length) return <p>There were no files found.</p>;
     return (
         <>

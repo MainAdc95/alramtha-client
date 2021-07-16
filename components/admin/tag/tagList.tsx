@@ -100,7 +100,7 @@ const TagList = () => {
     };
 
     if (error) return <p>An error has occured while fetching tags.</p>;
-    else if (!data) return <p>Loading...</p>;
+    else if (!data) return <p>جار التحميل...</p>;
     else if (!data.tags?.length) return <p>There were no tags found.</p>;
     return (
         <>

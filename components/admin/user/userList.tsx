@@ -82,7 +82,7 @@ const UserList = () => {
     };
 
     if (error) return <p>An error has occured while fetching users.</p>;
-    else if (!data) return <p>Loading...</p>;
+    else if (!data) return <p>جار التحميل...</p>;
     else if (!data.users?.length) return <p>There were no users found.</p>;
     return (
         <>

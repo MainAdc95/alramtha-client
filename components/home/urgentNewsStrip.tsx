@@ -16,6 +16,35 @@ interface IProps {
 const UrgentNewsStrip = ({ strips }: IProps) => {
     const classes = useStyles();
 
+    return (
+        <Box display="flex" className={classes.root}>
+            <Box className={classes.badge} display="flex">
+                <Typography>أخبار عاجلة</Typography>
+                <div className={classes.imgContainer}>
+                    <img className={classes.img} src="/urgent.svg" />
+                </div>
+            </Box>
+            <Marquee pauseOnHover speed={60} gradient={false}>
+                {strips.map((s) => {
+                    if (s.type === "announcement") return;
+
+                    if (new Date(s.duration).getTime() > new Date().getTime())
+                        return (
+                            <Strip
+                                key={s.strip_id}
+                                strip={s}
+                                classes={classes}
+                            />
+                        );
+
+                    return null;
+                })}
+            </Marquee>
+        </Box>
+    );
+};
+
+const Strip = ({ strip, classes }: { strip?: IStrip; classes: any }) => {
     const getColor = (strip: StripType) => {
         switch (strip) {
             case "breakingNews":
@@ -28,32 +57,22 @@ const UrgentNewsStrip = ({ strips }: IProps) => {
     };
 
     return (
-        <Box display="flex" className={classes.root}>
-            <Box className={classes.badge} display="flex">
-                <Typography>أخبار عاجلة</Typography>
-                <div className={classes.imgContainer}>
-                    <img className={classes.img} src="/urgent.svg" />
-                </div>
-            </Box>
-            <Marquee pauseOnHover speed={60} gradient={false}>
-                {strips.map((s) => (
-                    <Link key={s.strip_id} href={s.link}>
-                        <a className={classes.newsLink} title={s.title}>
-                            <p>
-                                <span style={{ color: getColor(s.type) }}>
-                                    {s.title}
-                                </span>{" "}
-                                <span className={classes.time}>
-                                    {new Date(
-                                        s.created_at
-                                    ).toLocaleDateString()}
-                                </span>
-                            </p>
-                        </a>
-                    </Link>
-                ))}
-            </Marquee>
-        </Box>
+        <Link href={s.link}>
+            <a className={classes.newsLink} title={strip.title}>
+                <p>
+                    <span
+                        style={{
+                            color: getColor(strip.type),
+                        }}
+                    >
+                        {strip.title}
+                    </span>{" "}
+                    <span className={classes.time}>
+                        {new Date(strip.created_at).toLocaleDateString()}
+                    </span>
+                </p>
+            </a>
+        </Link>
     );
 };
 

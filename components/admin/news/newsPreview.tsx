@@ -106,7 +106,9 @@ const NewsPreview = ({ news, close }: IProps) => {
                                             width="100%"
                                             className={styles.newsContent}
                                         >
-                                            {parse(news.text)}
+                                            <div className="textParserContainer">
+                                                {parse(news.text)}
+                                            </div>
                                         </Box>
                                         <div className={styles.newsTags}>
                                             <ul>

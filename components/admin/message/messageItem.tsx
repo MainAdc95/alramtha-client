@@ -9,6 +9,7 @@ import {
     Menu,
     MenuItem,
     Box,
+    IconButton,
 } from "@material-ui/core";
 import { IMessage } from "../../../types/message";
 import { apiImage } from "../../../utils/apiCall";
@@ -17,6 +18,9 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCreateNews } from "../../../store/actions/news";
 import { useRouter } from "next/router";
+
+// icons
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 const useStyles = makeStyles({
     root: {
@@ -168,6 +172,15 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                 {message.created_by?.username || (
                     <Typography align="center">-</Typography>
                 )}
+            </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
+                <IconButton onClick={handleDetails}>
+                    <VisibilityIcon />
+                </IconButton>
             </TableCell>
             <TableCell
                 classes={{

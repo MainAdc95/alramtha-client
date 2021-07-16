@@ -75,10 +75,9 @@ const MessageList = () => {
         setDetails(message);
     };
 
-    if (error) return <p>An error has occured while fetching messages.</p>;
-    else if (!data) return <p>Loading...</p>;
-    else if (!data.messages?.length)
-        return <p>There were no messages found.</p>;
+    if (error) return <p>حدث خطأ أثناء جلب الرسائل.</p>;
+    else if (!data) return <p>جار التحميل...</p>;
+    else if (!data.messages?.length) return <p>لم يتم العثور على اي رسائل.</p>;
     return (
         <>
             <TableContainer
@@ -104,6 +103,9 @@ const MessageList = () => {
                             </TableCell>
                             <TableCell className={classes.smallCell}>
                                 ارسلت بواسطة
+                            </TableCell>
+                            <TableCell style={{ minWidth: "50px" }}>
+                                معاينة
                             </TableCell>
                             <TableCell style={{ minWidth: "50px" }}>
                                 أجراءات

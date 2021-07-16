@@ -8,6 +8,7 @@ import {
     Tabs,
     Tab,
     Box,
+    Button,
     Theme,
     createStyles,
     makeStyles,
@@ -16,6 +17,8 @@ import SmallNews from "./news/smallNews";
 import { ITag } from "../types/tag";
 import StickyBox from "react-sticky-box";
 import { IPoll } from "../types/poll";
+import { SettingsInputSvideoTwoTone } from "@material-ui/icons";
+import { apiCall } from "../utils/apiCall";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -139,10 +142,15 @@ const SideBar = () => {
 const Poll = ({ poll }: { poll: IPoll }) => {
     const classes = useStyles();
     const [vote, setVote] = useState<string | null>(null);
+    const [isDisabled, setDisabled] = useState(false);
 
     const handleVote = (optionId?: string) => {
-        if (optionId) return setVote(optionId);
-        else if (vote) return setVote(null);
+        if (!isDisabled && optionId) setVote(optionId);
+    };
+
+    const handleSubmit = async () => {
+        setDisabled(true);
+        await apiCall("post", `/poll/vote/${vote}`);
     };
 
     if (poll)
@@ -150,42 +158,70 @@ const Poll = ({ poll }: { poll: IPoll }) => {
             <Box className={classes.root}>
                 <p className={classes.title}>{poll.title}</p>
                 <Box>
-                    {poll.options.map((o) => (
-                        <Box
-                            style={
-                                vote === o.option_id
-                                    ? {
-                                          backgroundColor: `rgb(2, 135, 254)`,
-                                          color: "white",
-                                      }
-                                    : null
-                            }
-                            className={classes.optionContainer}
-                            onClick={() =>
-                                handleVote(
-                                    o.option_id === vote ? null : o.option_id
-                                )
-                            }
-                            key={o.option_id}
-                        >
-                            <Box display="flex" justifyContent="space-between">
-                                <p>{o.name}</p>
-                                {vote && <p>{o.votes}</p>}
+                    {poll.options
+                        .sort(
+                            (a, b) =>
+                                new Date(a.created_at).getTime() -
+                                new Date(b.created_at).getTime()
+                        )
+                        .map((o) => (
+                            <Box
+                                style={
+                                    vote === o.option_id
+                                        ? {
+                                              backgroundColor: `rgb(2, 135, 254)`,
+                                              color: "white",
+                                          }
+                                        : null
+                                }
+                                className={classes.optionContainer}
+                                onClick={() => handleVote(o.option_id)}
+                                key={o.option_id}
+                            >
+                                <Box
+                                    display="flex"
+                                    justifyContent="space-between"
+                                >
+                                    <p>{o.name}</p>
+                                    {vote && isDisabled && (
+                                        <p>
+                                            {vote === o.option_id
+                                                ? o.votes + 1
+                                                : o.votes}
+                                        </p>
+                                    )}
+                                </Box>
                             </Box>
+                        ))}
+                    {!isDisabled && (
+                        <Box mb={1}>
+                            <Button
+                                disabled={!Boolean(vote)}
+                                color="secondary"
+                                variant="contained"
+                                onClick={handleSubmit}
+                                fullWidth
+                            >
+                                صوت
+                            </Button>
                         </Box>
-                    ))}
-                    <p>
-                        عدد الاصوات{" "}
-                        {(() => {
-                            let number = 0;
+                    )}
+                    {isDisabled && (
+                        <p>
+                            عدد الاصوات{" "}
+                            {(() => {
+                                let number = 0;
 
-                            if (vote) number++;
+                                if (vote) number++;
 
-                            poll.options.forEach((o) => (number += o.votes));
+                                poll.options.forEach(
+                                    (o) => (number += o.votes)
+                                );
 
-                            return number;
-                        })()}
-                    </p>
+                                return number;
+                            })()}
+                        </p>
+                    )}
                 </Box>
             </Box>
         );
@@ -196,7 +232,7 @@ const Poll = ({ poll }: { poll: IPoll }) => {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            marginBottom: "10px",
+            marginBottom: "20px",
         },
         title: {
             fontWeight: 800,

@@ -45,32 +45,32 @@ const Home = ({ info }: IProps) => {
                             <div
                                 className={`${styles.introItem} ${styles.introItem1}`}
                             >
-                                <BannerCard data={sections[0]} type={false} />
+                                <BannerCard data={sections[1]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem2}`}
                             >
-                                <BannerCard data={sections[1]} type={false} />
+                                <BannerCard data={sections[4]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem3}`}
                             >
-                                <BannerCard data={sections[2]} type={true} />
+                                <BannerCard data={sections[0]} type={true} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem4}`}
                             >
-                                <BannerCard data={sections[3]} type={false} />
+                                <BannerCard data={sections[2]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem5}`}
                             >
-                                <BannerCard data={sections[4]} type={false} />
+                                <BannerCard data={sections[3]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem6}`}
                             >
-                                <BannerCard data={sections[5]} type={false} />
+                                <BannerCard data={sections[7]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem7}`}
@@ -80,7 +80,7 @@ const Home = ({ info }: IProps) => {
                             <div
                                 className={`${styles.introItem} ${styles.introItem8}`}
                             >
-                                <BannerCard data={sections[7]} type={false} />
+                                <BannerCard data={sections[5]} type={false} />
                             </div>
                             <div
                                 className={`${styles.introItem} ${styles.introItem9}`}

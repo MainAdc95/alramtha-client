@@ -211,7 +211,7 @@ const ArticleList = () => {
     };
 
     if (error) return <p>An error has occured while fetching article.</p>;
-    else if (!data) return <p>Loading...</p>;
+    else if (!data) return <p>جار التحميل...</p>;
     return (
         <>
             <Box mb={3}>

@@ -213,7 +213,7 @@ const StripForm = ({ strip }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={strip ? "احفظ التغييرات" : "اضافة الوسم"}
+                            text={strip ? "احفظ التغييرات" : "اضافة الشريط"}
                         />
                     </div>
                 </div>

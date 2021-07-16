@@ -114,7 +114,7 @@ const StripList = () => {
     const types: StripType[] = ["default", "breakingNews", "announcement"];
 
     if (error) return <p>An error has occured while fetching strips.</p>;
-    else if (!strips) return <p>Loading...</p>;
+    else if (!strips) return <p>جار التحميل...</p>;
     else if (!strips?.length) return <p>There were no strips found.</p>;
     return (
         <>
