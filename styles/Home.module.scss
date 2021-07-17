@@ -51,47 +51,52 @@
         left: 0;
         width: 100%;
         height: 100%;
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-        grid-gap: 1px;
-        grid-template-areas:
-            "a c c d f h"
-            "a c c d f h"
-            "b c c e g i"
-            "b c c e g i";
 
-        .introItem {
+        .introContainer {
             width: 100%;
             height: 100%;
-        }
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-gap: 1px;
+            grid-template-areas:
+                "a c c d f h"
+                "a c c d f h"
+                "b c c e g i"
+                "b c c e g i";
 
-        .introItem1 {
-            grid-area: a;
-        }
-        .introItem2 {
-            grid-area: b;
-        }
-        .introItem3 {
-            grid-area: c;
-        }
-        .introItem4 {
-            grid-area: d;
-        }
-        .introItem5 {
-            grid-area: e;
-        }
-        .introItem6 {
-            grid-area: f;
-        }
-        .introItem7 {
-            grid-area: g;
-        }
-        .introItem8 {
-            grid-area: h;
-        }
-        .introItem9 {
-            grid-area: i;
+            .introItem {
+                width: 100%;
+                height: 100%;
+            }
+
+            .introItem1 {
+                grid-area: a;
+            }
+            .introItem2 {
+                grid-area: b;
+            }
+            .introItem3 {
+                grid-area: c;
+            }
+            .introItem4 {
+                grid-area: d;
+            }
+            .introItem5 {
+                grid-area: e;
+            }
+            .introItem6 {
+                grid-area: f;
+            }
+            .introItem7 {
+                grid-area: g;
+            }
+            .introItem8 {
+                grid-area: h;
+            }
+            .introItem9 {
+                grid-area: i;
+            }
         }
     }
 

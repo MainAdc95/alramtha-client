@@ -42,50 +42,79 @@ const Home = ({ info }: IProps) => {
                 <div className={styles.page}>
                     <div className={styles.introSection}>
                         <div className={styles.introContent}>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem1}`}
-                            >
-                                <BannerCard data={sections[1]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem2}`}
-                            >
-                                <BannerCard data={sections[4]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem3}`}
-                            >
-                                <BannerCard data={sections[0]} type={true} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem4}`}
-                            >
-                                <BannerCard data={sections[2]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem5}`}
-                            >
-                                <BannerCard data={sections[3]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem6}`}
-                            >
-                                <BannerCard data={sections[7]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem7}`}
-                            >
-                                <BannerCard data={sections[6]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem8}`}
-                            >
-                                <BannerCard data={sections[5]} type={false} />
-                            </div>
-                            <div
-                                className={`${styles.introItem} ${styles.introItem9}`}
-                            >
-                                <BannerCard data={sections[8]} type={false} />
+                            <div className={styles.introContainer}>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem1}`}
+                                >
+                                    <BannerCard
+                                        data={sections[1]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem2}`}
+                                >
+                                    <BannerCard
+                                        data={sections[4]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem3}`}
+                                >
+                                    <BannerCard
+                                        data={sections[0]}
+                                        type={true}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem4}`}
+                                >
+                                    <BannerCard
+                                        data={sections[2]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem5}`}
+                                >
+                                    <BannerCard
+                                        data={sections[3]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem6}`}
+                                >
+                                    <BannerCard
+                                        data={sections[7]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem7}`}
+                                >
+                                    <BannerCard
+                                        data={sections[6]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem8}`}
+                                >
+                                    <BannerCard
+                                        data={sections[5]}
+                                        type={false}
+                                    />
+                                </div>
+                                <div
+                                    className={`${styles.introItem} ${styles.introItem9}`}
+                                >
+                                    <BannerCard
+                                        data={sections[8]}
+                                        type={false}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
