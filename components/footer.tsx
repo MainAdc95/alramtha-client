@@ -146,7 +146,7 @@ const Footer = () => {
                                     <li>تواصل معنا</li>
                                 </Link>{" "}
                                 <Link href="/">
-                                    <li>الصفحة الرأيسية</li>
+                                    <li>الصفحة الرئيسية</li>
                                 </Link>
                             </ul>
                         </Grid>

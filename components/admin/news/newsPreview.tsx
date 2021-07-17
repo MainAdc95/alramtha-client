@@ -95,6 +95,25 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                 ))}
                                             </Slider>
                                         </div>
+                                        {console.log(news.resources)}
+                                        <Box display="flex">
+                                            <p className={styles.resource}>
+                                                المصادر:
+                                                {news.resources.map((r) => (
+                                                    <span key={r.resource_id}>
+                                                        {r.resource}
+                                                        <span
+                                                            className={
+                                                                styles.coma
+                                                            }
+                                                        >
+                                                            ,
+                                                        </span>
+                                                    </span>
+                                                ))}
+                                                .
+                                            </p>
+                                        </Box>
                                         {news.intro && (
                                             <blockquote
                                                 className={styles.newsQoute}

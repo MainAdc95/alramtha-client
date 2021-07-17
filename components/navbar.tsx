@@ -56,7 +56,7 @@ const Navbar = () => {
             window.removeEventListener("scroll", handleCatgBar);
         };
     }, []);
-    console.log(sections);
+
     return (
         <>
             <div className={classes.root}>

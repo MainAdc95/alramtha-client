@@ -15,7 +15,6 @@ const MediumNews = ({ data }: IProps) => {
                 layout="fill"
                 objectFit="cover"
             />
-
             <div className="overlay">
                 <Link href={`/news/${data.news_id}`}>
                     <a>{data.title}</a>

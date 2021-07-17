@@ -137,7 +137,7 @@ const Home = ({ info }: IProps) => {
                         <div className="container">
                             <div className="author-title">
                                 <h1>
-                                    <span>الاخبار اليوم المميزه</span>
+                                    <span>الاخبار الاكثر قراءة</span>
                                 </h1>
                             </div>
                             <div className={styles.swiperWrapper}>
@@ -233,56 +233,11 @@ const Home = ({ info }: IProps) => {
                             </Grid>
                         </div>
                     </div>
-                    <div className={styles.section}>
-                        <div className="container">
-                            <Grid container className="grid-root">
-                                <Grid item xs={12} md={8}>
-                                    <div className="author-title">
-                                        <h1>
-                                            <span>أخر الأخبار</span>
-                                        </h1>
-                                    </div>
-
-                                    <div>
-                                        <Grid
-                                            container
-                                            className={`grid-root`}
-                                            spacing={3}
-                                        >
-                                            {data &&
-                                                data.news.map((item) => (
-                                                    <Grid
-                                                        item
-                                                        xs={12}
-                                                        md={6}
-                                                        key={item.news_id}
-                                                    >
-                                                        <LargeNews
-                                                            data={item}
-                                                            styles={{
-                                                                padding:
-                                                                    "18px 20px",
-                                                                borderBottom:
-                                                                    "1px solid #f0f0f0",
-                                                                backgroundColor:
-                                                                    "#fafafa",
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                ))}
-                                        </Grid>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </div>
-                    </div>
                 </div>
             </div>
         </>
     );
 };
-
-// ("رياضة, اقتصاد, ثقافة, سياحة, تكنولوجيا, سياسة, تحقيق, منوعات, كتاب وآراء");
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const info = await apiCall("get", `/homeInfo`);

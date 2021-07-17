@@ -54,13 +54,48 @@ iframe {
 }
 
 .textParserContainer {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 400 !important;
+        font-family: "Almarai", sans-serif !important;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 26px;
+    }
+
+    h4 {
+        font-size: 24px;
+    }
+
+    h5 {
+        font-size: 22px;
+    }
+
+    h6 {
+        font-size: 20px;
+    }
+
     p {
-        font-size: 20px !important;
+        font-size: 17px !important;
         font-weight: 300 !important;
         font-family: "Almarai", sans-serif !important;
+        line-height: 25px !important;
 
         span {
-            font-size: 20px !important;
+            font-size: 17px !important;
             font-weight: 300 !important;
             font-family: "Almarai", sans-serif !important;
         }

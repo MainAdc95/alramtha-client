@@ -76,7 +76,7 @@ const Gallery = () => {
                                 <h1 className={classes.title}>معرض الصور</h1>
                             </div>
                             <Box display="flex" alignItems="center">
-                                <Box ml={2} style={{ direction: "ltr" }}>
+                                <Box mr={2}>
                                     <MuButton
                                         startIcon={<SortIcon />}
                                         variant="outlined"

@@ -50,7 +50,6 @@ const SideBar = () => {
         }>(`/tags?p=1&r=20`);
     const { data: news } = useSWR("/news?p=1&r=5&type=published");
     const { data: poll } = useSWR<IPoll>("/poll/active");
-    console.log(poll);
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -77,7 +76,7 @@ const SideBar = () => {
                         className="tabs-styles"
                     />
                     <Tab
-                        label="الاجدد"
+                        label="الاحدث"
                         style={selected(1)}
                         className="tabs-styles"
                     />

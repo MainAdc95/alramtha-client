@@ -47,6 +47,7 @@ interface IState {
     intro: string;
     subTitles: { sub_title: string }[];
     tags: ITag[];
+    resources: { resource: string }[];
 }
 
 interface IError {
@@ -59,6 +60,7 @@ interface IError {
     intro: string[];
     tags: string[];
     section: string[];
+    resources: string[];
 }
 
 const NewsForm = ({ news }: IProps) => {
@@ -83,6 +85,10 @@ const NewsForm = ({ news }: IProps) => {
         sub_title: "",
         error: "",
     });
+    const [resource, setResource] = useState({
+        resource: "",
+        error: "",
+    });
     const [errors, setErrors] = useState<IError>({
         thumbnail: [],
         title: [],
@@ -93,6 +99,7 @@ const NewsForm = ({ news }: IProps) => {
         section: [],
         file: [],
         tags: [],
+        resources: [],
     });
     const [state, setState] = useState<IState>({
         title: "",
@@ -104,6 +111,7 @@ const NewsForm = ({ news }: IProps) => {
         intro: "",
         is_published: false,
         subTitles: [],
+        resources: [{ resource: "الرمسة" }],
         tags: [],
     });
 
@@ -152,6 +160,7 @@ const NewsForm = ({ news }: IProps) => {
                 section: news.section?.section_id || "",
                 file: news.file?.file_id || "",
                 subTitles: news.sub_titles || [],
+                resources: news.resources || [],
                 tags: news.tags || [],
                 images: news.images || [],
                 is_published: news.is_published || false,
@@ -226,6 +235,48 @@ const NewsForm = ({ news }: IProps) => {
         return false;
     };
 
+    // ____________________________________ handle resources
+    const handleResource = (e: any) => {
+        setResource({
+            ...resource,
+            [e.target.name]: e.target.value,
+        });
+
+        validateResource(e.target.value);
+    };
+
+    const addResource = () => {
+        if (validateResource(resource.resource)) return;
+
+        setState({
+            ...state,
+            resources: [...state.resources, { resource: resource.resource }],
+        });
+
+        setResource({ ...resource, resource: "" });
+    };
+
+    const removeResource = (index: any) => {
+        setState({
+            ...state,
+            resources: state.resources.filter((s, i) => i !== index),
+        });
+    };
+
+    const validateResource = (val: string) => {
+        if (!val) {
+            setResource((prev: any) => ({
+                ...prev,
+                error: "Please fill in resource.",
+            }));
+
+            return true;
+        }
+
+        setResource((prev: any) => ({ ...prev, error: "" }));
+        return false;
+    };
+
     // ________________________________________________ tags
     const handleTags = (e: any, values: any) => {
         setState({ ...state, tags: values });
@@ -278,35 +329,8 @@ const NewsForm = ({ news }: IProps) => {
             section: [],
             file: [],
             tags: [],
+            resources: [],
         };
-
-        // if (!state.thumbnail) {
-        //     TmpErrors.thumbnail.push("Please choose a thumbnail.");
-        // }
-
-        // if (!state.title.trim()) {
-        //     TmpErrors.title.push("Please fill in title.");
-        // }
-
-        // if (!state.text) {
-        //     TmpErrors.text.push("Please fill in text.");
-        // }
-
-        // if (!state.section) {
-        //     TmpErrors.section.push("Please choose a section.");
-        // }
-
-        // if (!state.file) {
-        //     TmpErrors.file.push("Please choose a file.");
-        // }
-
-        // if (!state.images.length) {
-        //     TmpErrors.images.push("Please pick at least one image.");
-        // }
-
-        // if (!state.tags.length) {
-        //     TmpErrors.tags.push("Please pick at least one tag.");
-        // }
 
         setErrors(TmpErrors);
 
@@ -446,6 +470,56 @@ const NewsForm = ({ news }: IProps) => {
                                         color="purple"
                                         variant="contained"
                                         onClick={addSubTitle}
+                                        loading={loading}
+                                        text={"أضافة عنوان فرعي"}
+                                    />
+                                </Box>
+                            </div>
+                            <Box mb={3}>
+                                <Divider />
+                            </Box>
+                            <div className={classes.resourcesWrapper}>
+                                {state.resources.map((sub, i) => (
+                                    <div className={classes.resourceContainer}>
+                                        <p>{sub.resource}</p>
+                                        <div style={{ direction: "ltr" }}>
+                                            <Button
+                                                onClick={() =>
+                                                    removeResource(i)
+                                                }
+                                                text="حذف"
+                                                startIcon={<RemoveIcon />}
+                                                color="red"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={classes.formGroup}>
+                                <TextField
+                                    name="resource"
+                                    label="عنوان فرعي"
+                                    value={resource.resource}
+                                    onChange={handleResource}
+                                    onKeyDown={(e: any) => {
+                                        if (e.keyCode === 13) {
+                                            addResource();
+                                        }
+                                    }}
+                                    errors={{
+                                        resource: resource.error
+                                            ? [resource.error]
+                                            : [],
+                                    }}
+                                    variant="outlined"
+                                />
+                                <Box mt={2}>
+                                    <Button
+                                        fullWidth
+                                        type="button"
+                                        color="purple"
+                                        variant="contained"
+                                        onClick={addResource}
                                         loading={loading}
                                         text={"أضافة عنوان فرعي"}
                                     />
@@ -622,6 +696,17 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(0, 0, 3, 0),
         },
         subTitleContainer: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+        },
+        resourcesWrapper: {
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridGap: "20px",
+            margin: theme.spacing(0, 0, 3, 0),
+        },
+        resourceContainer: {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",

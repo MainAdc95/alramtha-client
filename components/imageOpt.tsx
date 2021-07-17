@@ -12,6 +12,7 @@ interface IProps {
     height?: number;
     draggable?: boolean;
     size?: "s" | "m" | "l";
+    priority?: boolean;
 }
 
 const ImageOpt = ({
@@ -24,11 +25,13 @@ const ImageOpt = ({
     className,
     location,
     draggable,
+    priority,
 }: IProps) => {
     return (
         <>
             <div className="image-opt">
                 <Image
+                    priority={priority === true ? true : false}
                     className={className || ""}
                     src={location === "local" ? src : apiImage(src)}
                     alt={alt}

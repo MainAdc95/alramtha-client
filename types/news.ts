@@ -5,6 +5,7 @@ import { ITag } from "./tag";
 import { IUser } from "./user";
 
 type SubTitle = { sub_title_id: string; sub_title: string };
+type Resource = { resource_id: string; resource: string };
 
 export interface INews {
     news_id: string;
@@ -15,6 +16,7 @@ export interface INews {
     section: ISection;
     file: IFile;
     sub_titles: SubTitle[];
+    resources: Resource[];
     images: IImage[];
     tags: ITag[];
     is_published: boolean;

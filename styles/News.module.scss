@@ -59,12 +59,28 @@
                 height: 100%;
             }
 
+            .resource {
+                font-size: 20px;
+                color: rgb(2, 135, 254);
+                margin-bottom: 10px;
+
+                span {
+                    margin: 0 2px;
+                }
+
+                span:last-child {
+                    .coma {
+                        display: none;
+                    }
+                }
+            }
+
             .newsQoute {
                 padding: 20px;
+                margin-bottom: 15px;
                 padding-left: 70px;
                 background: #eeeeee;
                 border: none;
-                margin: 0 0 20px;
                 position: relative;
                 p {
                     padding: 0 20px;

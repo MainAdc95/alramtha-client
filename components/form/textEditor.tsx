@@ -45,7 +45,6 @@ const TextEditor = ({
                     }
                 }}
                 apiKey="p2f3wrzpsomvt0lvr2uphccyzhlnxzopddrmptrb4addcxon"
-                onPaste={(e) => console.log(e.currentTarget)}
                 init={{
                     height: 400,
                     language: "ar",
