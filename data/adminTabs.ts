@@ -79,17 +79,17 @@ export const tabs: {
     },
     {
         role: "is_admin",
+        name: "الاشتراكات",
+        icon: "/subscriptions.svg",
+        link: "/admin/newsLetter",
+        isDisabled: false,
+    },
+    {
+        role: "is_admin",
         name: "الاعضاء",
         icon: "/addNews.svg",
         link: "/admin/users",
         isDisabled: false,
-    },
-    {
-        role: "all",
-        name: "الاشتراكات",
-        icon: "/subscriptions.svg",
-        link: "/admin",
-        isDisabled: true,
     },
     {
         role: "all",

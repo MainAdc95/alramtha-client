@@ -76,10 +76,6 @@ const PollList = ({ polls, loading }: IProps) => {
         setEdit(poll);
     };
 
-    const handleCloseEdit = () => {
-        setEdit(null);
-    };
-
     const handleDelete = async () => {
         try {
             setDelLoading(true);

@@ -1,11 +1,6 @@
-import {
-    createStyles,
-    makeStyles,
-    Theme,
-    Box,
-    Typography,
-} from "@material-ui/core";
-import Marquee from "react-fast-marquee";
+import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
+import { useState } from "react";
+import Marquee from "react-marquee-slider";
 import Link from "next/link";
 import { IStrip, StripType } from "../../types/strip";
 
@@ -15,31 +10,41 @@ interface IProps {
 
 const UrgentNewsStrip = ({ strips }: IProps) => {
     const classes = useStyles();
+    const [vol, setVol] = useState(50);
+
+    const handleVol = (v?: number) => {
+        setVol(v);
+    };
 
     return (
-        <Box display="flex" className={classes.root}>
-            <Box className={classes.badge} display="flex">
-                <Typography>أخبار عاجلة</Typography>
-                <div className={classes.imgContainer}>
-                    <img className={classes.img} src="/urgent.svg" />
-                </div>
-            </Box>
-            <Marquee pauseOnHover speed={60} gradient={false}>
-                {strips.map((s) => {
-                    if (s.type === "announcement") return;
+        <Box
+            onMouseOver={() => handleVol(0)}
+            onMouseLeave={() => handleVol(50)}
+            display="flex"
+            className={classes.root}
+        >
+            {strips?.length ? (
+                // @ts-ignore
+                <Marquee direction="ltr" velocity={vol}>
+                    {strips.map((s) => {
+                        if (s.type === "default") return null;
 
-                    if (new Date(s.duration).getTime() > new Date().getTime())
-                        return (
-                            <Strip
-                                key={s.strip_id}
-                                strip={s}
-                                classes={classes}
-                            />
-                        );
+                        if (
+                            new Date(s.duration).getTime() >
+                            new Date().getTime()
+                        )
+                            return (
+                                <Strip
+                                    key={s.strip_id}
+                                    strip={s}
+                                    classes={classes}
+                                />
+                            );
 
-                    return null;
-                })}
-            </Marquee>
+                        return null;
+                    })}
+                </Marquee>
+            ) : null}
         </Box>
     );
 };
@@ -56,13 +61,33 @@ const Strip = ({ strip, classes }: { strip?: IStrip; classes: any }) => {
         }
     };
 
+    const translateType = (type: StripType) => {
+        switch (type) {
+            case "default":
+                return "رسائل دائمة";
+            case "breakingNews":
+                return "خبر عاجل";
+            case "announcement":
+                return "تنويه";
+            default:
+                return "";
+        }
+    };
+
     return (
         <Link href={strip.link}>
             <a className={classes.newsLink} title={strip.title}>
                 <p>
                     <span
+                        style={{ backgroundColor: getColor(strip.type) }}
+                        className={classes.stripType}
+                    >
+                        {translateType(strip.type)}
+                    </span>
+                    <span
                         style={{
                             color: getColor(strip.type),
+                            fontSize: "16px",
                         }}
                     >
                         {strip.title}
@@ -79,10 +104,14 @@ const Strip = ({ strip, classes }: { strip?: IStrip; classes: any }) => {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            boxShadow: theme.shadows[4],
+            alignItems: "center",
+            width: "100%",
+            margin: "auto",
+            boxShadow: theme.shadows[2],
         },
         newsLink: {
-            margin: theme.spacing(0, 3),
+            display: "flex",
+            padding: theme.spacing(1.5, 2),
         },
         imgContainer: {
             width: "30px",
@@ -105,6 +134,19 @@ const useStyles = makeStyles((theme: Theme) =>
         time: {
             fontSize: "10px",
             margin: "0 10px",
+        },
+        marquee: {
+            backgroundColor: "pink",
+        },
+        stripType: {
+            padding: "5px",
+            display: "inline-block",
+            borderRadius: "5px",
+            color: "white",
+            margin: "0 10px",
+            fontWeight: 900,
+            boxShadow:
+                "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
         },
     })
 );

@@ -41,7 +41,8 @@ const MessageForm = ({ message }: IProps) => {
     const { data: users } = useSWR<IUser[]>(`/users?authId=${user.user_id}`);
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
-    const [imagesPick, setImagesPick] = useState(false);
+    const [imagesPick, setImagesPick] =
+        useState<null | { toForm: boolean }>(null);
     const [isForward, setForward] = useState(false);
     const [replay, setReplay] = useState<string | null>(null);
     const [errors, setErrors] = useState<IError>({
@@ -139,8 +140,12 @@ const MessageForm = ({ message }: IProps) => {
         return true;
     };
 
-    const handlePick = () => {
-        setImagesPick(!imagesPick);
+    const handlePick = (toForm?: boolean) => {
+        if (imagesPick) {
+            return setImagesPick(null);
+        }
+
+        setImagesPick({ toForm: !!toForm });
     };
 
     return (
@@ -181,6 +186,7 @@ const MessageForm = ({ message }: IProps) => {
                                 text="اختر بعض الصور"
                                 name="images"
                                 handler={handlePick}
+                                toForm={() => handlePick(true)}
                                 type="multiple"
                                 images={state.images}
                             />
@@ -211,6 +217,7 @@ const MessageForm = ({ message }: IProps) => {
             </form>
             {imagesPick && (
                 <ImagePicker
+                    openForm={imagesPick.toForm}
                     type="multiple"
                     close={handlePick}
                     state={state}

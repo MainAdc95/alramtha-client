@@ -92,9 +92,9 @@
                 }
             }
             .newsTags {
-                margin: 15px 0;
+                margin: 10px 0;
                 border-bottom: 1px solid #f0f0f0;
-                padding: 0 20px 12px;
+                padding-bottom: 10px;
                 ul {
                     li {
                         display: inline-block;
@@ -102,20 +102,6 @@
                         font-size: 13px;
                         margin-right: 3px;
                         margin-bottom: 2px;
-                        a {
-                            display: inline-block;
-                            cursor: pointer;
-                            transition: 0.4s ease-in-out;
-                            padding: 6px 10px;
-                            border: 1px solid #efefef;
-                            border-radius: 2px;
-                            color: #999999;
-                            font-size: 12px;
-                        }
-                        a:hover {
-                            background-color: #222222;
-                            color: white;
-                        }
                     }
                 }
             }

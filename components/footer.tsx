@@ -4,7 +4,6 @@ import Image from "next/image";
 // impoer ImageOpt from "./imageOpt";
 import SmallNews from "./news/smallNews";
 import { Box, Grid } from "@material-ui/core";
-import { small_3, categories, fleckr } from "../utils/seeds";
 import useSWR from "swr";
 
 // Styles
@@ -12,6 +11,7 @@ import styles from "../styles/Footer.module.scss";
 import ImageOpt from "./imageOpt";
 import { ITag } from "../types/tag";
 import { INews } from "../types/news";
+import NewsLetter from "./newsLetter";
 
 const Footer = () => {
     const { data, error, isValidating } =
@@ -65,14 +65,15 @@ const Footer = () => {
                                         />
                                     </div>{" "}
                                 </Box>
-                                <Box
+                                {/* <Box
                                     mb="25px"
-                                    height="80px"
                                     display="flex"
                                     flexDirection="column"
                                     alignItems="flex-start"
                                     justifyContent="space-between"
+                                    style={{ backgroundColor: "white" }}
                                 >
+                                    <NewsLetter />
                                     <p style={{ color: "white" }}>
                                         أدخل عنوان بريدك الإلكتروني لتلقي
                                         التحديثات اليومية
@@ -82,7 +83,7 @@ const Footer = () => {
                                         style={{ width: "90%" }}
                                         className="form-input"
                                     />
-                                </Box>
+                                </Box> */}
                             </div>
                         </Grid>
 

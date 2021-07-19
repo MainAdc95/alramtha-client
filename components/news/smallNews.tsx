@@ -11,11 +11,13 @@ const SmallNews = ({ data }: IProps) => {
     return (
         <li className="small-news">
             <div className="news-img">
-                <ImageOpt
-                    src={data.thumbnail?.sizes?.s}
-                    layout="fill"
-                    objectFit="cover"
-                />
+                <div>
+                    <ImageOpt
+                        src={data.thumbnail?.sizes?.s}
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                </div>
             </div>
             <div className="news-info">
                 <h2>

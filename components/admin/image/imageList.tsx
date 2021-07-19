@@ -38,11 +38,6 @@ const ImageList = ({ images, sortOption }: IProps) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
     const handleOpenDel = (product: IImage) => {
         setDel(product);
     };

@@ -33,3 +33,6 @@ export const SET_AR_LOCALE = "SET_AR_LOCALE";
 // ______________________________________________ news
 export const ADD_TO_CREATE_NEWS = "ADD_TO_CREATE_NEWS";
 export const REMOVE_TO_CREATE_NEWS = "REMOVE_TO_CREATE_NEWS";
+
+// ________________________________________ polls
+export const VOTE_POLL = "VOTE_POLL";

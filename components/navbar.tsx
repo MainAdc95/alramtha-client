@@ -62,7 +62,7 @@ const Navbar = () => {
             <div className={classes.root}>
                 <AppBar classes={{ root: classes.appbar }} position="static">
                     <Box className={classes.strip}>
-                        <Box className={classes.stripSocialMedia}>
+                        {/* <Box className={classes.stripSocialMedia}>
                             <Box>
                                 <Typography className={classes.stripTxt}>
                                     facebook
@@ -78,30 +78,37 @@ const Navbar = () => {
                                     facebook
                                 </Typography>
                             </Box>
-                        </Box>
-                        <Typography className={classes.stripTxt}>
-                            {time.setLocale("ar").toLocaleString({
-                                weekday: "short",
-                                month: "short",
-                                day: "2-digit",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                            })}
-                        </Typography>
+                        </Box> */}
+                        <div className={classes.stripContent}>
+                            <Typography className={classes.stripTxt}>
+                                {time.setLocale("ar").toLocaleString({
+                                    weekday: "short",
+                                    month: "short",
+                                    day: "2-digit",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                })}
+                            </Typography>
+                        </div>
                     </Box>
-                    <Toolbar className={classes.toolbar}>
-                        <Link href="/">
-                            <a>
-                                <div className={classes.logoContianer}>
-                                    <ImageOpt
-                                        src="/logo.svg"
-                                        location="local"
-                                        layout="fill"
-                                        objectFit="contain"
-                                    />
-                                </div>
-                            </a>
-                        </Link>
+                    <div className={classes.toolbar}>
+                        <Box>
+                            <Link href="/">
+                                <a>
+                                    <div className={classes.logoContianer}>
+                                        <ImageOpt
+                                            src="/logo.svg"
+                                            location="local"
+                                            layout="fill"
+                                            objectFit="contain"
+                                        />
+                                    </div>
+                                </a>
+                            </Link>
+                            <p className={classes.motto}>
+                                من العالم المبتدأ ... ونحن الخبر
+                            </p>
+                        </Box>
                         <Box className={classes.adsContainer}>
                             <img className={classes.adsImg} src="/ads.png" />
                         </Box>
@@ -122,7 +129,7 @@ const Navbar = () => {
                                     </Box>
                                 </Box>
                             </div> */}
-                    </Toolbar>
+                    </div>
                 </AppBar>
             </div>
             <div ref={categ} className={classes.sectionsContainer}>
@@ -195,19 +202,25 @@ const useStyles = makeStyles((theme: Theme) =>
         strip: {
             display: "flex",
             justifyContent: "space-between",
-            margin: "0 auto",
-            height: "30px",
+            height: "40px",
             alignItems: "center",
+            width: "100%",
+            zIndex: 5,
+            boxShadow:
+                "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+            backgroundColor: "rgb(2, 135, 254)",
+        },
+        stripContent: {
+            margin: "0 auto",
             width: "1200px",
-            padding: theme.spacing(0.5, 0),
-            borderBottom: `1px solid rgb(194, 194, 194)`,
         },
         stripSocialMedia: {
             display: "flex",
         },
         stripTxt: {
-            fontSize: "13px",
+            fontSize: "16px",
             color: "white",
+            fontWeight: 100,
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -221,10 +234,9 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "1200px",
             height: "100%",
             display: "flex",
-            justifyContent: "space-between",
+            alignItems: "flex-start",
+            // justifyContent: "space-between",
             margin: "0 auto",
-            alignItems: "center",
-            padding: theme.spacing(1, 0),
         },
         title: {
             display: "none",
@@ -267,8 +279,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         logoContianer: {
             position: "relative",
-            height: "140px",
-            minWidth: "187px",
+            height: "130px",
+            minWidth: "177px",
         },
         logo: {
             position: "absolute",
@@ -320,17 +332,16 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: "all 0.2s ease",
         },
         adsContainer: {
-            position: "relative",
             height: "80%",
             width: "50%",
-            margin: theme.spacing(0, 3),
+            // margin: theme.spacing(0, 3),
             display: "flex",
+            margin: "auto",
             justifyContent: "center",
         },
         adsImg: {
-            position: "absolute",
-            width: "100%",
-            height: "100%",
+            maxHeight: "100%",
+            maxWidth: "100%",
         },
         sectionsContainer: {
             backgroundColor: theme.palette.grey[100],
@@ -347,6 +358,12 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "40px",
             width: "1200px",
             margin: "auto",
+        },
+        motto: {
+            textAlign: "center",
+            marginTop: "5px",
+            fontWeight: 900,
+            fontSize: "12px",
         },
     })
 );

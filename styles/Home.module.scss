@@ -1,7 +1,37 @@
 .page {
     width: 100%;
     min-height: 100vh;
-    margin: 0 0 2rem;
+
+    .container {
+        width: 1200px;
+        max-width: 95%;
+    }
+
+    .filesContainer {
+        width: 1200px;
+        max-width: 95%;
+        margin: 30px auto;
+    }
+
+    .mainSection {
+        width: 1200px;
+        max-width: 95%;
+        margin: 50px auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
+
+        .content {
+            grid-column: 1 / 4;
+            width: 100%;
+            grid-row: 1 / 2;
+        }
+
+        .aside {
+            grid-column: 4 / 5;
+            grid-row: 1 / 2;
+        }
+    }
 
     // Swiper
     .swiper {
@@ -20,7 +50,6 @@
         }
     }
 
-    // // Banner
     .banner {
         overflow: hidden;
         margin-top: -1px;
@@ -103,28 +132,129 @@
     &:after {
         content: "";
         display: block;
-        padding-bottom: 28%;
+        padding-bottom: 22.25%;
     }
 }
 
-@media (min-width: 320px) {
-    .itemImg {
-        height: 370px;
-    }
-}
-@media (min-width: 768px) {
-    .itemImg {
-        height: 200px;
-    }
-}
-@media (min-width: 992px) {
-    .itemImg {
-        height: 240px;
+@media screen and (max-width: 1650px) {
+    .introSection {
+        .introContent {
+            .introContainer {
+                grid-template-columns: repeat(8, 1fr);
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+                grid-template-areas:
+                    "a a c c c c d d"
+                    "a a c c c c d d"
+                    "b b c c c c e e"
+                    "b b c c c c e e"
+                    "f f h h g g i i"
+                    "f f h h g g i i";
+            }
+        }
+
+        &:after {
+            padding-bottom: 48%;
+        }
     }
 }
 
-@media (min-width: 1200px) {
-    .itemImg {
-        height: 300px;
+@media screen and (max-width: 1200px) {
+    .introSection {
+        .introContent {
+            .introContainer {
+                grid-template-columns: repeat(9, 1fr);
+                grid-template-rows: 1fr 1fr 1fr;
+                grid-template-areas:
+                    "f f f b b b a a a"
+                    "e e e c c c d d d"
+                    "g g g h h h i i i";
+            }
+        }
+
+        &:after {
+            padding-bottom: 70%;
+        }
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .introSection {
+        .introContent {
+            .introContainer {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+                grid-template-areas:
+                    "c c"
+                    "c c"
+                    "a b"
+                    "d e"
+                    "f g"
+                    "h i";
+            }
+        }
+
+        &:after {
+            padding-bottom: 190%;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .page {
+        .mainSection {
+            grid-template-columns: 1fr;
+
+            .content {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+            }
+
+            .aside {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .introSection {
+        .introContent {
+            .introContainer {
+                display: flex;
+                flex-direction: column;
+                .introItem1 {
+                    order: 2;
+                }
+                .introItem2 {
+                    order: 3;
+                }
+                .introItem3 {
+                    order: 1;
+                }
+                .introItem4 {
+                    order: 4;
+                }
+                .introItem5 {
+                    order: 5;
+                }
+                .introItem6 {
+                    order: 6;
+                }
+                .introItem7 {
+                    order: 7;
+                }
+                .introItem8 {
+                    order: 8;
+                }
+                .introItem9 {
+                    order: 9;
+                }
+            }
+        }
+
+        &:after {
+            padding-bottom: 550%;
+        }
     }
 }

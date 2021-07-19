@@ -1,14 +1,22 @@
-import HoverBox from "./hoverBox";
-import SmallNews from "./news/smallNews";
-import Slider from "./slider";
-import { SwiperSlide } from "swiper/react";
+import {
+    createStyles,
+    makeStyles,
+    Theme,
+    Box,
+    CircularProgress,
+} from "@material-ui/core";
+import useSWR from "swr";
+import { INews } from "../types/news";
+import { ISection } from "../types/section";
+import Pagination from "@material-ui/lab/Pagination";
+import LargeNews from "./news/largeNews";
+import { useEffect, useState } from "react";
 
 interface IProps {
     data: any;
-    styles: any;
 }
 
-const SectionNews = ({ data, styles }: IProps) => {
+const SectionNews = ({ data }: IProps) => {
     if (data?.news?.length)
         return (
             <div style={{ marginBottom: "25px" }}>
@@ -23,33 +31,80 @@ const SectionNews = ({ data, styles }: IProps) => {
                         </span>
                     </h1>
                 </div>
-
-                <Slider slidesPerView={2} spaceBetween={50}>
-                    {data.news.map((news) => (
-                        <SwiperSlide key={news.news_id}>
-                            <div className={styles.sectionItem}>
-                                <div className={styles.itemImg}>
-                                    <HoverBox data={news} />
-                                </div>
-                                <ul
-                                    style={{
-                                        marginBottom: "10px",
-                                    }}
-                                >
-                                    {data.news.map((item) => (
-                                        <SmallNews
-                                            key={item.news_id}
-                                            data={item}
-                                        />
-                                    ))}
-                                </ul>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Slider>
+                <NewsList section={data} />
             </div>
         );
-    else return null;
+
+    return null;
 };
+
+const NewsList = ({ section }: { section: ISection }) => {
+    const classes = useStyles();
+    const rowsPerPage = 4;
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const { data } = useSWR<{ results: number; news: INews[] }>(
+        `/news?p=${page}&r=${rowsPerPage}&type=published&sectionId=${section.section_id}`
+    );
+
+    useEffect(() => {
+        if (data) {
+            setCount(Math.ceil(data.results / rowsPerPage));
+        }
+    }, [data]);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    return (
+        <div className={classes.root}>
+            {!data ? (
+                <div className={classes.loadingContaienr}>
+                    <CircularProgress color="primary" />
+                </div>
+            ) : (
+                <div className={classes.list}>
+                    {data.news?.map((n) => (
+                        <LargeNews key={n.news_id} news={n} />
+                    ))}
+                </div>
+            )}
+            <Pagination
+                onChange={handleChangePage}
+                count={count}
+                shape="rounded"
+                color="primary"
+            />
+        </div>
+    );
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {},
+        list: {
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridGap: "20px",
+            marginBottom: "20px",
+            "@media screen and (max-width: 1000px)": {
+                gridTemplateColumns: "1fr",
+            },
+            "@media screen and (max-width: 800px)": {
+                gridTemplateColumns: "1fr 1fr",
+            },
+            "@media screen and (max-width: 550px)": {
+                gridTemplateColumns: "1fr",
+            },
+        },
+        loadingContaienr: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "550px",
+        },
+    })
+);
 
 export default SectionNews;

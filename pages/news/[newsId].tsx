@@ -90,6 +90,28 @@ const NewsPage = ({ news }: IProps) => {
                                                 ))}
                                             </Slider>
                                         </div>
+                                        {news.resources && (
+                                            <Box display="flex">
+                                                <p className={styles.resource}>
+                                                    المصادر:
+                                                    {news.resources.map((r) => (
+                                                        <span
+                                                            key={r.resource_id}
+                                                        >
+                                                            {r.resource}
+                                                            <span
+                                                                className={
+                                                                    styles.coma
+                                                                }
+                                                            >
+                                                                ,
+                                                            </span>
+                                                        </span>
+                                                    ))}
+                                                    .
+                                                </p>
+                                            </Box>
+                                        )}
                                         {news.intro && (
                                             <blockquote
                                                 className={styles.newsQoute}
@@ -112,7 +134,7 @@ const NewsPage = ({ news }: IProps) => {
                                                         <Link
                                                             href={`/tags/${tag.tag_id}`}
                                                         >
-                                                            <a>
+                                                            <a className="tag">
                                                                 {tag.tag_name}
                                                             </a>
                                                         </Link>

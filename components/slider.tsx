@@ -5,11 +5,17 @@ interface IProps {
     children: React.ReactNode[];
     slidesPerView?: number;
     spaceBetween?: number;
+    breakingpoints?: any;
 }
 
 SwiperCore.use([Navigation, Autoplay]);
 
-const Slider = ({ children, spaceBetween, slidesPerView }: IProps) => {
+const Slider = ({
+    children,
+    spaceBetween,
+    slidesPerView,
+    breakingpoints,
+}: IProps) => {
     return (
         <Swiper
             style={{ width: "100%", height: "100%" }}
@@ -17,6 +23,7 @@ const Slider = ({ children, spaceBetween, slidesPerView }: IProps) => {
             navigation
             autoplay={{ disableOnInteraction: true, delay: 2500 }}
             slidesPerView={slidesPerView || 1}
+            breakpoints={breakingpoints || null}
         >
             {children}
         </Swiper>

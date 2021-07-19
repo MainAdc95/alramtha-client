@@ -498,7 +498,7 @@ const NewsForm = ({ news }: IProps) => {
                             <div className={classes.formGroup}>
                                 <TextField
                                     name="resource"
-                                    label="عنوان فرعي"
+                                    label="المصدر"
                                     value={resource.resource}
                                     onChange={handleResource}
                                     onKeyDown={(e: any) => {
@@ -521,7 +521,7 @@ const NewsForm = ({ news }: IProps) => {
                                         variant="contained"
                                         onClick={addResource}
                                         loading={loading}
-                                        text={"أضافة عنوان فرعي"}
+                                        text={"أضافة المصدر"}
                                     />
                                 </Box>
                             </div>

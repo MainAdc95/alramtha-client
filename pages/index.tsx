@@ -22,18 +22,19 @@ import styles from "../styles/Home.module.scss";
 import SectionNews from "../components/sectionNews";
 import ImageOpt from "../components/imageOpt";
 
+// tmrNews === todays most read news
+
 interface IProps {
-    info: { sections: ISection[]; strips: IStrip[]; files: IFile[] };
+    info: {
+        sections: ISection[];
+        strips: IStrip[];
+        files: IFile[];
+        tmrNews: INews[];
+    };
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections, strips, files } = info;
-
-    const { data } =
-        useSWR<{
-            results: number;
-            news: INews[];
-        }>("/news");
+    const { sections, strips, files, tmrNews } = info;
 
     return (
         <>
@@ -119,8 +120,25 @@ const Home = ({ info }: IProps) => {
                         </div>
                     </div>
                     <UrgentNewsStrip strips={strips} />
-                    <Box mb={2} mt={2} width="1170px" ml="auto" mr="auto">
-                        <Slider slidesPerView={6} spaceBetween={10}>
+                    <Box className={styles.filesContainer}>
+                        <Slider
+                            slidesPerView={6}
+                            spaceBetween={10}
+                            breakingpoints={{
+                                0: {
+                                    slidesPerView: 3,
+                                },
+                                600: {
+                                    slidesPerView: 4,
+                                },
+                                900: {
+                                    slidesPerView: 5,
+                                },
+                                1200: {
+                                    slidesPerView: 6,
+                                },
+                            }}
+                        >
                             {files.map((file) => (
                                 <SwiperSlide
                                     className="file-container"
@@ -166,16 +184,18 @@ const Home = ({ info }: IProps) => {
                         <div className="container">
                             <div className="author-title">
                                 <h1>
-                                    <span>الاخبار الاكثر قراءة</span>
+                                    <span>
+                                        اكثر 10 اخبار قراءة لهذا الأسبوع
+                                    </span>
                                 </h1>
                             </div>
                             <div className={styles.swiperWrapper}>
                                 <Slider slidesPerView={4}>
-                                    {data &&
-                                        data.news.map((item) => (
+                                    {tmrNews &&
+                                        tmrNews.map((item) => (
                                             <SwiperSlide key={item.news_id}>
                                                 <LargeNews
-                                                    data={item}
+                                                    news={item}
                                                     styles={{
                                                         padding: "18px 20px",
                                                         borderBottom:
@@ -190,76 +210,20 @@ const Home = ({ info }: IProps) => {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.section}>
-                        <div className="container">
-                            <Grid container className="grid-root" spacing={1}>
-                                <Grid item xs={12} md={8}>
-                                    <SectionNews
-                                        data={sections[0]}
-                                        styles={styles}
-                                    />
-                                    <div className="adv-wide-box">
-                                        <Image src="/news1.jpg" layout="fill" />
-                                    </div>
-
-                                    <SectionNews
-                                        data={sections[1]}
-                                        styles={styles}
-                                    />
-
-                                    <SectionNews
-                                        data={sections[2]}
-                                        styles={styles}
-                                    />
-                                    <div className="adv-wide-box">
-                                        <Image src="/news1.jpg" layout="fill" />
-                                    </div>
-
-                                    <SectionNews
-                                        data={sections[3]}
-                                        styles={styles}
-                                    />
-
-                                    <SectionNews
-                                        data={sections[4]}
-                                        styles={styles}
-                                    />
-
-                                    <div className="adv-wide-box">
-                                        <Image src="/news1.jpg" layout="fill" />
-                                    </div>
-
-                                    <SectionNews
-                                        data={sections[5]}
-                                        styles={styles}
-                                    />
-
-                                    <SectionNews
-                                        data={sections[6]}
-                                        styles={styles}
-                                    />
-
-                                    <div className="adv-wide-box">
-                                        <Image src="/news1.jpg" layout="fill" />
-                                    </div>
-                                    <SectionNews
-                                        data={sections[7]}
-                                        styles={styles}
-                                    />
-
-                                    <SectionNews
-                                        data={sections[8]}
-                                        styles={styles}
-                                    />
-
-                                    <div className="adv-wide-box">
-                                        <Image src="/news1.jpg" layout="fill" />
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <SideBar />
-                                </Grid>
-                            </Grid>
+                    <div className={styles.mainSection}>
+                        <aside className={styles.aside}>
+                            <SideBar />
+                        </aside>
+                        <div className={styles.content}>
+                            {sections
+                                ?.sort(
+                                    (a, b) =>
+                                        Number(a.section_order) -
+                                        Number(b.section_order)
+                                )
+                                .map((s) => (
+                                    <SectionNews key={s.section_id} data={s} />
+                                ))}
                         </div>
                     </div>
                 </div>
