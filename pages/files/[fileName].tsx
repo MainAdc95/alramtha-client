@@ -50,7 +50,7 @@ const SectionTags = ({ section }: IProps) => {
                                             key={item.news_id}
                                         >
                                             <LargeNews
-                                                data={item}
+                                                news={item}
                                                 styles={{
                                                     padding: "18px 20px",
                                                     borderBottom:
