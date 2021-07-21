@@ -134,7 +134,7 @@ const NewsPage = ({ news }: IProps) => {
                                                             styles.resource
                                                         }
                                                     >
-                                                        المصادر:
+                                                        المصدر:
                                                         {news.resources.map(
                                                             (r) => (
                                                                 <span

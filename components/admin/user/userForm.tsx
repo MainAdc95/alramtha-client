@@ -105,6 +105,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                             <FormControlLabel
                                 control={
                                     <Switch
+                                        color="primary"
                                         checked={state.is_editor}
                                         onChange={handleChange}
                                         name="is_editor"
@@ -115,6 +116,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                             <FormControlLabel
                                 control={
                                     <Switch
+                                        color="primary"
                                         checked={state.is_reporter}
                                         onChange={handleChange}
                                         name="is_reporter"
@@ -125,6 +127,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                             <FormControlLabel
                                 control={
                                     <Switch
+                                        color="primary"
                                         checked={state.is_blocked}
                                         onChange={handleChange}
                                         name="is_blocked"
@@ -135,6 +138,7 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                             <FormControlLabel
                                 control={
                                     <Switch
+                                        color="primary"
                                         checked={state.is_active}
                                         onChange={handleChange}
                                         name="is_active"

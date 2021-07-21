@@ -125,7 +125,7 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                             styles.resource
                                                         }
                                                     >
-                                                        المصادر:
+                                                        المصدر:
                                                         {news.resources.map(
                                                             (r) => (
                                                                 <span
