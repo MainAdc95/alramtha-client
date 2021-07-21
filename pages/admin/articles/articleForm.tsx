@@ -18,7 +18,7 @@ import ArticleForm from "../../../components/admin/article/articleForm";
 const Form = () => {
     const router = useRouter();
     const { data: article } = useSWR<IArticle>(
-        router.query.articleId ? `/article/${router.query.articleId}` : null
+        router.query.articleId ? `/articles/${router.query.articleId}` : null
     );
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });

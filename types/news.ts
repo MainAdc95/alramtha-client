@@ -16,6 +16,7 @@ export interface INews {
     section: ISection;
     file: IFile;
     sub_titles: SubTitle[];
+    readers: number;
     resources: Resource[];
     images: IImage[];
     tags: ITag[];

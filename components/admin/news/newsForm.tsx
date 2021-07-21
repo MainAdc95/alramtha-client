@@ -571,7 +571,7 @@ const NewsForm = ({ news }: IProps) => {
                                             variant="outlined"
                                             label="وسوم"
                                             onChange="none"
-                                            placeholder="أختر بعض وسوم"
+                                            placeholder="أختر بعض الوسوم"
                                         />
                                     )}
                                 />

@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) => {
             display: "flex",
             width: "100%",
             maxWidth: "100%",
-            minHeight: "100vh",
         },
         sidebar: {
             minWidth: `${sidebarWidth}px`,
@@ -51,7 +50,6 @@ const useStyles = makeStyles((theme: Theme) => {
         children: {
             width: `calc(100% - ${sidebarWidth}px)`,
             maxWidth: "100%",
-            minHeight: "100vh",
             padding: theme.spacing(5),
             paddingTop: "0",
         },

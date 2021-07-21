@@ -26,11 +26,9 @@ import ImageInput from "../../form/imageInput";
 import Select from "../../form/select";
 import TextEditor from "../../form/textEditor";
 import TagForm from "../tag/tagForm";
-// import NewsPreview from "./articlePreview";
 
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
-import { IFile } from "../../../types/file";
 
 interface IProps {
     article?: IArticle;
@@ -43,7 +41,6 @@ interface IState {
     text: string;
     images: IImage[];
     section: string;
-    // file: string;
     intro: string;
     subTitles: { sub_title: string }[];
     tags: ITag[];
@@ -55,21 +52,16 @@ interface IError {
     is_published: string[];
     text: string[];
     images: string[];
-    // file: string[];
     intro: string[];
     tags: string[];
     section: string[];
 }
 
-const NewsForm = ({ article }: IProps) => {
+const ArticleForm = ({ article }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const { data: sections } = useSWR<ISection[]>(`/sections`);
-    // const { data: files } = useSWR<IFile[]>(`/files`);
     const [loading, setLoading] = useState<boolean>(false);
-    // const toCreate: any = useSelector(
-    //     (state: RootReducer) => state.article.toCreate
-    // );
     const [createFrom, setCreateFrom] =
         useState<"message" | "rss" | null>(null);
     const user = useSelector((state: RootReducer) => state.auth.user);
@@ -150,7 +142,6 @@ const NewsForm = ({ article }: IProps) => {
                 intro: article.intro || "",
                 text: article.text || "",
                 section: article.section?.section_id || "",
-                // file: article.file?.file_id || "",
                 subTitles: article.sub_titles || [],
                 tags: article.tags || [],
                 images: article.images || [],
@@ -497,7 +488,7 @@ const NewsForm = ({ article }: IProps) => {
                                             variant="outlined"
                                             label="وسوم"
                                             onChange="none"
-                                            placeholder="أختر بعض وسوم"
+                                            placeholder="أختر بعض الوسوم"
                                         />
                                     )}
                                 />
@@ -631,4 +622,4 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default NewsForm;
+export default ArticleForm;

@@ -1,13 +1,11 @@
 import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { ISection } from "../types/section";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 // components
 import GeoLocationInfo from "../components/geoLocationInfo";
@@ -18,7 +16,9 @@ import HomeIcon from "@material-ui/icons/Home";
 import ImageOpt from "./imageOpt";
 
 const Navbar = () => {
+    const router = useRouter();
     const { data: sections } = useSWR("/sections");
+    const [search, setSearch] = useState("");
     const classes = useStyles();
     const [time, setTime] = useState(DateTime.now());
     const categ = useRef<any>(null);
@@ -57,28 +57,22 @@ const Navbar = () => {
         };
     }, []);
 
+    // __________________________ search
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
+    };
+
+    const searchCall = () => {
+        if (search) {
+            router.push(`/search/${search}`);
+        }
+    };
+
     return (
         <>
             <div className={classes.root}>
-                <AppBar classes={{ root: classes.appbar }} position="static">
+                <div className={classes.appbar}>
                     <Box className={classes.strip}>
-                        {/* <Box className={classes.stripSocialMedia}>
-                            <Box>
-                                <Typography className={classes.stripTxt}>
-                                    facebook
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography className={classes.stripTxt}>
-                                    facebook
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography className={classes.stripTxt}>
-                                    facebook
-                                </Typography>
-                            </Box>
-                        </Box> */}
                         <div className={classes.stripContent}>
                             <Typography className={classes.stripTxt}>
                                 {time.setLocale("ar").toLocaleString({
@@ -110,27 +104,16 @@ const Navbar = () => {
                             </p>
                         </Box>
                         <Box className={classes.adsContainer}>
-                            <img className={classes.adsImg} src="/ads.png" />
+                            <img
+                                className={classes.adsImg}
+                                src="/blueAdvBig.jpg"
+                            />
                         </Box>
                         <Box>
                             <GeoLocationInfo />
                         </Box>
-                        {/* <div className={classes.navbarContent}>
-                                <Box
-                                    display="flex"
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Box>
-                                        <Typography>
-                                            From the world, we begin, we are
-                                            your eyes on the news
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </div> */}
                     </div>
-                </AppBar>
+                </div>
             </div>
             <div ref={categ} className={classes.sectionsContainer}>
                 <Box className={classes.sections}>
@@ -172,13 +155,29 @@ const Navbar = () => {
                                     </Link>
                                 </div>
                             ))}
+                        <div className={classes.tabItem}>
+                            <div
+                                className={classes.tabColorStrip}
+                                style={{
+                                    backgroundColor: "rgb(1, 224, 1)",
+                                }}
+                            ></div>
+                            <Link href={`/articles`}>
+                                <a className={classes.tabLink}>كتاب وآراء</a>
+                            </Link>
+                        </div>
                     </Box>
                     <div className={classes.search}>
-                        <div className={classes.searchIcon}>
+                        <div
+                            onClick={searchCall}
+                            className={classes.searchIcon}
+                        >
                             <SearchIcon />
                         </div>
                         <InputBase
                             placeholder="بحث…"
+                            value={search}
+                            onChange={handleSearch}
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
@@ -208,11 +207,12 @@ const useStyles = makeStyles((theme: Theme) =>
             zIndex: 5,
             boxShadow:
                 "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
-            backgroundColor: "rgb(2, 135, 254)",
+            backgroundColor: "black",
         },
         stripContent: {
             margin: "0 auto",
             width: "1200px",
+            maxWidth: "95%",
         },
         stripSocialMedia: {
             display: "flex",
@@ -221,22 +221,28 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: "16px",
             color: "white",
             fontWeight: 100,
+            textAlign: "right",
         },
         menuButton: {
             marginRight: theme.spacing(2),
         },
         appbar: {
             backgroundColor: "#313131",
+            display: "flex",
+            flexDirection: "column",
             height: "200px",
             width: "100%",
         },
         toolbar: {
             width: "1200px",
-            height: "100%",
+            maxWidth: "95%",
+            height: "160px",
             display: "flex",
             alignItems: "flex-start",
-            // justifyContent: "space-between",
             margin: "0 auto",
+            [theme.breakpoints.down("xs")]: {
+                justifyContent: "center",
+            },
         },
         title: {
             display: "none",
@@ -253,11 +259,12 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "30px",
         },
         searchIcon: {
+            cursor: "pointer",
             padding: theme.spacing(0, 1),
             height: "100%",
             position: "absolute",
+            zIndex: 100,
             color: theme.palette.primary.main,
-            pointerEvents: "none",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -297,6 +304,7 @@ const useStyles = makeStyles((theme: Theme) =>
         tabList: {
             display: "flex",
             height: "100%",
+            marginRight: "20px",
             "& div:last-child": {
                 [theme.direction === "ltr" ? "marginLeft " : "marginRight"]: 0,
             },
@@ -321,6 +329,7 @@ const useStyles = makeStyles((theme: Theme) =>
             textTransform: "capitalize",
             zIndex: 1,
             justifyContent: "center",
+            whiteSpace: "nowrap",
         },
         tabColorStrip: {
             position: "absolute",
@@ -332,21 +341,23 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: "all 0.2s ease",
         },
         adsContainer: {
-            height: "80%",
-            width: "50%",
-            // margin: theme.spacing(0, 3),
+            maxHeight: "100%",
+            overflow: "hidden",
             display: "flex",
-            margin: "auto",
+            margin: "0 50px",
             justifyContent: "center",
+            [theme.breakpoints.down("xs")]: {
+                display: "none",
+            },
         },
         adsImg: {
-            maxHeight: "100%",
-            maxWidth: "100%",
+            objectFit: "cover",
         },
         sectionsContainer: {
             backgroundColor: theme.palette.grey[100],
             top: 0,
             left: 0,
+            overflowX: "auto",
             zIndex: 1000,
             width: "100%",
         },
@@ -357,12 +368,14 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
             height: "40px",
             width: "1200px",
+            maxWidth: "95%",
             margin: "auto",
         },
         motto: {
             textAlign: "center",
             marginTop: "5px",
             fontWeight: 900,
+            color: "white",
             fontSize: "12px",
         },
     })

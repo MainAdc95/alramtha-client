@@ -1,57 +1,66 @@
 import parse from "html-react-parser";
+import { apiCall } from "../../utils/apiCall";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
-import HeadLayout from "../../headLayout";
+import HeadLayout from "../../components/headLayout";
 import { useEffect } from "react";
 
 // Components
-import ShareNews from "../../news/shareNews";
-import SideBar from "../../sideBar";
-import { Grid, Box } from "@material-ui/core";
-import Modal from "../modal";
+import ShareNews from "../../components/news/shareNews";
+import SideBar from "../../components/sideBar";
+import { Box } from "@material-ui/core";
 
 // Styles
-import styles from "../../../styles/News.module.scss";
-import { INews } from "../../../types/news";
-import ImageOpt from "../../imageOpt";
-import Slider from "../../slider";
+import styles from "../../styles/News.module.scss";
+import { IArticle } from "../../types/article";
+import ImageOpt from "../../components/imageOpt";
+import Slider from "../../components/slider";
 import { SwiperSlide } from "swiper/react";
+import { useRouter } from "next/router";
 
 // icons
 import VisibilityIcon from "@material-ui/icons/Visibility";
 
 interface IProps {
-    news: INews;
-    close: any;
+    article: IArticle;
 }
 
-const NewsPreview = ({ news, close }: IProps) => {
+const NewsPage = ({ article }: IProps) => {
+    const router = useRouter();
+
     useEffect(() => {
         // @ts-ignore
-        window?.twttr?.widgets?.load();
-
+        window?.twttr?.widgets?.load(document.getElementById("textEditor"));
         // @ts-ignore
-        window.instgrm?.Embeds?.process();
-    }, []);
+        window?.instgrm?.Embeds?.process();
 
-    return (
-        <>
-            <Modal
-                width="70%"
-                type="parent"
-                closeInfo={{ close, check: false }}
-            >
+        handleSelect();
+    }, [router.asPath]);
+
+    const handleSelect = async () => {
+        try {
+            await apiCall("post", `/articles/${article.article_id}/read`);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    if (article)
+        return (
+            <>
+                <HeadLayout title={article.title} />
                 <div className={styles.page}>
                     <div className={`${styles.container}`}>
                         <div className={styles.sideContentContainer}>
                             <div className={styles.mainContent}>
                                 <div className={styles.newsContent}>
                                     <div className={styles.newsHeading}>
-                                        <h1>{news.title}</h1>
+                                        <h1>{article.title}</h1>
                                         <ul>
                                             <li>
-                                                {new Date().toLocaleString(
-                                                    "ar"
-                                                )}
+                                                {new Date(
+                                                    article.created_at
+                                                ).toLocaleString("ar")}
                                             </li>
                                         </ul>
                                     </div>
@@ -59,10 +68,10 @@ const NewsPreview = ({ news, close }: IProps) => {
                                     <Box width="100%">
                                         <div className={styles.newsImgsWrapper}>
                                             <Slider>
-                                                {news.thumbnail && (
+                                                {article.thumbnail && (
                                                     <SwiperSlide
                                                         key={
-                                                            news.thumbnail
+                                                            article.thumbnail
                                                                 .image_id
                                                         }
                                                     >
@@ -74,7 +83,7 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                             <div>
                                                                 <ImageOpt
                                                                     src={
-                                                                        news
+                                                                        article
                                                                             .thumbnail
                                                                             ?.sizes
                                                                             ?.l
@@ -89,7 +98,7 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                         </div>
                                                     </SwiperSlide>
                                                 )}
-                                                {news.images.map((img) => (
+                                                {article.images.map((img) => (
                                                     <SwiperSlide
                                                         key={img.image_id}
                                                     >
@@ -118,50 +127,20 @@ const NewsPreview = ({ news, close }: IProps) => {
                                             </Slider>
                                         </div>
                                         <div className={styles.newsInfo}>
-                                            {news.resources && (
-                                                <Box display="flex">
-                                                    <p
-                                                        className={
-                                                            styles.resource
-                                                        }
-                                                    >
-                                                        المصادر:
-                                                        {news.resources.map(
-                                                            (r) => (
-                                                                <span
-                                                                    key={
-                                                                        r.resource_id
-                                                                    }
-                                                                >
-                                                                    {r.resource}
-                                                                    <span
-                                                                        className={
-                                                                            styles.coma
-                                                                        }
-                                                                    >
-                                                                        ,
-                                                                    </span>
-                                                                </span>
-                                                            )
-                                                        )}
-                                                        .
-                                                    </p>
-                                                </Box>
-                                            )}
                                             <div
                                                 className={
                                                     styles.readersContainer
                                                 }
                                             >
-                                                <p>{news.readers || 0}</p>
+                                                <p>{article.readers || 0}</p>
                                                 <VisibilityIcon />
                                             </div>
                                         </div>
-                                        {news.intro && (
+                                        {article.intro && (
                                             <blockquote
                                                 className={styles.newsQoute}
                                             >
-                                                <p>{news.intro}</p>
+                                                <p>{article.intro}</p>
                                             </blockquote>
                                         )}
                                         <Box
@@ -170,12 +149,12 @@ const NewsPreview = ({ news, close }: IProps) => {
                                             className={styles.newsContent}
                                         >
                                             <div className="textParserContainer">
-                                                {parse(news.text)}
+                                                {parse(article.text)}
                                             </div>
                                         </Box>
                                         <div className={styles.newsTags}>
                                             <ul>
-                                                {news.tags.map((tag) => (
+                                                {article.tags.map((tag) => (
                                                     <li>
                                                         <Link
                                                             href={`/tags/${tag.tag_id}`}
@@ -193,14 +172,25 @@ const NewsPreview = ({ news, close }: IProps) => {
                                 </div>
                             </div>
                             <div className={styles.sidebarContainer}>
-                                <SideBar newsId={news.news_id} />
+                                <SideBar newsId={article.article_id} />
                             </div>
                         </div>
                     </div>
                 </div>
-            </Modal>
-        </>
-    );
+            </>
+        );
+
+    return null;
 };
 
-export default NewsPreview;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const article = await apiCall("get", `/articles/${ctx.params.articleId}`);
+
+    return {
+        props: {
+            article,
+        },
+    };
+};
+
+export default NewsPage;

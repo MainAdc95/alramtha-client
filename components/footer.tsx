@@ -1,24 +1,14 @@
-// Main
 import Link from "next/link";
-import Image from "next/image";
-// impoer ImageOpt from "./imageOpt";
-import SmallNews from "./news/smallNews";
-import { Box, Grid } from "@material-ui/core";
 import useSWR from "swr";
+import ImageOpt from "./imageOpt";
+import { INews } from "../types/news";
+import { ISection } from "../types/section";
 
 // Styles
 import styles from "../styles/Footer.module.scss";
-import ImageOpt from "./imageOpt";
-import { ITag } from "../types/tag";
-import { INews } from "../types/news";
-import NewsLetter from "./newsLetter";
 
 const Footer = () => {
-    const { data, error, isValidating } =
-        useSWR<{
-            results: number;
-            tags: ITag[];
-        }>(`/tags?p=1&r=10`);
+    const { data: sections } = useSWR<ISection[]>("/sections");
     const { data: news } = useSWR<{
         results: number;
         news: INews[];
@@ -39,119 +29,102 @@ const Footer = () => {
 
     return (
         <footer className={styles.footer}>
-            <div className={styles.container}>
-                <Box mt="25px">
-                    <Grid container className="grid-root">
-                        <Grid item xs={12} md={4}>
-                            <div className={styles.footerItem}>
-                                <Box
-                                    mt="25px"
-                                    mb="30px"
-                                    display="flex"
-                                    justifyContent="flex-start"
-                                >
-                                    <div
-                                        style={{
-                                            position: "relative",
-                                            height: "150px",
-                                            width: "150px",
-                                        }}
-                                    >
-                                        <ImageOpt
-                                            src="/logo.svg"
-                                            layout="fill"
-                                            location="local"
-                                            objectFit="cover"
-                                        />
-                                    </div>{" "}
-                                </Box>
-                                {/* <Box
-                                    mb="25px"
-                                    display="flex"
-                                    flexDirection="column"
-                                    alignItems="flex-start"
-                                    justifyContent="space-between"
-                                    style={{ backgroundColor: "white" }}
-                                >
-                                    <NewsLetter />
-                                    <p style={{ color: "white" }}>
-                                        أدخل عنوان بريدك الإلكتروني لتلقي
-                                        التحديثات اليومية
-                                    </p>
-
-                                    <input
-                                        style={{ width: "90%" }}
-                                        className="form-input"
-                                    />
-                                </Box> */}
+            <div className={styles.section1}>
+                <div className={styles.container}>
+                    <div className={styles.logo}>
+                        <div className={styles.logoContainer}>
+                            <ImageOpt
+                                src="/logo.svg"
+                                location="local"
+                                layout="fill"
+                                objectFit="contain"
+                            />
+                        </div>
+                        <p>من العالم المبتدأ ... ونحن الخبر</p>
+                    </div>
+                    <div className={styles.sections}>
+                        <h3>الأقسام</h3>
+                        <div className={styles.content}>
+                            {sections
+                                ?.sort(
+                                    (a, b) =>
+                                        Number(a.section_order) -
+                                        Number(b.section_order)
+                                )
+                                ?.map((s) => (
+                                    <Link href={`/sections/${s.section_id}`}>
+                                        <a style={{ borderColor: s.color }}>
+                                            {s.section_name}
+                                        </a>
+                                    </Link>
+                                ))}
+                        </div>
+                    </div>
+                    <div className={styles.socialMedia}>
+                        <h3>وسائل التواصل الاجتماعي</h3>
+                        <div className={styles.content}>
+                            <div className={styles.item}>
+                                <ImageOpt
+                                    src="/facebook.png"
+                                    location="local"
+                                    width={30}
+                                    height={30}
+                                />
                             </div>
-                        </Grid>
-
-                        <Grid item xs={12} md={4}>
-                            <div className={styles.footerItem}>
-                                <h2 className={styles.footerTitle}>القائمة</h2>
-
-                                <div className={styles.hotCategories}>
-                                    <ul>
-                                        {data &&
-                                            data.tags.map((i) => (
-                                                <Link
-                                                    href={`/tags/${i.tag_id}`}
-                                                    key={i.tag_id}
-                                                >
-                                                    <li>
-                                                        <a>{i.tag_name}</a>
-                                                        <span>
-                                                            ({tagNews(i.tag_id)}
-                                                            )
-                                                        </span>
-                                                    </li>
-                                                </Link>
-                                            ))}
-                                    </ul>
-                                </div>
+                            <div className={styles.item}>
+                                <ImageOpt
+                                    src="/twitter.png"
+                                    location="local"
+                                    width={30}
+                                    height={30}
+                                />
                             </div>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <div className={styles.footerItem}>
-                                <h2 className={styles.footerTitle}>
-                                    الاكثر قراءة
-                                </h2>
-
-                                <div className={styles.randomNews}>
-                                    <ul>
-                                        {news &&
-                                            news.news.map((item) => (
-                                                <SmallNews
-                                                    key={item.news_id}
-                                                    data={item}
-                                                />
-                                            ))}
-                                    </ul>
-                                </div>
+                            <div className={styles.item}>
+                                <ImageOpt
+                                    src="/instagram.png"
+                                    location="local"
+                                    width={30}
+                                    height={30}
+                                />
                             </div>
-                        </Grid>
-                    </Grid>
-                </Box>
-
-                <div className={styles.bottomFooter}>
-                    <Grid container className="grid-root">
-                        <Grid item xs={12} sm={6}>
-                            <p>
-                                © Copyright - alramsah.com. All Rights Reserved
-                            </p>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <ul>
-                                <Link href="/contactUs">
-                                    <li>تواصل معنا</li>
-                                </Link>{" "}
-                                <Link href="/">
-                                    <li>الصفحة الرئيسية</li>
-                                </Link>
-                            </ul>
-                        </Grid>
-                    </Grid>
+                            <div className={styles.item}>
+                                <ImageOpt
+                                    src="/telegram.png"
+                                    location="local"
+                                    width={30}
+                                    height={30}
+                                />
+                            </div>
+                            <div className={styles.item}>
+                                <ImageOpt
+                                    src="/whatsapp.png"
+                                    location="local"
+                                    width={30}
+                                    height={30}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.section2}>
+                <div className={styles.contentContainer}>
+                    <p>
+                        جميع الحقوق محفوظة © {new Date().getFullYear()} الرمسة.
+                        طور بواسطة كراون فينيكس للاستشارات التسويقية.
+                    </p>
+                    <p>
+                        <span>
+                            <Link href="/">
+                                <a>الشروط والأحكام</a>
+                            </Link>
+                        </span>
+                        <span>
+                            <Link href="/">
+                                <a>تواصل بنا</a>
+                            </Link>
+                        </span>
+                    </p>
                 </div>
             </div>
         </footer>

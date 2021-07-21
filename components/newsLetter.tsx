@@ -14,8 +14,12 @@ import Error from "./form/error";
 const emailRegex =
     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-const Newsletter = () => {
-    const classes = useStyles();
+interface IProps {
+    place?: "footer";
+}
+
+const Newsletter = ({ place }: IProps) => {
+    const classes = useStyles({ place });
     const [state, setState] = useState({ email: "" });
     const [isDisabled, setDisabled] = useState(false);
     const [greet, setGreet] = useState(false);
@@ -72,7 +76,9 @@ const Newsletter = () => {
                 </p>
             ) : (
                 <>
-                    <p className={classes.title}>اشترك في نشرتنا الإخبارية.</p>
+                    <p className={classes.title}>
+                        اشترك في نشرتنا الإخبارية ليصلك كل جديد.
+                    </p>
                     <TextField
                         value={state.email}
                         name="email"
@@ -111,9 +117,10 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             backgroundColor: "#313131",
             borderRadius: "5px",
-            padding: "15px 10px",
+            padding: "20px",
             color: "white",
-            marginBottom: "30px",
+            marginBottom: (props: any) =>
+                props.place !== "footer" ? "30px" : "0px",
             boxShadow: `0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)`,
         },
         greet: {
@@ -123,6 +130,7 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             fontSize: "18px",
             marginBottom: "20px",
+            textAlign: "center",
         },
         input: {
             width: "100%",

@@ -87,13 +87,13 @@ const Strip = ({ strip, classes }: { strip?: IStrip; classes: any }) => {
                     <span
                         style={{
                             color: getColor(strip.type),
-                            fontSize: "16px",
+                            fontSize: "14px",
                         }}
                     >
                         {strip.title}
                     </span>{" "}
                     <span className={classes.time}>
-                        {new Date(strip.created_at).toLocaleDateString()}
+                        {new Date(strip.created_at).toLocaleString("ar")}
                     </span>
                 </p>
             </a>
@@ -113,16 +113,6 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             padding: theme.spacing(1.5, 2),
         },
-        imgContainer: {
-            width: "30px",
-            height: "30px",
-            [theme.direction === "ltr" ? "marginLeft" : "marginRight"]:
-                theme.spacing(1),
-        },
-        img: {
-            width: "100%",
-            height: "100%",
-        },
         badge: {
             whiteSpace: "nowrap",
             backgroundColor: theme.palette.error.main,
@@ -132,18 +122,19 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
         },
         time: {
-            fontSize: "10px",
+            fontSize: "12px",
             margin: "0 10px",
         },
         marquee: {
             backgroundColor: "pink",
         },
         stripType: {
-            padding: "5px",
+            padding: "2px 5px",
             display: "inline-block",
             borderRadius: "5px",
             color: "white",
             margin: "0 10px",
+            fontSize: "10px",
             fontWeight: 900,
             boxShadow:
                 "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",

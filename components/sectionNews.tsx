@@ -2,7 +2,6 @@ import {
     createStyles,
     makeStyles,
     Theme,
-    Box,
     CircularProgress,
 } from "@material-ui/core";
 import useSWR from "swr";
@@ -32,6 +31,9 @@ const SectionNews = ({ data }: IProps) => {
                     </h1>
                 </div>
                 <NewsList section={data} />
+                <div>
+                    <img style={{ maxWidth: "100%" }} src="/blueAdvBig.jpg" />
+                </div>
             </div>
         );
 
@@ -60,7 +62,7 @@ const NewsList = ({ section }: { section: ISection }) => {
     return (
         <div className={classes.root}>
             {!data ? (
-                <div className={classes.loadingContaienr}>
+                <div className={classes.loadingContainer}>
                     <CircularProgress color="primary" />
                 </div>
             ) : (
@@ -82,7 +84,9 @@ const NewsList = ({ section }: { section: ISection }) => {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {},
+        root: {
+            marginBottom: "30px",
+        },
         list: {
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -98,7 +102,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 gridTemplateColumns: "1fr",
             },
         },
-        loadingContaienr: {
+        loadingContainer: {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

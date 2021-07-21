@@ -1,17 +1,16 @@
-import { Grid, Box } from "@material-ui/core";
-import useSWR from "swr";
+import { Box } from "@material-ui/core";
 import { apiCall } from "../utils/apiCall";
 import HeadLayout from "../components/headLayout";
 import { INews } from "../types/news";
 import Slider from "../components/slider";
 import { SwiperSlide } from "swiper/react";
+import Link from "next/link";
 
 // components
 import UrgentNewsStrip from "../components/home/urgentNewsStrip";
 import LargeNews from "../components/news/largeNews";
 import BannerCard from "../components/news/bannerCard";
 import SideBar from "../components/sideBar";
-import Image from "next/image";
 import { GetServerSideProps } from "next";
 import { ISection } from "../types/section";
 import { IStrip } from "../types/strip";
@@ -21,6 +20,7 @@ import { IFile } from "../types/file";
 import styles from "../styles/Home.module.scss";
 import SectionNews from "../components/sectionNews";
 import ImageOpt from "../components/imageOpt";
+import { IArticle } from "../types/article";
 
 // tmrNews === todays most read news
 
@@ -30,11 +30,12 @@ interface IProps {
         strips: IStrip[];
         files: IFile[];
         tmrNews: INews[];
+        article: IArticle;
     };
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections, strips, files, tmrNews } = info;
+    const { sections, strips, files, tmrNews, article } = info;
 
     return (
         <>
@@ -111,10 +112,39 @@ const Home = ({ info }: IProps) => {
                                 <div
                                     className={`${styles.introItem} ${styles.introItem9}`}
                                 >
-                                    <BannerCard
-                                        data={sections[8]}
-                                        type={false}
-                                    />
+                                    <div className="banner-card">
+                                        <ImageOpt
+                                            src={
+                                                (
+                                                    article.thumbnail ||
+                                                    article.created_by.avatar
+                                                )?.sizes?.m
+                                            }
+                                            objectFit="cover"
+                                            layout="fill"
+                                        />
+                                        <Link
+                                            href={`/articles/${article.article_id}`}
+                                        >
+                                            <div className="overlay">
+                                                <div className="card-content">
+                                                    <a
+                                                        style={{
+                                                            backgroundColor:
+                                                                "rgb(1, 224, 1)",
+                                                        }}
+                                                    >
+                                                        كتاب وآراء
+                                                    </a>
+                                                    <Link
+                                                        href={`/articles/${article.article_id}`}
+                                                    >
+                                                        <p>{article.title}</p>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,9 +156,12 @@ const Home = ({ info }: IProps) => {
                             spaceBetween={10}
                             breakingpoints={{
                                 0: {
+                                    slidesPerView: 2,
+                                },
+                                550: {
                                     slidesPerView: 3,
                                 },
-                                600: {
+                                700: {
                                     slidesPerView: 4,
                                 },
                                 900: {
@@ -144,38 +177,42 @@ const Home = ({ info }: IProps) => {
                                     className="file-container"
                                     key={file.file_id}
                                 >
-                                    <div className="file-wrapper"></div>
-                                    <Box width="100%" height="100%">
-                                        <ImageOpt
-                                            src={file.image?.sizes?.s}
-                                            objectFit="cover"
-                                            layout="fill"
-                                        />
-                                        <p
-                                            style={{
-                                                zIndex: 2,
-                                                color: "white",
-                                                position: "absolute",
-                                                bottom: "5px",
-                                                right: "5px",
-                                                fontWeight: 900,
-                                                fontSize: "18px",
-                                            }}
-                                        >
-                                            {file.text}
-                                        </p>
-                                        <div
-                                            style={{
-                                                position: "absolute",
-                                                left: 0,
-                                                top: 0,
-                                                width: "100%",
-                                                height: "100%",
-                                                backgroundImage:
-                                                    "linear-gradient(360deg, #0000008b 0%, transparent 100%)",
-                                            }}
-                                        ></div>
-                                    </Box>
+                                    <Link href={`/files/${file.file_id}`}>
+                                        <a>
+                                            <div className="file-wrapper"></div>
+                                            <Box width="100%" height="100%">
+                                                <ImageOpt
+                                                    src={file.image?.sizes?.s}
+                                                    objectFit="cover"
+                                                    layout="fill"
+                                                />
+                                                <p
+                                                    style={{
+                                                        zIndex: 2,
+                                                        color: "white",
+                                                        position: "absolute",
+                                                        bottom: "5px",
+                                                        right: "5px",
+                                                        fontWeight: 900,
+                                                        fontSize: "18px",
+                                                    }}
+                                                >
+                                                    {file.text}
+                                                </p>
+                                                <div
+                                                    style={{
+                                                        position: "absolute",
+                                                        left: 0,
+                                                        top: 0,
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        backgroundImage:
+                                                            "linear-gradient(360deg, #0000008b 0%, transparent 100%)",
+                                                    }}
+                                                ></div>
+                                            </Box>
+                                        </a>
+                                    </Link>
                                 </SwiperSlide>
                             ))}
                         </Slider>
@@ -190,20 +227,24 @@ const Home = ({ info }: IProps) => {
                                 </h1>
                             </div>
                             <div className={styles.swiperWrapper}>
-                                <Slider slidesPerView={4}>
+                                <Slider
+                                    slidesPerView={4}
+                                    breakingpoints={{
+                                        0: {
+                                            slidesPerView: 2,
+                                        },
+                                        750: {
+                                            slidesPerView: 3,
+                                        },
+                                        1000: {
+                                            slidesPerView: 4,
+                                        },
+                                    }}
+                                >
                                     {tmrNews &&
                                         tmrNews.map((item) => (
                                             <SwiperSlide key={item.news_id}>
-                                                <LargeNews
-                                                    news={item}
-                                                    styles={{
-                                                        padding: "18px 20px",
-                                                        borderBottom:
-                                                            "1px solid #f0f0f0",
-                                                        backgroundColor:
-                                                            "#fafafa",
-                                                    }}
-                                                />
+                                                <LargeNews news={item} />
                                             </SwiperSlide>
                                         ))}
                                 </Slider>

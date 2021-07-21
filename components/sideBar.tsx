@@ -45,13 +45,22 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-const SideBar = () => {
+interface IProps {
+    newsId?: string;
+}
+
+const SideBar = ({ newsId }: IProps) => {
     const { data } =
         useSWR<{
             results: number;
             tags: ITag[];
-        }>(`/tags?p=1&r=20`);
+        }>(`/tags?p=1&r=30`);
     const { data: news } = useSWR("/news?p=1&r=5&type=published");
+    const { data: mvNews } = useSWR(
+        `/news?p=1&r=5&type=published&mvn=true${
+            newsId ? `&newsId=${newsId}` : ""
+        }`
+    );
     const { data: poll } = useSWR<IPoll>("/poll/active");
     const [value, setValue] = useState(0);
 
@@ -87,10 +96,10 @@ const SideBar = () => {
                 </Tabs>
                 <Box mt="30px">
                     <TabPanel value={value} index={0}>
-                        <div style={{ minHeight: "100px" }}>
-                            <ul style={{ width: "100%" }}>
-                                {news &&
-                                    news.news.map((item) => (
+                        <div>
+                            <ul>
+                                {mvNews &&
+                                    mvNews.news.map((item) => (
                                         <SmallNews
                                             key={item.news_id}
                                             data={item}
@@ -100,7 +109,7 @@ const SideBar = () => {
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <div style={{ minHeight: "100px" }}>
+                        <div>
                             <ul>
                                 {news &&
                                     news.news.map((item) => (
@@ -113,6 +122,13 @@ const SideBar = () => {
                         </div>
                     </TabPanel>
                 </Box>
+                <div className="side-bar-adv">
+                    <Image
+                        src="/blueAdv.jpg"
+                        layout="fill"
+                        objectFit="contain"
+                    />
+                </div>
                 <div style={{ margin: "3rem 0" }}>
                     <div className="author-title">
                         <h1>
@@ -135,7 +151,11 @@ const SideBar = () => {
                     </div>
                 </div>
                 <div className="side-bar-adv">
-                    <Image src="/news1.jpg" layout="fill" objectFit="cover" />
+                    <Image
+                        src="/blueAdv.jpg"
+                        layout="fill"
+                        objectFit="contain"
+                    />
                 </div>
             </div>
         </StickyBox>
@@ -192,107 +212,129 @@ const Poll = ({ poll }: { poll: IPoll }) => {
 
     if (poll)
         return (
-            <Box className={classes.root}>
-                <p className={classes.title}>{poll.title}</p>
-                <Box>
-                    {poll.options
-                        .sort(
-                            (a, b) =>
-                                new Date(a.created_at).getTime() -
-                                new Date(b.created_at).getTime()
-                        )
-                        .map((o) => (
-                            <div className={classes.optionWrapper}>
-                                <Box
-                                    style={
-                                        isDisabled
-                                            ? {
-                                                  cursor: "default",
-                                                  color: "black",
-                                              }
-                                            : vote === o.option_id
-                                            ? {
-                                                  backgroundColor: "white",
-                                                  color: "black",
-                                              }
-                                            : { cursor: "pointer" }
-                                    }
-                                    className={classes.optionContainer}
-                                    onClick={() => handleVote(o.option_id)}
-                                    key={o.option_id}
-                                >
-                                    <div
-                                        className={classes.percentageBackground}
+            <>
+                <p className={classes.sectionTitle}>استطلاعات الرأي</p>
+                <Box className={classes.root}>
+                    <p className={classes.title}>{poll.title}</p>
+                    <p className={classes.date}>
+                        تاريخ النشر:{" "}
+                        {new Date(poll.created_at).toLocaleString("ar")}
+                    </p>
+                    <Box>
+                        {poll.options
+                            .sort(
+                                (a, b) =>
+                                    new Date(a.created_at).getTime() -
+                                    new Date(b.created_at).getTime()
+                            )
+                            .map((o) => (
+                                <div className={classes.optionWrapper}>
+                                    <Box
                                         style={
                                             isDisabled
                                                 ? {
-                                                      width: `${
-                                                          ((vote === o.option_id
-                                                              ? o.votes +
-                                                                (plus ? 1 : 0)
-                                                              : o.votes) /
-                                                              poll.options.reduce(
-                                                                  (total, o) =>
-                                                                      total +
-                                                                      Number(
-                                                                          o.votes
-                                                                      ),
-                                                                  plus ? 1 : 0
-                                                              )) *
-                                                          100
-                                                      }%`,
+                                                      cursor: "default",
+                                                      color: "black",
                                                   }
-                                                : { width: "0px" }
+                                                : vote === o.option_id
+                                                ? {
+                                                      backgroundColor: "white",
+                                                      color: "black",
+                                                  }
+                                                : { cursor: "pointer" }
                                         }
-                                    ></div>
-                                    <Box
-                                        display="flex"
-                                        justifyContent="space-between"
-                                    ></Box>
-                                    <p>{o.name}</p>
-                                </Box>
-                                {vote && isDisabled && (
-                                    <p className={classes.votes}>
-                                        {Math.ceil(
-                                            ((vote === o.option_id
-                                                ? o.votes + (plus ? 1 : 0)
-                                                : o.votes) /
-                                                poll.options.reduce(
-                                                    (total, o) =>
-                                                        total + Number(o.votes),
-                                                    plus ? 1 : 0
-                                                )) *
-                                                100
-                                        )}{" "}
-                                        %
-                                    </p>
-                                )}
-                            </div>
-                        ))}
-                    {!isDisabled && (
-                        <Box mb={1}>
-                            <Button
-                                disabled={!Boolean(vote)}
-                                color="secondary"
-                                variant="contained"
-                                onClick={handleSubmit}
-                                fullWidth
+                                        className={classes.optionContainer}
+                                        onClick={() => handleVote(o.option_id)}
+                                        key={o.option_id}
+                                    >
+                                        <div
+                                            className={
+                                                classes.percentageBackground
+                                            }
+                                            style={
+                                                isDisabled
+                                                    ? {
+                                                          width: `${
+                                                              ((vote ===
+                                                              o.option_id
+                                                                  ? o.votes +
+                                                                    (plus
+                                                                        ? 8
+                                                                        : 0)
+                                                                  : o.votes) /
+                                                                  poll.options.reduce(
+                                                                      (
+                                                                          total,
+                                                                          o
+                                                                      ) =>
+                                                                          total +
+                                                                          Number(
+                                                                              o.votes
+                                                                          ),
+                                                                      plus
+                                                                          ? 8
+                                                                          : 0
+                                                                  )) *
+                                                              100
+                                                          }%`,
+                                                      }
+                                                    : { width: "0px" }
+                                            }
+                                        ></div>
+                                        <Box
+                                            display="flex"
+                                            justifyContent="space-between"
+                                        ></Box>
+                                        <p>{o.name}</p>
+                                    </Box>
+                                    {vote && isDisabled && (
+                                        <p className={classes.votes}>
+                                            {Math.ceil(
+                                                ((vote === o.option_id
+                                                    ? o.votes + (plus ? 8 : 0)
+                                                    : o.votes) /
+                                                    poll.options.reduce(
+                                                        (total, o) =>
+                                                            total +
+                                                            Number(o.votes),
+                                                        plus ? 8 : 0
+                                                    )) *
+                                                    100
+                                            )}{" "}
+                                            %
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        {!isDisabled && (
+                            <Box mb={1}>
+                                <Button
+                                    disabled={!Boolean(vote)}
+                                    color="secondary"
+                                    variant="contained"
+                                    onClick={handleSubmit}
+                                    fullWidth
+                                >
+                                    صوت
+                                </Button>
+                            </Box>
+                        )}
+                        {isDisabled && (
+                            <p
+                                style={{
+                                    fontWeight: 900,
+                                }}
                             >
-                                صوت
-                            </Button>
-                        </Box>
-                    )}
-                    {isDisabled && (
-                        <p>
-                            اجمالي عدد الاصوات{" "}
-                            {poll.options.reduce(
-                                (total, o) => total + Number(o.votes),
-                                plus ? 1 : 0
-                            )}
-                        </p>
-                    )}
+                                اجمالي عدد الاصوات{" "}
+                                {poll.options.reduce(
+                                    (total, o) => total + Number(o.votes),
+                                    plus ? 8 : 0
+                                )}
+                            </p>
+                        )}
+                    </Box>
                 </Box>
-            </Box>
+            </>
         );
 
     return null;
@@ -302,8 +344,8 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             backgroundColor: "rgb(2, 135, 254)",
-            borderRadius: "5px",
-            padding: "10px",
+            borderRadius: "0 0 5px 5px",
+            padding: "10px 20px",
             color: "white",
             marginBottom: "30px",
             paddingBottom: "30px",
@@ -316,7 +358,10 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             fontWeight: 800,
             fontSize: 16,
-            paddingBottom: "15px",
+            marginBottom: "8px",
+        },
+        date: {
+            marginBottom: "15px",
         },
         optionContainer: {
             position: "relative",
@@ -340,6 +385,15 @@ const useStyles = makeStyles((theme: Theme) =>
         votes: {
             margin: "0 5px 0 10px",
             whiteSpace: "nowrap",
+            fontWeight: 900,
+        },
+        sectionTitle: {
+            textAlign: "center",
+            padding: "10px",
+            backgroundColor: "#313131",
+            borderRadius: "5px 5px 0 0",
+            color: "white",
+            fontSize: "18px",
         },
     })
 );

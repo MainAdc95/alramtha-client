@@ -38,11 +38,7 @@ const Layout = ({ children }: Props) => {
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
-        root: {
-            width: "100%",
-            boxShadow: theme.shadows[10],
-            margin: "auto",
-        },
+        root: {},
     });
 });
 

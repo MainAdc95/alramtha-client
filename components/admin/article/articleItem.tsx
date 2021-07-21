@@ -228,7 +228,7 @@ const ArticleItem = ({
                     onClose={handleClose}
                 >
                     <Link
-                        href={`/admin/article/addNews?articleId=${article.article_id}`}
+                        href={`/admin/articles/articleForm?articleId=${article.article_id}`}
                     >
                         <MenuItem>
                             <a>تعديل</a>

@@ -3,9 +3,9 @@ import { INews } from "../../types/news";
 import HeadLayout from "../../components/headLayout";
 import useSWR from "swr";
 import { GetServerSideProps } from "next";
-import { ISection } from "../../types/section";
+import { IFile } from "../../types/file";
 import Pagination from "@material-ui/lab/Pagination";
-import { CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress, TextField } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
 // Components
@@ -16,18 +16,29 @@ import { apiCall } from "../../utils/apiCall";
 // style sheet
 import styles from "../../styles/Section.module.scss";
 
-interface IProps {
-    section: ISection;
-}
+// icons
+import SearchIcon from "@material-ui/icons/Search";
 
-const Section = ({ section }: IProps) => {
+const Search = () => {
     const router = useRouter();
+    const [state, setState] = useState({
+        search: "",
+        activeSearch: router.query.text,
+    });
     const rowsPerPage = 20;
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const { data } = useSWR<{ results: number; news: INews[] }>(
-        `/news?p=${page}&r=${rowsPerPage}&type=published&sectionId=${section.section_id}`
+        `/news?p=${page}&r=${rowsPerPage}&type=published&text=${state.activeSearch}`
     );
+
+    useEffect(() => {
+        setState({
+            ...state,
+            activeSearch: String(router.query.text),
+            search: String(router.query.text),
+        });
+    }, []);
 
     useEffect(() => {
         setPage(1);
@@ -43,18 +54,47 @@ const Section = ({ section }: IProps) => {
         setPage(newPage);
     };
 
+    // __________________________ search
+    const handleSearch = (e) => {
+        setState({ ...state, [e.target.name]: e.target.value });
+    };
+
+    const searchCall = async () => {
+        if (state.search) {
+            setState({ ...state, activeSearch: state.search });
+        }
+    };
+
     return (
         <>
-            <HeadLayout title={section.section_name} />
+            <HeadLayout title={String(router.query.text)} />
             <div className={styles.page}>
                 <div className={styles.mainContent}>
-                    <div className="author-title">
-                        <h1>
-                            <span style={{ borderColor: section.color }}>
-                                {section.section_name}
-                            </span>
-                        </h1>
-                    </div>
+                    <Box mb={5} display="flex">
+                        <Box
+                            onClick={searchCall}
+                            style={{
+                                minHeight: "100%",
+                                width: "50px",
+                                background: "rgb(2, 135, 254)",
+                                borderRadius: "0 5px 5px 0",
+                                cursor: "pointer",
+                            }}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <SearchIcon style={{ color: "white" }} />
+                        </Box>
+                        <TextField
+                            value={state.search}
+                            label="بحث"
+                            name="search"
+                            onChange={handleSearch}
+                            fullWidth
+                            variant="outlined"
+                        />
+                    </Box>
                     <Pagination
                         onChange={handleChangePage}
                         count={count}
@@ -84,14 +124,4 @@ const Section = ({ section }: IProps) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const section = await apiCall("get", `/section/${ctx.params.sectionId}`);
-
-    return {
-        props: {
-            section,
-        },
-    };
-};
-
-export default Section;
+export default Search;

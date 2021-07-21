@@ -3,7 +3,7 @@ import { INews } from "../../types/news";
 import HeadLayout from "../../components/headLayout";
 import useSWR from "swr";
 import { GetServerSideProps } from "next";
-import { ISection } from "../../types/section";
+import { IFile } from "../../types/file";
 import Pagination from "@material-ui/lab/Pagination";
 import { CircularProgress } from "@material-ui/core";
 import { useEffect, useState } from "react";
@@ -17,16 +17,16 @@ import { apiCall } from "../../utils/apiCall";
 import styles from "../../styles/Section.module.scss";
 
 interface IProps {
-    section: ISection;
+    file: IFile;
 }
 
-const Section = ({ section }: IProps) => {
+const File = ({ file }: IProps) => {
     const router = useRouter();
     const rowsPerPage = 20;
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const { data } = useSWR<{ results: number; news: INews[] }>(
-        `/news?p=${page}&r=${rowsPerPage}&type=published&sectionId=${section.section_id}`
+        `/news?p=${page}&r=${rowsPerPage}&type=published&fileId=${file.file_id}`
     );
 
     useEffect(() => {
@@ -45,14 +45,12 @@ const Section = ({ section }: IProps) => {
 
     return (
         <>
-            <HeadLayout title={section.section_name} />
+            <HeadLayout title={file.text} />
             <div className={styles.page}>
                 <div className={styles.mainContent}>
                     <div className="author-title">
                         <h1>
-                            <span style={{ borderColor: section.color }}>
-                                {section.section_name}
-                            </span>
+                            <span>{file.text}</span>
                         </h1>
                     </div>
                     <Pagination
@@ -85,13 +83,13 @@ const Section = ({ section }: IProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const section = await apiCall("get", `/section/${ctx.params.sectionId}`);
+    const file = await apiCall("get", `/file/${ctx.params.fileId}`);
 
     return {
         props: {
-            section,
+            file,
         },
     };
 };
 
-export default Section;
+export default File;

@@ -12,10 +12,10 @@ const ShareNews = () => {
                         href={`https://facebook.com/sharer.php?u=${domain}`}
                     >
                         <ImageOpt
-                            src="/facebook.svg"
+                            src="/facebook.png"
                             location="local"
-                            width={30}
-                            height={30}
+                            width={20}
+                            height={20}
                         />
                     </a>
                 </li>
@@ -25,10 +25,10 @@ const ShareNews = () => {
                         href={`https://twitter.com/intent/tweet?url=${domain}`}
                     >
                         <ImageOpt
-                            src="/twitter.svg"
+                            src="/twitter.png"
                             location="local"
-                            width={30}
-                            height={30}
+                            width={20}
+                            height={20}
                         />
                     </a>
                 </li>
@@ -39,10 +39,10 @@ const ShareNews = () => {
                         href={`https://web.whatsapp.com/send?text=${domain}`}
                     >
                         <ImageOpt
-                            src="/whatsapp.svg"
+                            src="/whatsapp.png"
                             location="local"
-                            width={30}
-                            height={30}
+                            width={20}
+                            height={20}
                         />
                     </a>
                 </li>

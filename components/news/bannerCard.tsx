@@ -26,24 +26,28 @@ const BannerCard = ({ data, type }: IProps) => {
                                         layout="fill"
                                     />
                                 </div>
-                                <div className="overlay">
-                                    <div className="card-content">
-                                        <a
-                                            style={{
-                                                backgroundColor: `${data.color}`,
-                                            }}
-                                        >
-                                            {data.section_name}
-                                        </a>
-                                        <Link href={`/news/${news.news_id}`}>
-                                            <p>{news.title}</p>
-                                        </Link>
-                                        {/* <ul>
+                                <Link href={`/news/${news.news_id}`}>
+                                    <div className="overlay">
+                                        <div className="card-content">
+                                            <a
+                                                style={{
+                                                    backgroundColor: `${data.color}`,
+                                                }}
+                                            >
+                                                {data.section_name}
+                                            </a>
+                                            <Link
+                                                href={`/news/${news.news_id}`}
+                                            >
+                                                <p>{news.title}</p>
+                                            </Link>
+                                            {/* <ul>
                                             <li>{news.created_at}</li>
                                             <li>0 القراء</li>
                                         </ul> */}
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </SwiperSlide>
                         ))}
                     </Slider>
@@ -54,24 +58,28 @@ const BannerCard = ({ data, type }: IProps) => {
                             objectFit="cover"
                             layout="fill"
                         />
-                        <div className="overlay">
-                            <div className="card-content">
-                                <a
-                                    style={{
-                                        backgroundColor: `${data.color}`,
-                                    }}
-                                >
-                                    {data.section_name}
-                                </a>
-                                <Link href={`/news/${data.news[0]?.news_id}`}>
-                                    <p>{data.news[0]?.title}</p>
-                                </Link>
-                                {/* <ul>
+                        <Link href={`/news/${data?.news[0]?.news_id}`}>
+                            <div className="overlay">
+                                <div className="card-content">
+                                    <a
+                                        style={{
+                                            backgroundColor: `${data.color}`,
+                                        }}
+                                    >
+                                        {data.section_name}
+                                    </a>
+                                    <Link
+                                        href={`/news/${data.news[0]?.news_id}`}
+                                    >
+                                        <p>{data.news[0]?.title}</p>
+                                    </Link>
+                                    {/* <ul>
                                     <li>{data.news[0]?.created_at}</li>
                                     <li>0 القراء</li>
                                 </ul> */}
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </>
                 )
             ) : null}

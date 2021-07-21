@@ -17,7 +17,7 @@ body {
 }
 
 html {
-    overflow-x: hidden;
+    // overflow-x: hidden;
 }
 
 a {
@@ -58,6 +58,14 @@ iframe {
 
 .swiper-button-disabled {
     display: none !important;
+}
+
+.swiper-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
 }
 
 .textParserContainer {
@@ -140,7 +148,16 @@ iframe {
     &:after {
         content: "";
         display: block;
-        padding-bottom: 40%;
+        padding-bottom: 54.4%;
+    }
+}
+
+.readers-container {
+    display: flex;
+    align-items: center;
+
+    p {
+        margin: 0 5px;
     }
 }
 
@@ -244,7 +261,7 @@ td {
     margin-bottom: 30px;
     h1 {
         color: #222222;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
         margin: 0 0 30px;
         text-transform: uppercase;
@@ -332,8 +349,8 @@ td {
     top: 70px;
 
     .side-bar-adv {
-        width: 80%;
-        height: 250px;
+        width: 100%;
+        height: 600px;
         margin: 0 auto;
         position: relative;
     }
@@ -355,6 +372,10 @@ td {
             color: white;
         }
     }
+}
+
+.overlay {
+    cursor: pointer;
 }
 
 // Hover Box
@@ -434,31 +455,29 @@ td {
         width: 50%;
     }
     .news-info {
+        display: flex;
+        flex-direction: column;
         width: 100%;
         padding-right: 10px;
-        h2 {
-            line-height: 18px;
-            margin-bottom: 0;
-            max-height: 70px;
-            color: #333333;
-            font-weight: 700;
-            font-size: 13px;
-            overflow: hidden;
-            a {
-                color: #999999;
-                display: inline-block;
-                transition: 0.2s ease-in;
-            }
-            a:hover {
-                color: #0287fe;
-            }
-            span {
-                display: block;
-                color: #999999;
-                font-size: 12px;
-                font-weight: 400;
-                font-style: italic;
-            }
+
+        div {
+            display: flex;
+        }
+
+        a {
+            color: #999999;
+            display: inline-block;
+            transition: 0.2s ease-in;
+        }
+        a:hover {
+            color: #0287fe;
+        }
+        span {
+            display: block;
+            color: #999999;
+            font-size: 12px;
+            font-weight: 400;
+            font-style: italic;
         }
     }
 }
@@ -487,6 +506,7 @@ td {
 
 .news-img {
     position: relative;
+    cursor: pointer;
     width: 100%;
 
     div {
@@ -531,9 +551,9 @@ td {
             font-weight: 700;
             line-height: 20px;
             margin: 0 0 10px;
-            cursor: pointer;
             transition: 0.3s ease-in;
         }
+
         h2:hover {
             color: #0287fe;
         }
@@ -543,7 +563,6 @@ td {
             color: #999999;
             font-size: 12px;
             font-style: italic;
-            cursor: pointer;
             span:hover {
                 color: #0287fe;
             }

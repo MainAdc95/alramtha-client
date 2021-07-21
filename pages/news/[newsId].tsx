@@ -8,7 +8,7 @@ import { useEffect } from "react";
 // Components
 import ShareNews from "../../components/news/shareNews";
 import SideBar from "../../components/sideBar";
-import { Grid, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 // Styles
 import styles from "../../styles/News.module.scss";
@@ -16,28 +16,43 @@ import { INews } from "../../types/news";
 import ImageOpt from "../../components/imageOpt";
 import Slider from "../../components/slider";
 import { SwiperSlide } from "swiper/react";
+import { useRouter } from "next/router";
+
+// icons
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 interface IProps {
     news: INews;
 }
 
 const NewsPage = ({ news }: IProps) => {
+    const router = useRouter();
+
     useEffect(() => {
         // @ts-ignore
-        window?.twttr?.widgets?.load();
-
+        window?.twttr?.widgets?.load(document.getElementById("textEditor"));
         // @ts-ignore
-        window.instgrm?.Embeds?.process();
-    }, []);
+        window?.instgrm?.Embeds?.process();
+
+        handleSelect();
+    }, [router.asPath]);
+
+    const handleSelect = async () => {
+        try {
+            await apiCall("post", `/news/${news.news_id}/read`);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     if (news)
         return (
             <>
                 <HeadLayout title={news.title} />
                 <div className={styles.page}>
-                    <div className={`container ${styles.container}`}>
-                        <Grid container className="grid-root">
-                            <Grid item xs={12} md={8}>
+                    <div className={`${styles.container}`}>
+                        <div className={styles.sideContentContainer}>
+                            <div className={styles.mainContent}>
                                 <div className={styles.newsContent}>
                                     <div className={styles.newsHeading}>
                                         <h1>{news.title}</h1>
@@ -45,9 +60,8 @@ const NewsPage = ({ news }: IProps) => {
                                             <li>
                                                 {new Date(
                                                     news.created_at
-                                                ).toLocaleDateString()}
+                                                ).toLocaleString("ar")}
                                             </li>
-                                            <li>0 القراء</li>
                                         </ul>
                                     </div>
                                     <ShareNews />
@@ -60,58 +74,98 @@ const NewsPage = ({ news }: IProps) => {
                                                             news.thumbnail
                                                                 .image_id
                                                         }
-                                                        className={
-                                                            styles.newsImgContainer
-                                                        }
                                                     >
-                                                        <ImageOpt
-                                                            src={
-                                                                news.thumbnail
-                                                                    ?.sizes?.m
+                                                        <div
+                                                            className={
+                                                                styles.newsImgItem
                                                             }
-                                                            layout="fill"
-                                                            objectFit="cover"
-                                                        />
+                                                        >
+                                                            <div>
+                                                                <ImageOpt
+                                                                    src={
+                                                                        news
+                                                                            .thumbnail
+                                                                            ?.sizes
+                                                                            ?.l
+                                                                    }
+                                                                    priority={
+                                                                        true
+                                                                    }
+                                                                    layout="fill"
+                                                                    objectFit="cover"
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </SwiperSlide>
                                                 )}
                                                 {news.images.map((img) => (
                                                     <SwiperSlide
                                                         key={img.image_id}
-                                                        className={
-                                                            styles.newsImgContainer
-                                                        }
                                                     >
-                                                        <ImageOpt
-                                                            src={img?.sizes?.m}
-                                                            layout="fill"
-                                                            objectFit="cover"
-                                                        />
+                                                        <div
+                                                            className={
+                                                                styles.newsImgItem
+                                                            }
+                                                        >
+                                                            <div>
+                                                                <ImageOpt
+                                                                    src={
+                                                                        img
+                                                                            ?.sizes
+                                                                            ?.l
+                                                                    }
+                                                                    priority={
+                                                                        true
+                                                                    }
+                                                                    layout="fill"
+                                                                    objectFit="cover"
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </SwiperSlide>
                                                 ))}
                                             </Slider>
                                         </div>
-                                        {news.resources && (
-                                            <Box display="flex">
-                                                <p className={styles.resource}>
-                                                    المصادر:
-                                                    {news.resources.map((r) => (
-                                                        <span
-                                                            key={r.resource_id}
-                                                        >
-                                                            {r.resource}
-                                                            <span
-                                                                className={
-                                                                    styles.coma
-                                                                }
-                                                            >
-                                                                ,
-                                                            </span>
-                                                        </span>
-                                                    ))}
-                                                    .
-                                                </p>
-                                            </Box>
-                                        )}
+                                        <div className={styles.newsInfo}>
+                                            {news.resources && (
+                                                <Box display="flex">
+                                                    <p
+                                                        className={
+                                                            styles.resource
+                                                        }
+                                                    >
+                                                        المصادر:
+                                                        {news.resources.map(
+                                                            (r) => (
+                                                                <span
+                                                                    key={
+                                                                        r.resource_id
+                                                                    }
+                                                                >
+                                                                    {r.resource}
+                                                                    <span
+                                                                        className={
+                                                                            styles.coma
+                                                                        }
+                                                                    >
+                                                                        ,
+                                                                    </span>
+                                                                </span>
+                                                            )
+                                                        )}
+                                                        .
+                                                    </p>
+                                                </Box>
+                                            )}
+                                            <div
+                                                className={
+                                                    styles.readersContainer
+                                                }
+                                            >
+                                                <p>{news.readers || 0}</p>
+                                                <VisibilityIcon />
+                                            </div>
+                                        </div>
                                         {news.intro && (
                                             <blockquote
                                                 className={styles.newsQoute}
@@ -121,6 +175,7 @@ const NewsPage = ({ news }: IProps) => {
                                         )}
                                         <Box
                                             width="100%"
+                                            id="textEditor"
                                             className={styles.newsContent}
                                         >
                                             <div className="textParserContainer">
@@ -145,12 +200,11 @@ const NewsPage = ({ news }: IProps) => {
                                         <ShareNews />
                                     </Box>
                                 </div>
-                            </Grid>
-
-                            <Grid item xs={12} md={4}>
-                                <SideBar />
-                            </Grid>
-                        </Grid>
+                            </div>
+                            <div className={styles.sidebarContainer}>
+                                <SideBar newsId={news.news_id} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

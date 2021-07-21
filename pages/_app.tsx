@@ -148,6 +148,7 @@ const DataHandler = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        const { isAuth } = cookie.parse(document.cookie);
         // loading instagram embed script
         const instagramScript = document.createElement("script");
         instagramScript.src = "https://www.instagram.com/embed.js";
@@ -158,8 +159,6 @@ const DataHandler = () => {
         });
 
         document.body.appendChild(instagramScript);
-
-        const { isAuth } = cookie.parse(document.cookie);
 
         // loading twitter embed script
         // @ts-ignore

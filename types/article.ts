@@ -13,6 +13,7 @@ export interface IArticle {
     text: string;
     section: ISection;
     sub_titles: SubTitle[];
+    readers: number;
     images: IImage[];
     tags: ITag[];
     is_archived: boolean;
