@@ -135,9 +135,7 @@ const PollItem = ({ poll, handleOpenDel, handleOpenEdit }: IProps) => {
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(poll.created_at).toLocaleDateString()}, ${new Date(
-                    poll.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(poll.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{
@@ -149,9 +147,7 @@ const PollItem = ({ poll, handleOpenDel, handleOpenEdit }: IProps) => {
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(poll.updated_at).toLocaleDateString()}, ${new Date(
-                    poll.updated_at
-                ).toLocaleTimeString()}`}
+                {new Date(poll.updated_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

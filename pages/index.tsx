@@ -112,39 +112,44 @@ const Home = ({ info }: IProps) => {
                                 <div
                                     className={`${styles.introItem} ${styles.introItem9}`}
                                 >
-                                    <div className="banner-card">
-                                        <ImageOpt
-                                            src={
-                                                (
-                                                    article.thumbnail ||
-                                                    article.created_by.avatar
-                                                )?.sizes?.m
-                                            }
-                                            objectFit="cover"
-                                            layout="fill"
-                                        />
-                                        <Link
-                                            href={`/articles/${article.article_id}`}
-                                        >
-                                            <div className="overlay">
-                                                <div className="card-content">
-                                                    <a
-                                                        style={{
-                                                            backgroundColor:
-                                                                "rgb(1, 224, 1)",
-                                                        }}
-                                                    >
-                                                        كتاب وآراء
-                                                    </a>
-                                                    <Link
-                                                        href={`/articles/${article.article_id}`}
-                                                    >
-                                                        <p>{article.title}</p>
-                                                    </Link>
+                                    {article && (
+                                        <div className="banner-card">
+                                            <ImageOpt
+                                                src={
+                                                    (
+                                                        article.thumbnail ||
+                                                        article.created_by
+                                                            .avatar
+                                                    )?.sizes?.m
+                                                }
+                                                objectFit="cover"
+                                                layout="fill"
+                                            />
+                                            <Link
+                                                href={`/articles/${article.article_id}`}
+                                            >
+                                                <div className="overlay">
+                                                    <div className="card-content">
+                                                        <a
+                                                            style={{
+                                                                backgroundColor:
+                                                                    "rgb(1, 224, 1)",
+                                                            }}
+                                                        >
+                                                            كتاب وآراء
+                                                        </a>
+                                                        <Link
+                                                            href={`/articles/${article.article_id}`}
+                                                        >
+                                                            <p>
+                                                                {article.title}
+                                                            </p>
+                                                        </Link>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Link>
-                                    </div>
+                                            </Link>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -169,9 +169,7 @@ const NewsItem = ({
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(news.created_at).toLocaleDateString()}, ${new Date(
-                    news.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(news.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{
@@ -183,9 +181,7 @@ const NewsItem = ({
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(news.updated_at).toLocaleDateString()}, ${new Date(
-                    news.updated_at
-                ).toLocaleTimeString()}`}
+                {new Date(news.updated_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

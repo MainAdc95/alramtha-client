@@ -87,11 +87,7 @@ const StripItem = ({ strip, handleOpenDel }: IProps) => {
                 {strip.title}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(
-                    strip.created_at
-                ).toLocaleDateString()}, ${new Date(
-                    strip.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(strip.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{
@@ -103,11 +99,7 @@ const StripItem = ({ strip, handleOpenDel }: IProps) => {
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(
-                    strip.updated_at
-                ).toLocaleDateString()}, ${new Date(
-                    strip.updated_at
-                ).toLocaleTimeString()}`}
+                {new Date(strip.updated_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

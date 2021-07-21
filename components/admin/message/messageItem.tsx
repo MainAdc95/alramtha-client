@@ -158,11 +158,7 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(
-                    message.created_at
-                ).toLocaleDateString()}, ${new Date(
-                    message.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(message.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

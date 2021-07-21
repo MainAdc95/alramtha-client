@@ -1,5 +1,6 @@
 .page {
     width: 100%;
+    max-width: 100%;
     min-height: 100vh;
     margin: 50px auto;
     .container {
@@ -165,10 +166,12 @@
 
                 .mainContent {
                     grid-column: 1 / 2;
+                    width: calc(100vw - 5%);
                 }
 
                 .sidebarContainer {
                     grid-column: 1 / 2;
+                    width: calc(100vw - 5%);
                 }
             }
         }

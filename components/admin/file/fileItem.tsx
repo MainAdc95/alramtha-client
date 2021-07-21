@@ -130,9 +130,7 @@ const FileItem = ({ file, handleOpenDel }: IProps) => {
                 </div>
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(file.created_at).toLocaleDateString()}, ${new Date(
-                    file.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(file.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{
@@ -144,9 +142,7 @@ const FileItem = ({ file, handleOpenDel }: IProps) => {
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(file.updated_at).toLocaleDateString()}, ${new Date(
-                    file.updated_at
-                ).toLocaleTimeString()}`}
+                {new Date(file.updated_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

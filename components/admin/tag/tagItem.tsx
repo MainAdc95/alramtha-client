@@ -87,9 +87,7 @@ const TagItem = ({ tag, handleOpenDel }: IProps) => {
                 {tag.tag_name}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(tag.created_at).toLocaleDateString()}, ${new Date(
-                    tag.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(tag.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{
@@ -101,9 +99,7 @@ const TagItem = ({ tag, handleOpenDel }: IProps) => {
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(tag.updated_at).toLocaleDateString()}, ${new Date(
-                    tag.updated_at
-                ).toLocaleTimeString()}`}
+                {new Date(tag.updated_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

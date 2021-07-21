@@ -136,9 +136,7 @@ const UserItem = ({ user, handleOpenEdit }: IProps) => {
                 {user.phone}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
-                {`${new Date(user.created_at).toLocaleDateString()}, ${new Date(
-                    user.created_at
-                ).toLocaleTimeString()}`}
+                {new Date(user.created_at).toLocaleString("ar")}
             </TableCell>
             <TableCell
                 classes={{

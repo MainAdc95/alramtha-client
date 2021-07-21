@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import cookie from "cookie";
 import App, { AppInitialProps } from "next/app";
 import { wrapper } from "../store";
@@ -80,28 +80,10 @@ class Alramsah extends App<AppInitialProps> {
                     <meta name="msapplication-TileColor" content="#2b5797" />
                     <meta name="theme-color" content="#ffffff" />
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
-                    {/* <link
-                        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-                        rel="stylesheet"
-                    /> */}
-                    {/* <link
-                        rel="preconnect"
-                        href="https://fonts.googleapis.com"
-                    />
-                    <link
-                        rel="preconnect"
-                        href="https://fonts.gstatic.com"
-                        crossorigin
-                    /> */}
                     <link
                         href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap"
                         rel="stylesheet"
                     ></link>
-                    {/* <script src="https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456"></script>
-                    <script
-                        async
-                        src="https://platform.twitter.com/widgets.js"
-                    ></script> */}
                 </Head>
                 <StylesProvider jss={jss}>
                     <Theme>
@@ -115,25 +97,6 @@ class Alramsah extends App<AppInitialProps> {
                         >
                             <Layout>
                                 <Component {...pageProps} />
-                                {/* <blockquote
-                                    className="twitter-tweet"
-                                    data-theme="light"
-                                >
-                                    <p lang="und" dir="ltr">
-                                        <a href="https://t.co/97xjWeIHjV">
-                                            https://t.co/97xjWeIHjV
-                                        </a>
-                                    </p>
-                                    &mdash; mahmoud khalil (@zorba222){" "}
-                                    <a href="https://twitter.com/zorba222/status/1414553264457240580?ref_src=twsrc%5Etfw">
-                                        July 12, 2021
-                                    </a>
-                                </blockquote>
-                                <script
-                                    async
-                                    src="https://platform.twitter.com/widgets.js"
-                                    // charset="utf-8"
-                                ></script> */}
                             </Layout>
                         </SWRConfig>
                     </Theme>

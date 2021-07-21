@@ -9,6 +9,17 @@ interface IProps {
     children?: React.ReactNode | React.ReactNode[];
 }
 
+const alramsahSum = `موقع الرمسة .. صوت الحقيقة .. يقارب الصورة من كل زواياها ويقربها للقاريء يعنى بأخبار العرب والعالم  ، ويقدم أخبار أونلاين من العالم في مختلف المجالات، السياسية والاقتصادية  والثقافية والرياضية والصحية.
+
+الرمسة موقع يؤمن بان الصحافة رسالة انسانية واخلاقية بامتياز هويته العربية يفتخر بها ولا يفرط  بها . التزامه الوطني والقومي تتم ترجمته  كتابة لا شعارات 
+
+تابعونا ليصلكم كل جديد من العرب والعالم وعنهم 
+
+
+موقع الرمسة 
+
+موقع سياسي اقتصادي ثقافي فني تتوزع موادنا بين خبر وتقرير وتحليل ومقابلة وترجمة ودراسة ومقالة وفيديو`;
+
 const HeadLayout = ({ title, description, image, children }: IProps) => {
     return (
         <Head>
@@ -28,9 +39,18 @@ const HeadLayout = ({ title, description, image, children }: IProps) => {
             />
             {description && (
                 <>
-                    <meta name="description" content={description} />
-                    <meta property="og:description" content={description} />
-                    <meta property="twitter:image" content={description} />
+                    <meta
+                        name="description"
+                        content={description || alramsahSum}
+                    />
+                    <meta
+                        property="og:description"
+                        content={description || alramsahSum}
+                    />
+                    <meta
+                        property="twitter:image"
+                        content={description || alramsahSum}
+                    />
                 </>
             )}
             {image && (
