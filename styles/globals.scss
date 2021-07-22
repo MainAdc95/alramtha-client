@@ -27,7 +27,7 @@ a {
 
 iframe {
     border: 1px solid rgb(2, 135, 254) !important;
-    border-radius: 10px !important;
+    border-radius: 10 !important;
 }
 
 .swiper-button-next,
@@ -40,6 +40,18 @@ iframe {
     opacity: 0.6;
     &:hover {
         opacity: 1;
+    }
+}
+
+.twitter-iframe-container {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    iframe {
+        border: 3px solid rgb(2, 135, 254) !important;
+        border-radius: 25px !important;
     }
 }
 
@@ -119,9 +131,33 @@ iframe {
         }
     }
 
+    line-height: 30px !important;
+
     img {
         width: 100% !important;
         border-radius: 0 !important;
+    }
+}
+
+.yt-iframe-container {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+
+    &:after {
+        content: "";
+        display: block;
+        padding-bottom: 56.6%;
+    }
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        border: 3px solid rgb(2, 135, 254) !important;
+        border-radius: 25px !important;
     }
 }
 

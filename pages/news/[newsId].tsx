@@ -4,6 +4,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import HeadLayout from "../../components/headLayout";
 import { useEffect } from "react";
+import { transformYoutubeLinks } from "../../utils/parseSmTextEditor";
 
 // Components
 import ShareNews from "../../components/news/shareNews";
@@ -179,7 +180,11 @@ const NewsPage = ({ news }: IProps) => {
                                             className={styles.newsContent}
                                         >
                                             <div className="textParserContainer">
-                                                {parse(news.text)}
+                                                {parse(
+                                                    transformYoutubeLinks(
+                                                        news.text
+                                                    )
+                                                )}
                                             </div>
                                         </Box>
                                         <div className={styles.newsTags}>
