@@ -75,7 +75,7 @@ const ImageItem = ({ image, handleOpenDel }: IProps) => {
         <Grid classes={{ root: classes.root }} item>
             <div className={classes.settingsContainer}>
                 <Box className={classes.toolbar}>
-                    <Typography>{image.image_description}</Typography>
+                    {/* <Typography>{image.image_description}</Typography> */}
                     <Box width={45}>
                         <Button
                             style={{ minWidth: "100%" }}

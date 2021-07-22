@@ -599,17 +599,21 @@ const NewsForm = ({ news }: IProps) => {
                         />
                     </div>
                     <div className={classes.triple}>
-                        <div>
-                            <Button
-                                fullWidth
-                                onClick={() => handleSubmit("publish")}
-                                type="submit"
-                                color="purple"
-                                variant="contained"
-                                loading={loading}
-                                text={news ? "احفظ التغييرات" : "أضافة الخبر"}
-                            />
-                        </div>
+                        {(user.is_admin || user.is_admin_assistant) && (
+                            <div>
+                                <Button
+                                    fullWidth
+                                    onClick={() => handleSubmit("publish")}
+                                    type="submit"
+                                    color="purple"
+                                    variant="contained"
+                                    loading={loading}
+                                    text={
+                                        news ? "احفظ التغييرات" : "أضافة الخبر"
+                                    }
+                                />
+                            </div>
+                        )}
                         {!news && (
                             <div>
                                 <Button

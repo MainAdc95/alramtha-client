@@ -5,7 +5,9 @@ export type Role =
     | "is_super_admin"
     | "is_admin"
     | "is_editor"
-    | "is_reporter";
+    | "is_reporter"
+    | "is_writer"
+    | "is_admin_assistant";
 
 export interface IUser {
     user_id: string;
@@ -21,6 +23,8 @@ export interface IUser {
     is_blocked: boolean;
     is_admin: boolean;
     is_super_admin: boolean;
+    is_admin_assistant: boolean;
+    is_writer: boolean;
     is_editor: boolean;
     is_reporter: boolean;
     created_at: Date;

@@ -45,9 +45,6 @@ iframe {
 
 .twitter-iframe-container {
     margin: 10px 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
 
     iframe {
         border: 3px solid rgb(2, 135, 254) !important;
@@ -116,15 +113,13 @@ iframe {
     }
 
     p {
-        max-width: 100% !important;
         font-size: 17px !important;
         font-weight: 300 !important;
         font-family: "Almarai", sans-serif !important;
         line-height: 25px !important;
 
         span {
-            max-width: 100% !important;
-
+            line-height: 25px !important;
             font-size: 17px !important;
             font-weight: 300 !important;
             font-family: "Almarai", sans-serif !important;
@@ -132,7 +127,6 @@ iframe {
     }
 
     div {
-        max-width: 100% !important;
         font-size: 17px !important;
         font-weight: 300 !important;
         font-family: "Almarai", sans-serif !important;

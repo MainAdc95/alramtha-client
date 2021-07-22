@@ -30,8 +30,22 @@ const Sidebar = () => {
                 if (user.is_super_admin || user.is_admin) return true;
 
                 return false;
+            case "is_admin_assistant":
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_admin_assistant
+                )
+                    return true;
+
+                return false;
             case "is_editor":
-                if (user.is_super_admin || user.is_admin || user.is_editor)
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_editor ||
+                    user.is_admin_assistant
+                )
                     return true;
 
                 return false;
@@ -40,12 +54,25 @@ const Sidebar = () => {
                     return true;
 
                 return false;
+            case "is_writer":
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_admin_assistant ||
+                    user.is_writer ||
+                    user.is_editor
+                )
+                    return true;
+
+                return false;
             case "all":
                 if (
                     user.is_super_admin ||
                     user.is_admin ||
                     user.is_reporter ||
-                    user.is_editor
+                    user.is_editor ||
+                    user.is_admin_assistant ||
+                    user.is_writer
                 )
                     return true;
 

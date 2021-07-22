@@ -26,6 +26,8 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
     const [state, setState] = useState({
         is_editor: false,
         is_reporter: false,
+        is_writer: false,
+        is_admin_assistant: false,
         is_blocked: false,
         is_active: false,
     });
@@ -43,6 +45,8 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                 ...state,
                 is_editor: user.is_editor || false,
                 is_reporter: user.is_reporter || false,
+                is_writer: user.is_writer || false,
+                is_admin_assistant: user.is_admin_assistant || false,
                 is_blocked: user.is_blocked || false,
                 is_active: user.is_active || false,
             });
@@ -74,6 +78,9 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                                               ...u,
                                               is_reporter: state.is_reporter,
                                               is_editor: state.is_editor,
+                                              is_writer: state.is_writer,
+                                              is_admin_assistant:
+                                                  state.is_admin_assistant,
                                               is_blocked: state.is_blocked,
                                               is_active: state.is_active,
                                           }
@@ -123,6 +130,28 @@ const UserForm = ({ close, user, mutateUrl }: IProps) => {
                                     />
                                 }
                                 label="مراسل"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        color="primary"
+                                        checked={state.is_writer}
+                                        onChange={handleChange}
+                                        name="is_writer"
+                                    />
+                                }
+                                label="كاتب"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        color="primary"
+                                        checked={state.is_admin_assistant}
+                                        onChange={handleChange}
+                                        name="is_admin_assistant"
+                                    />
+                                }
+                                label="مساعد آدمن"
                             />
                             <FormControlLabel
                                 control={

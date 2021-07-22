@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Box, Divider } from "@material-ui/core";
 import { useState } from "react";

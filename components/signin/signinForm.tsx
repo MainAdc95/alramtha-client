@@ -60,7 +60,7 @@ const SigninForm = () => {
 
             setErrors((prevErrors) => ({ ...prevErrors, ...err }));
         } finally {
-            setState({ ...state, identifier: "", password: "" });
+            setState({ ...state, password: "" });
 
             setLoading(false);
         }

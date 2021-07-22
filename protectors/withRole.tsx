@@ -28,7 +28,9 @@ const WithRole = ({ children, role }: IProps) => {
                     user.is_super_admin ||
                     user.is_admin ||
                     user.is_editor ||
-                    user.is_reporter
+                    user.is_reporter ||
+                    user.is_admin_assistant ||
+                    user.is_writer
                 )
                     return true;
 
@@ -42,12 +44,42 @@ const WithRole = ({ children, role }: IProps) => {
 
                 return false;
             case "is_editor":
-                if (user.is_super_admin || user.is_admin || user.is_editor)
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_admin_assistant ||
+                    user.is_editor
+                )
                     return true;
 
                 return false;
             case "is_reporter":
-                if (user.is_super_admin || user.is_admin || user.is_reporter)
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_admin_assistant ||
+                    user.is_reporter
+                )
+                    return true;
+
+                return false;
+            case "is_writer":
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_admin_assistant ||
+                    user.is_editor ||
+                    user.is_writer
+                )
+                    return true;
+
+                return false;
+            case "is_admin_assistant":
+                if (
+                    user.is_super_admin ||
+                    user.is_admin ||
+                    user.is_admin_assistant
+                )
                     return true;
 
                 return false;
@@ -56,11 +88,14 @@ const WithRole = ({ children, role }: IProps) => {
         }
     };
 
-    if (!isClient) return <p>still in server btw</p>;
-    else if (loading) return <p>loading</p>;
+    if (!isClient) return <p>loading...</p>;
+    else if (loading) return <p>loading...</p>;
     else if (user && checkRole()) return <>{children}</>;
-    else {
+    else if (!user) {
         router.push("/admin/signin");
+        return <p>loading...</p>;
+    } else if (!checkRole()) {
+        router.push("/");
         return <p>loading...</p>;
     }
 };

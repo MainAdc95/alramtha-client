@@ -89,7 +89,7 @@ class Alramsah extends App<AppInitialProps> {
                     <Theme>
                         <SWRConfig
                             value={{
-                                refreshInterval: 10000,
+                                refreshInterval: 120000,
                                 fetcher: async (url) => {
                                     return await apiCall("get", url);
                                 },

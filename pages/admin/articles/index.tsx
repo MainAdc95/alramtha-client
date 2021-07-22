@@ -22,7 +22,7 @@ const News = () => {
     return (
         <>
             <HeadLayout title="Admin article" />
-            <WithRole role="is_editor">
+            <WithRole role="is_writer">
                 <Layout>
                     <div className={classes.head}>
                         <Box

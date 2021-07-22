@@ -1,7 +1,6 @@
 import Link from "next/link";
 import useSWR from "swr";
 import ImageOpt from "./imageOpt";
-import { INews } from "../types/news";
 import { ISection } from "../types/section";
 
 // Styles
@@ -9,23 +8,6 @@ import styles from "../styles/Footer.module.scss";
 
 const Footer = () => {
     const { data: sections } = useSWR<ISection[]>("/sections");
-    const { data: news } = useSWR<{
-        results: number;
-        news: INews[];
-    }>("/news?p=1&r=3&type=published");
-
-    const tagNews = (tag_id) => {
-        if (news) {
-            const tempState = [];
-            const find = news.news.map((n) => {
-                n.tags.map((i) => {
-                    if (i.tag_id === tag_id) tempState.push(tag_id);
-                });
-            });
-
-            return tempState.length;
-        }
-    };
 
     return (
         <footer className={styles.footer}>
