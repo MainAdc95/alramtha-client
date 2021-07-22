@@ -2,11 +2,12 @@ import parse from "html-react-parser";
 import Link from "next/link";
 import HeadLayout from "../../headLayout";
 import { useEffect } from "react";
+import { transformYoutubeLinks } from "../../../utils/parseSmTextEditor";
 
 // Components
 import ShareNews from "../../news/shareNews";
 import SideBar from "../../sideBar";
-import { Grid, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Modal from "../modal";
 
 // Styles
@@ -170,7 +171,11 @@ const NewsPreview = ({ news, close }: IProps) => {
                                             className={styles.newsContent}
                                         >
                                             <div className="textParserContainer">
-                                                {parse(news.text)}
+                                                {parse(
+                                                    transformYoutubeLinks(
+                                                        news.text
+                                                    )
+                                                )}
                                             </div>
                                         </Box>
                                         <div className={styles.newsTags}>
