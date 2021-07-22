@@ -163,17 +163,23 @@ const Home = ({ info }: IProps) => {
                                 0: {
                                     slidesPerView: 2,
                                 },
-                                550: {
+                                450: {
                                     slidesPerView: 3,
                                 },
-                                700: {
+                                600: {
                                     slidesPerView: 4,
                                 },
-                                900: {
+                                750: {
                                     slidesPerView: 5,
                                 },
-                                1200: {
+                                900: {
                                     slidesPerView: 6,
+                                },
+                                1050: {
+                                    slidesPerView: 7,
+                                },
+                                1200: {
+                                    slidesPerView: 8,
                                 },
                             }}
                         >
