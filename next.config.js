@@ -1,10 +1,6 @@
 module.exports = {
     images: {
-        domains: [
-            "localhost",
-            "d1eg6p1o9lpedp.cloudfront.net",
-            "alramsah.s3.amazonaws.com",
-        ],
+        domains: ["localhost", "d9g1urqkjad5c.cloudfront.net"],
     },
     future: {
         webpack5: true,

@@ -11,7 +11,7 @@ export const apiImage = (
     size?: "s" | "m" | "l",
     q?: number
 ): string => {
-    return `https://d1eg6p1o9lpedp.cloudfront.net/${image}`;
+    return `https://d9g1urqkjad5c.cloudfront.net/${image}`;
 };
 
 export const apiCall = <T>(
