@@ -1,6 +1,6 @@
 import axios, { Method } from "axios";
 
-export const isProduction: boolean = false;
+export const isProduction: boolean = true;
 // https://www.alramsah.com
 export const domain = isProduction
     ? "https://www.alshamkhacoop.com"

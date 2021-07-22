@@ -8,7 +8,7 @@ export const tabs: {
     isDisabled: boolean;
 }[] = [
     {
-        role: "all",
+        role: "is_admin",
         name: "التغذية الاخبارية",
         icon: "/newsFeed.svg",
         link: "/admin/newsFeed",
