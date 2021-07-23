@@ -95,7 +95,7 @@ const MessageForm = ({ message }: IProps) => {
         try {
             setLoading(true);
 
-            if (!message) {
+            if (isForward || replay || !message) {
                 await apiCall("post", `/message?authId=${user.user_id}`, state);
             } else {
             }

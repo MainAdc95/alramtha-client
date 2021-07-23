@@ -18,11 +18,18 @@ import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
 import useSWR from "swr";
 import { IMessage } from "../../../types/message";
+import parser from "html-react-parser";
+import { transformYoutubeLinks } from "../../../utils/parseSmTextEditor";
+
+// style sheet
+import styles from "../../../styles/News.module.scss";
 
 // components
 import MessageItem from "./messageItem";
 import Modal from "../modal";
-import HTMLReactParser from "html-react-parser";
+import ImageOpt from "../../../components/imageOpt";
+import Slider from "../../../components/slider";
+import { SwiperSlide } from "swiper/react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -158,7 +165,27 @@ const MessageDetails = ({
                     <Divider />
                 </Box>
             </Box>
-            <div>{HTMLReactParser(message.text)}</div>
+            <Box width="100%" mb={2}>
+                <div className={styles.newsImgsWrapper}>
+                    <Slider>
+                        {message.images.map((img) => (
+                            <SwiperSlide key={img.image_id}>
+                                <div className={styles.newsImgItem}>
+                                    <div>
+                                        <ImageOpt
+                                            src={img?.sizes?.l}
+                                            priority={true}
+                                            layout="fill"
+                                            objectFit="cover"
+                                        />
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Slider>
+                </div>
+            </Box>
+            <div>{parser(transformYoutubeLinks(message.text))}</div>
         </Modal>
     );
 };
