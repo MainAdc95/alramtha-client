@@ -154,7 +154,7 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                         ))}
                     </div>
                 ) : (
-                    <p>No selected images</p>
+                    <p>لا يوجد صور</p>
                 )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
@@ -214,7 +214,7 @@ const MessageItem = ({ message, handleToggleDetails }: IProps) => {
                     <Link
                         href={`/admin/messages/sendMessage?messageId=${message.message_id}#forward`}
                     >
-                        <MenuItem onClick={delAction}>نقل</MenuItem>
+                        <MenuItem onClick={delAction}>اعادة توجيه</MenuItem>
                     </Link>
                     <MenuItem onClick={handleCreateNews}>انشاء خبر</MenuItem>
                 </Menu>
