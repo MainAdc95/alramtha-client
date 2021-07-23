@@ -22,7 +22,7 @@ import parser from "html-react-parser";
 import { transformYoutubeLinks } from "../../../utils/parseSmTextEditor";
 
 // style sheet
-import styles from "../../../styles/News.module.scss";
+import styles from "../../../styles/MessageList.module.scss";
 
 // components
 import MessageItem from "./messageItem";
@@ -149,7 +149,6 @@ const MessageList = () => {
         </>
     );
 };
-
 const MessageDetails = ({
     message,
     close,
@@ -165,26 +164,23 @@ const MessageDetails = ({
                     <Divider />
                 </Box>
             </Box>
-            <Box width="100%" mb={2}>
-                <div className={styles.newsImgsWrapper}>
-                    <Slider>
-                        {message.images.map((img) => (
-                            <SwiperSlide key={img.image_id}>
-                                <div className={styles.newsImgItem}>
-                                    <div>
-                                        <ImageOpt
-                                            src={img?.sizes?.l}
-                                            priority={true}
-                                            layout="fill"
-                                            objectFit="cover"
-                                        />
-                                    </div>
+            <div className={styles.newsImgsWrapper}>
+                <Slider>
+                    {message.images.map((img) => (
+                        <SwiperSlide key={img.image_id}>
+                            <div className={styles.newsImgItem}>
+                                <div>
+                                    <ImageOpt
+                                        src={img?.sizes?.l}
+                                        layout="fill"
+                                        objectFit="cover"
+                                    />
                                 </div>
-                            </SwiperSlide>
-                        ))}
-                    </Slider>
-                </div>
-            </Box>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Slider>
+            </div>
             <div>{parser(transformYoutubeLinks(message.text))}</div>
         </Modal>
     );
