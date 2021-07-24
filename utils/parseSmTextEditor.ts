@@ -16,7 +16,7 @@ export const transformYoutubeLinks = (text) => {
         /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
 
     let resultHtml = twitterParse(text);
-    console.log(resultHtml);
+
     // get all the matches for youtube links using the first regex
     const match = text.match(fullreg);
 
@@ -68,7 +68,7 @@ export const twitterParse = (str: string) => {
         for (let match of matched) {
             resultHtml = resultHtml.replace(
                 match,
-                `<div class="twitter-iframe-container"><blockquote class="twitter-tweet"><p lang="ar" dir="rtl">يبدو أن تيك توك ليسَ فقَطْ للترفيهِ والأغَاني هُوَ أيْضَاً مركزٌ للقِصَصِ الغَريبةِ مِثلِ لُغزِ النَّاجي الوَحيد، الذي ظهر في فبرايرَ الماضي لشابٍ إسبانيٍّ يدَّعي أنه استيقظَ في عام 2027 بِمُفردِهِ بعدَ انقراضِ البشريّةِ.<a href="https://twitter.com/hashtag/%D8%A7%D9%84%D9%86%D8%A7%D8%AC%D9%8A_%D8%A7%D9%84%D9%88%D8%AD%D9%8A%D8%AF?src=hash&amp;ref_src=twsrc%5Etfw">#الناجي_الوحيد</a><a href="https://twitter.com/hashtag/Unicosobreviviente?src=hash&amp;ref_src=twsrc%5Etfw">#Unicosobreviviente</a> <a href="https://t.co/SHeDMuGpOT">pic.twitter.com/SHeDMuGpOT</a></p>&mdash; الرَّجل (@ArrajolM) <a href="${match}?ref_src=twsrc%5Etfw">July 21, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>`
+                `<div class="twitter-iframe-container"><blockquote class="twitter-tweet"><a href="${match}"></a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>`
             );
         }
     }

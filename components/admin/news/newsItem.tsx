@@ -15,10 +15,6 @@ import { INews } from "../../../types/news";
 import { apiImage } from "../../../utils/apiCall";
 import ImageOpt from "../../imageOpt";
 
-// icons
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
-
 const useStyles = makeStyles({
     root: {
         "&:hover": {
@@ -127,6 +123,13 @@ const NewsItem = ({
             >
                 {news.title}
             </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
+                {news.readers}
+            </TableCell>
             <TableCell>
                 <div className={classes.imgsContainer}>
                     <div className={classes.imgContainer}>
@@ -156,17 +159,6 @@ const NewsItem = ({
                         </div>
                     ))}
                 </div>
-            </TableCell>
-            <TableCell
-                classes={{
-                    root: classes.tableCell,
-                }}
-            >
-                {news.is_published ? (
-                    <CheckIcon color="primary" />
-                ) : (
-                    <ClearIcon color="secondary" />
-                )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
                 {new Date(news.created_at).toLocaleString("ar")}

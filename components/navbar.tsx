@@ -310,7 +310,6 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         tabItem: {
-            padding: theme.spacing(0, 2),
             [theme.direction === "ltr" ? "marginRight" : "marginLeft"]:
                 theme.spacing(0.3),
             display: "flex",
@@ -325,9 +324,12 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: "all 0.2s ease",
         },
         tabLink: {
+            padding: theme.spacing(0, 2),
             fontSize: theme.typography.body1.fontSize,
             textTransform: "capitalize",
+            height: "100%",
             zIndex: 1,
+            lineHeight: "40px",
             justifyContent: "center",
             whiteSpace: "nowrap",
         },

@@ -4,6 +4,7 @@ import { INews } from "../../types/news";
 
 // icons
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import { apiImage } from "../../utils/apiCall";
 
 interface IProps {
     news: INews;
@@ -18,11 +19,16 @@ const LargeNews = ({ news, styles }: IProps) => {
                     <div className="news-img">
                         <div>
                             {news.thumbnail && (
-                                <ImageOpt
-                                    src={news.thumbnail?.sizes?.m}
-                                    layout="fill"
-                                    objectFit="cover"
-                                />
+                                <div className="image">
+                                    <img
+                                        src={apiImage(news.thumbnail?.sizes?.s)}
+                                    />
+                                </div>
+                                // <ImageOpt
+                                //     src={news.thumbnail?.sizes?.m}
+                                //     layout="fill"
+                                //     objectFit="cover"
+                                // />
                             )}
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import { apiCall } from "../../utils/apiCall";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import HeadLayout from "../../components/headLayout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { transformYoutubeLinks } from "../../utils/parseSmTextEditor";
 
 // Components
@@ -26,24 +26,45 @@ interface IProps {
     news: INews;
 }
 
-const NewsPage = ({ news }: IProps) => {
+const NewsPage = ({ news: n }: IProps) => {
     const router = useRouter();
+    const [news, setNews] = useState<INews | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // @ts-ignore
-        window?.twttr?.widgets?.load(document.getElementById("textEditor"));
-        // @ts-ignore
-        window?.instgrm?.Embeds?.process();
+        if (!news) return setNews(n);
 
-        handleSelect();
+        if (news)
+            (async () => {
+                setLoading(true);
+                const news = await apiCall<INews>(
+                    "get",
+                    `/news/${router.query.newsId}`
+                );
+                setLoading(false);
+
+                setNews(news);
+            })();
     }, [router.asPath]);
 
-    const handleSelect = async () => {
-        try {
-            await apiCall("post", `/news/${news.news_id}/read`);
-        } catch (err) {
-            console.log(err);
+    useEffect(() => {
+        if (news) {
+            // @ts-ignore
+            window?.twttr?.widgets?.load();
+            // @ts-ignore
+            window?.instgrm?.Embeds?.process();
+
+            handleSelect();
         }
+    }, [news]);
+
+    const handleSelect = async () => {
+        if (news)
+            try {
+                await apiCall("post", `/news/${news.news_id}/read`);
+            } catch (err) {
+                console.log(err);
+            }
     };
 
     if (news)
@@ -181,9 +202,11 @@ const NewsPage = ({ news }: IProps) => {
                                         >
                                             <div className="textParserContainer">
                                                 {parse(
-                                                    transformYoutubeLinks(
-                                                        news.text
-                                                    )
+                                                    loading
+                                                        ? ""
+                                                        : transformYoutubeLinks(
+                                                              news.text
+                                                          )
                                                 )}
                                             </div>
                                         </Box>

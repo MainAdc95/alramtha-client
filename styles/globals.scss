@@ -77,6 +77,10 @@ iframe {
     min-width: 0 !important;
 }
 
+grammarly-desktop-integration {
+    display: none;
+}
+
 .textParserContainer {
     h1,
     h2,
@@ -370,6 +374,35 @@ td {
     font-weight: 700;
     margin: 0 0 16px;
     cursor: pointer;
+}
+
+.image {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 0;
+        border: none;
+        margin: auto;
+        display: block;
+        width: 0;
+        height: 0;
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 100%;
+        max-height: 100%;
+        object-fit: cover;
+    }
 }
 
 .tag {

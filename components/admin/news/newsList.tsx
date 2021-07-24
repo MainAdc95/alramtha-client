@@ -69,7 +69,7 @@ const NewsList = () => {
         results: number;
         news: INews[];
     }>(
-        `/news?p=${page + 1}&r=${rowsPerPage}&type=${
+        `/news?isAdmin=true&p=${page + 1}&r=${rowsPerPage}&type=${
             value === 0 ? "published" : value === 1 ? "draft" : "archived"
         }`
     );
@@ -241,8 +241,8 @@ const NewsList = () => {
                                     <TableCell className={classes.mediumCell}>
                                         صورة
                                     </TableCell>
-                                    <TableCell className={classes.smallCell}>
-                                        نشرت
+                                    <TableCell className={classes.mediumCell}>
+                                        عدد القراء
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
                                         تاريخ الانشاء
