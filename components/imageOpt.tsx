@@ -30,16 +30,35 @@ const ImageOpt = ({
     return (
         <>
             <div className="image-opt">
-                <Image
-                    priority={priority === true ? true : false}
-                    className={className || ""}
-                    src={location === "local" ? src : apiImage(src)}
-                    alt={alt}
-                    width={width || null}
-                    height={height || null}
-                    layout={(layout || null) as any}
-                    objectFit={objectFit || null}
-                />
+                <div
+                    style={
+                        width && height
+                            ? {
+                                  minWidth: width,
+                                  minHeight: height,
+                                  width,
+                                  height,
+                              }
+                            : null
+                    }
+                    className={!width && !height ? "image" : ""}
+                >
+                    <img
+                        className={className || ""}
+                        style={
+                            width && height
+                                ? {
+                                      minWidth: width,
+                                      minHeight: height,
+                                      width,
+                                      height,
+                                  }
+                                : null
+                        }
+                        src={location === "local" ? src : apiImage(src)}
+                        alt={alt}
+                    />
+                </div>
             </div>
             <style jsx>{`
                 .image-opt {

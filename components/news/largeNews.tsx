@@ -19,16 +19,11 @@ const LargeNews = ({ news, styles }: IProps) => {
                     <div className="news-img">
                         <div>
                             {news.thumbnail && (
-                                <div className="image">
-                                    <img
-                                        src={apiImage(news.thumbnail?.sizes?.s)}
-                                    />
-                                </div>
-                                // <ImageOpt
-                                //     src={news.thumbnail?.sizes?.m}
-                                //     layout="fill"
-                                //     objectFit="cover"
-                                // />
+                                <ImageOpt
+                                    src={news.thumbnail?.sizes?.m}
+                                    layout="fill"
+                                    objectFit="cover"
+                                />
                             )}
                         </div>
                     </div>
