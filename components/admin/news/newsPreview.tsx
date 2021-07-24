@@ -80,9 +80,6 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                                             ?.sizes
                                                                             ?.l
                                                                     }
-                                                                    priority={
-                                                                        true
-                                                                    }
                                                                     layout="fill"
                                                                     objectFit="cover"
                                                                 />
@@ -105,9 +102,6 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                                         img
                                                                             ?.sizes
                                                                             ?.l
-                                                                    }
-                                                                    priority={
-                                                                        true
                                                                     }
                                                                     layout="fill"
                                                                     objectFit="cover"

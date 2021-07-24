@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { useState } from "react";
 import { apiImage } from "../utils/apiCall";
 
 interface IProps {
@@ -27,6 +27,8 @@ const ImageOpt = ({
     draggable,
     priority,
 }: IProps) => {
+    const [error, setError] = useState(false);
+
     return (
         <>
             <div className="image-opt">
@@ -44,6 +46,7 @@ const ImageOpt = ({
                     className={!width && !height ? "image" : ""}
                 >
                     <img
+                        loading="lazy"
                         className={className || ""}
                         style={
                             width && height
@@ -55,8 +58,16 @@ const ImageOpt = ({
                                   }
                                 : null
                         }
-                        src={location === "local" ? src : apiImage(src)}
+                        src={
+                            error
+                                ? "https://www.alramsah.com/logo.svg"
+                                : location === "local"
+                                ? src
+                                : apiImage(src)
+                        }
                         alt={alt}
+                        onError={(e: any) => setError(true)}
+                        onLoad={(e: any) => console.log(e.target.src)}
                     />
                 </div>
             </div>
