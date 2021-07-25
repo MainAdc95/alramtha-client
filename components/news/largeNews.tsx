@@ -4,7 +4,6 @@ import { INews } from "../../types/news";
 
 // icons
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import { apiImage } from "../../utils/apiCall";
 
 interface IProps {
     news: INews;
