@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiImage } from "../utils/apiCall";
 
 interface IProps {
@@ -13,6 +13,7 @@ interface IProps {
     draggable?: boolean;
     size?: "s" | "m" | "l";
     priority?: boolean;
+    empty?: boolean;
 }
 
 const ImageOpt = ({
@@ -23,18 +24,33 @@ const ImageOpt = ({
     layout,
     objectFit,
     className,
+    empty,
     location,
     draggable,
     priority,
 }: IProps) => {
     const [error, setError] = useState(false);
 
+    useEffect(() => {
+        if (empty) setError(true);
+    }, []);
+
     return (
         <>
             <div className="image-opt">
                 <div
                     style={
-                        width && height
+                        error
+                            ? {
+                                  display: "flex",
+                                  height: "100%",
+                                  width: "100%",
+                                  position: "static",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  backgroundColor: "#0288fec0",
+                              }
+                            : width && height
                             ? {
                                   minWidth: width,
                                   minHeight: height,
@@ -43,13 +59,20 @@ const ImageOpt = ({
                               }
                             : null
                     }
-                    className={!width && !height ? "image" : ""}
+                    className={!width && !height ? (error ? "" : "image") : ""}
                 >
                     <img
                         loading="lazy"
-                        className={className || ""}
+                        className={error ? "" : className || ""}
                         style={
-                            width && height
+                            error
+                                ? {
+                                      width: "100px",
+                                      height: "100px",
+                                      margin: "auto",
+                                      display: "block",
+                                  }
+                                : width && height
                                 ? {
                                       minWidth: width,
                                       minHeight: height,
@@ -60,7 +83,7 @@ const ImageOpt = ({
                         }
                         src={
                             error
-                                ? "https://www.alramsah.com/logo.svg"
+                                ? "https://www.alramsah.com/no-photos.svg"
                                 : location === "local"
                                 ? src
                                 : apiImage(src)

@@ -18,13 +18,16 @@ const LargeNews = ({ news, styles }: IProps) => {
                 <Link href={`/news/${news.news_id}`}>
                     <div className="news-img">
                         <div>
-                            {news.thumbnail && (
-                                <ImageOpt
-                                    src={news.thumbnail?.sizes?.m}
-                                    layout="fill"
-                                    objectFit="cover"
-                                />
-                            )}
+                            <ImageOpt
+                                src={
+                                    news.thumbnail
+                                        ? news.thumbnail?.sizes?.m
+                                        : ""
+                                }
+                                layout="fill"
+                                empty={news.thumbnail ? false : true}
+                                objectFit="cover"
+                            />
                         </div>
                     </div>
                 </Link>
