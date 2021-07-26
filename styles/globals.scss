@@ -26,8 +26,16 @@ a {
 }
 
 iframe {
-    border: 1px solid rgb(2, 135, 254) !important;
-    border-radius: 10 !important;
+    border: 3px solid rgb(2, 135, 254) !important;
+    border-radius: 25px;
+}
+
+.tox,
+.tox-tinymce {
+    iframe {
+        border: none !important;
+        border-radius: 0px;
+    }
 }
 
 .swiper-button-next,

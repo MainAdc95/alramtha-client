@@ -1,5 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box } from "@material-ui/core";
 import Error from "./error";
 
@@ -39,7 +39,7 @@ const TextEditor = ({
             <Editor
                 value={editorIsInitialized ? state[name] : " "}
                 id={id}
-                onInit={() => {
+                onInit={(e, a) => {
                     if (!editorIsInitialized) {
                         setEditorIsInitialized(true);
                     }
@@ -52,10 +52,10 @@ const TextEditor = ({
                     branding: false,
                     menubar: true,
                     plugins:
-                        "fullscreen code link preview print charmap emoticons",
+                        "fullscreen media embed code link preview print charmap emoticons",
                     directionality: direction || "ltr",
                     toolbar:
-                        "undo redo | bold italic underline strikethrough | fontselect code fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor casechange formatpainter removeformat | pagebreak | charmap emoticons | fullscreen preview save print | pageembed template link anchor codesample | a11ycheck ltr rtl",
+                        "undo redo | bold italic underline strikethrough | fontselect code fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor casechange formatpainter removeformat | pagebreak | charmap emoticons | fullscreen preview save print | pageembed embed media template link anchor codesample | a11ycheck ltr rtl",
                 }}
                 onEditorChange={(e) => handleEditorChange(e)}
             />
