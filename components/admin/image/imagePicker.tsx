@@ -11,11 +11,14 @@ import {
     makeStyles,
     Menu,
     MenuItem,
+    TextField,
     Theme,
 } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import ImageOpt from "../../imageOpt";
+import { IImage } from "../../../types/image";
 
 // components
 import Modal from "../modal";
@@ -23,7 +26,7 @@ import ImageForm from "./imageForm";
 
 // icons
 import SortIcon from "@material-ui/icons/Sort";
-import { IImage } from "../../../types/image";
+import SearchIcon from "@material-ui/icons/Search";
 
 type Sort = "الأحدث" | "الأقدم";
 
@@ -86,9 +89,40 @@ const ImagePicker = ({
     const [images, setImages] = useState<IImage[]>([]);
     const [active, setActive] = useState(0);
     const [loading, setLoading] = useState(true);
-    const { data, error } = useSWR("/images");
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedSort, setSelectedSort] = useState<Sort | null>("الأحدث");
+    const rowsPerPage = 42;
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const [search, setSearch] = useState("");
+    const [filters, setFilters] = useState({
+        search: "",
+        order: "الأحدث",
+    });
+    const { data, error } = useSWR<{
+        results: number;
+        images: IImage[];
+    }>(
+        `/images?p=${page}&r=${rowsPerPage}&search=${filters.search}&date=${
+            filters.order === "الأحدث" ? "desc" : "asc"
+        }`
+    );
+
+    const handleFilter = (k, v) => {
+        setFilters({
+            ...filters,
+            [k]: v,
+        });
+    };
+
+    useEffect(() => {
+        if (data) {
+            setCount(Math.ceil(data.results / rowsPerPage));
+        }
+    }, [data]);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
 
     useEffect(() => {
         if (type === "single") {
@@ -148,21 +182,15 @@ const ImagePicker = ({
         setActive(newValue);
     };
 
-    const getSelectedImages = () => {
-        return data?.filter((img) =>
-            images.map((i) => i.image_id).includes(img.image_id)
-        );
-    };
-
     const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleMenuItemClick = (
         event: React.MouseEvent<HTMLElement>,
-        value: Sort
+        v: Sort
     ) => {
-        setSelectedSort(value);
+        handleFilter("order", v);
         setAnchorEl(null);
     };
 
@@ -170,24 +198,19 @@ const ImagePicker = ({
         setAnchorEl(null);
     };
 
-    const handleSort = (a: any, b: any) => {
-        if (selectedSort === "الأحدث") {
-            return (
-                new Date(b.created_at).valueOf() -
-                new Date(a.created_at).valueOf()
-            );
-        } else if (selectedSort === "الأقدم") {
-            return (
-                new Date(a.created_at).valueOf() -
-                new Date(b.created_at).valueOf()
-            );
-        }
-    };
-
     // _______________________________ select multiple
     const selectMultiple = (images: IImage[]) => {
         images.forEach((img) => handleSelect(img));
         handleSave(images);
+    };
+
+    // __________________________ search
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
+    };
+
+    const searchCall = () => {
+        handleFilter("search", search);
     };
 
     return (
@@ -202,6 +225,7 @@ const ImagePicker = ({
             >
                 <Box position="relative">
                     <Box
+                        style={{ whiteSpace: "nowrap" }}
                         display="flex"
                         justifyContent="space-between"
                         alignItems="center"
@@ -211,6 +235,36 @@ const ImagePicker = ({
                         <Typography variant="h6">
                             الرجاء اختيار صورة واحدة على الأقل
                         </Typography>
+                        <Box ml={5} mr={5} display="flex" width="100%">
+                            <Box
+                                onClick={searchCall}
+                                style={{
+                                    minHeight: "100%",
+                                    width: "50px",
+                                    background: "rgb(2, 135, 254)",
+                                    borderRadius: "0 5px 5px 0",
+                                    cursor: "pointer",
+                                }}
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                            >
+                                <SearchIcon style={{ color: "white" }} />
+                            </Box>
+                            <TextField
+                                onKeyDown={(e: any) => {
+                                    if (e.keyCode === 13) {
+                                        searchCall();
+                                    }
+                                }}
+                                value={search}
+                                label="الحث..."
+                                name="search"
+                                onChange={handleSearch}
+                                fullWidth
+                                variant="outlined"
+                            />
+                        </Box>
                         <Box display="flex">
                             <div>
                                 <Box mr={2}>
@@ -219,7 +273,7 @@ const ImagePicker = ({
                                         variant="outlined"
                                         onClick={handleClickListItem}
                                     >
-                                        {selectedSort}
+                                        {filters.order}
                                     </Button>
                                 </Box>
                                 <Menu
@@ -239,7 +293,7 @@ const ImagePicker = ({
                                     {sortOptions.map((sort) => (
                                         <MenuItem
                                             key={sort}
-                                            selected={sort === selectedSort}
+                                            selected={sort === filters.order}
                                             onClick={(event) =>
                                                 handleMenuItemClick(event, sort)
                                             }
@@ -285,100 +339,115 @@ const ImagePicker = ({
                         <Tab label="الصور مختارة" {...a11yProps(1)} />
                     </Tabs>
                     <Divider />
-                    {loading ? (
-                        <Box display="flex" mt={2} justifyContent="center">
-                            <CircularProgress color="secondary" />
-                        </Box>
-                    ) : (
-                        <>
-                            <TabPanel value={active} index={0}>
-                                <div
-                                    style={{ marginTop: "20px" }}
-                                    className={classes.imagesWrapper}
-                                >
-                                    {data &&
-                                        data
-                                            .sort((a, b) => handleSort(a, b))
-                                            .map((img) => (
-                                                <div
-                                                    className={
-                                                        classes.imageContainer
-                                                    }
-                                                    style={{
-                                                        position: "relative",
-                                                        height: "200px",
-                                                    }}
-                                                >
-                                                    <div
-                                                        className={
-                                                            classes.checkboxContainer
-                                                        }
-                                                    >
-                                                        <Checkbox
-                                                            checked={images
-                                                                .map(
-                                                                    (i) =>
-                                                                        i.image_id
-                                                                )
-                                                                .includes(
-                                                                    img.image_id
-                                                                )}
-                                                            onChange={() =>
-                                                                handleSelect(
-                                                                    img
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <ImageOpt
-                                                        src={img?.sizes?.s}
-                                                        alt={img?.sizes?.s}
-                                                        layout="fill"
-                                                        objectFit="contain"
-                                                    />
-                                                </div>
-                                            ))}
+
+                    <>
+                        <TabPanel value={active} index={0}>
+                            <Box display="flex" mb={4}>
+                                <Pagination
+                                    color="secondary"
+                                    onChange={handleChangePage}
+                                    page={page}
+                                    count={count}
+                                />
+                            </Box>
+                            {!data ? (
+                                <div className={classes.loadingContainer}>
+                                    <CircularProgress color="primary" />
                                 </div>
-                            </TabPanel>
-                            <TabPanel value={active} index={1}>
+                            ) : !data.images.length ? (
+                                <p>لم يتم العثور على اي صور.</p>
+                            ) : (
                                 <div
                                     style={{ marginTop: "20px" }}
                                     className={classes.imagesWrapper}
                                 >
-                                    {getSelectedImages()?.map((img) => (
-                                        <div
-                                            className={classes.imageContainer}
-                                            style={{
-                                                position: "relative",
-                                                height: "200px",
-                                            }}
-                                        >
+                                    {data.images &&
+                                        data.images.map((img) => (
                                             <div
                                                 className={
-                                                    classes.checkboxContainer
+                                                    classes.imageContainer
                                                 }
+                                                style={{
+                                                    position: "relative",
+                                                    height: "200px",
+                                                }}
                                             >
-                                                <Checkbox
-                                                    checked={images
-                                                        .map((i) => i.image_id)
-                                                        .includes(img.image_id)}
-                                                    onChange={() =>
-                                                        handleSelect(img)
+                                                <div
+                                                    className={
+                                                        classes.checkboxContainer
                                                     }
+                                                >
+                                                    <Checkbox
+                                                        checked={images
+                                                            .map(
+                                                                (i) =>
+                                                                    i.image_id
+                                                            )
+                                                            .includes(
+                                                                img.image_id
+                                                            )}
+                                                        onChange={() =>
+                                                            handleSelect(img)
+                                                        }
+                                                    />
+                                                </div>
+                                                <ImageOpt
+                                                    src={img?.sizes?.s}
+                                                    alt={img?.sizes?.s}
+                                                    layout="fill"
+                                                    objectFit="contain"
                                                 />
                                             </div>
-                                            <ImageOpt
-                                                src={img?.sizes?.m}
-                                                alt={img?.sizes?.m}
-                                                layout="fill"
-                                                objectFit="contain"
+                                        ))}
+                                </div>
+                            )}
+                            <Box display="flex" mt={4}>
+                                <Pagination
+                                    color="secondary"
+                                    onChange={handleChangePage}
+                                    page={page}
+                                    count={count}
+                                />
+                            </Box>
+                        </TabPanel>
+                        <TabPanel value={active} index={1}>
+                            <div
+                                style={{ marginTop: "20px" }}
+                                className={classes.imagesWrapper}
+                            >
+                                {images.map((img) => (
+                                    <div
+                                        className={classes.imageContainer}
+                                        style={{
+                                            position: "relative",
+                                            height: "200px",
+                                        }}
+                                    >
+                                        <div
+                                            className={
+                                                classes.checkboxContainer
+                                            }
+                                        >
+                                            <Checkbox
+                                                checked={images
+                                                    .map((i) => i.image_id)
+                                                    .includes(img.image_id)}
+                                                onChange={() =>
+                                                    handleSelect(img)
+                                                }
                                             />
                                         </div>
-                                    ))}
-                                </div>
-                            </TabPanel>
-                        </>
-                    )}
+                                        <ImageOpt
+                                            src={img?.sizes?.m}
+                                            alt={img?.sizes?.m}
+                                            layout="fill"
+                                            objectFit="contain"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </TabPanel>
+                    </>
                 </Box>
             </Modal>
             {isImage && (
@@ -423,6 +492,11 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
             boxShadow: theme.shadows[5],
             backgroundColor: "white",
+        },
+        loadingContainer: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
         },
     })
 );

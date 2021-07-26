@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import { INews } from "../../types/news";
 import HeadLayout from "../../components/headLayout";
 import useSWR from "swr";
-import { GetServerSideProps } from "next";
-import { IFile } from "../../types/file";
 import Pagination from "@material-ui/lab/Pagination";
 import { Box, CircularProgress, TextField } from "@material-ui/core";
 import { useEffect, useState } from "react";
@@ -11,7 +9,6 @@ import { useEffect, useState } from "react";
 // Components
 import LargeNews from "../../components/news/largeNews";
 import SideBar from "../../components/sideBar";
-import { apiCall } from "../../utils/apiCall";
 
 // style sheet
 import styles from "../../styles/Section.module.scss";
@@ -28,17 +25,18 @@ const Search = () => {
     const rowsPerPage = 20;
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
-    const { data } = useSWR<{ results: number; news: INews[] }>(
+    const { data, error } = useSWR<{ results: number; news: INews[] }>(
         `/news?p=${page}&r=${rowsPerPage}&type=published&text=${state.activeSearch}`
     );
 
     useEffect(() => {
+        console.log(router.query.text);
         setState({
             ...state,
             activeSearch: String(router.query.text),
             search: String(router.query.text),
         });
-    }, []);
+    }, [router.query]);
 
     useEffect(() => {
         setPage(1);
@@ -51,6 +49,7 @@ const Search = () => {
     }, [data]);
 
     const handleChangePage = (event, newPage) => {
+        window.scrollTo(0, 0);
         setPage(newPage);
     };
 
@@ -59,8 +58,9 @@ const Search = () => {
         setState({ ...state, [e.target.name]: e.target.value });
     };
 
-    const searchCall = async () => {
+    const searchCall = () => {
         if (state.search) {
+            router.push(`/search/${state.search}`, null, { shallow: true });
             setState({ ...state, activeSearch: state.search });
         }
     };
@@ -91,29 +91,40 @@ const Search = () => {
                             label="بحث"
                             name="search"
                             onChange={handleSearch}
+                            onKeyDown={(e: any) => {
+                                if (e.keyCode === 13) {
+                                    searchCall();
+                                }
+                            }}
                             fullWidth
                             variant="outlined"
                         />
                     </Box>
-                    <Pagination
-                        onChange={handleChangePage}
-                        count={count}
-                        page={page}
-                        shape="rounded"
-                        color="primary"
-                    />
-                    {!data ? (
+                    {error ? (
+                        <p>حدث خطأ اثناء احتميل الأخر.</p>
+                    ) : !data ? (
                         <div className={styles.loadingContainer}>
                             <CircularProgress color="primary" />
                         </div>
+                    ) : !data.news.length ? (
+                        <p>لم يتم العثور على اي معلومات.</p>
                     ) : (
-                        <div className={styles.newsList}>
-                            {data?.news.map((item) => (
-                                <div key={item.news_id}>
-                                    <LargeNews news={item} />
-                                </div>
-                            ))}
-                        </div>
+                        <>
+                            <div className={styles.newsList}>
+                                {data?.news.map((item) => (
+                                    <div key={item.news_id}>
+                                        <LargeNews news={item} />
+                                    </div>
+                                ))}
+                            </div>
+                            <Pagination
+                                onChange={handleChangePage}
+                                count={count}
+                                page={page}
+                                shape="rounded"
+                                color="primary"
+                            />
+                        </>
                     )}
                 </div>
                 <div className={styles.sidebar}>

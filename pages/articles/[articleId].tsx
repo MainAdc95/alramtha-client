@@ -88,11 +88,12 @@ const NewsPage = ({ article }: IProps) => {
                                                                             ?.sizes
                                                                             ?.l
                                                                     }
-                                                                    priority={
-                                                                        true
+                                                                    alt={
+                                                                        article
+                                                                            ?.thumbnail
+                                                                            ?.image_description ||
+                                                                        ""
                                                                     }
-                                                                    layout="fill"
-                                                                    objectFit="cover"
                                                                 />
                                                             </div>
                                                         </div>
@@ -114,11 +115,9 @@ const NewsPage = ({ article }: IProps) => {
                                                                             ?.sizes
                                                                             ?.l
                                                                     }
-                                                                    priority={
-                                                                        true
+                                                                    alt={
+                                                                        img.image_description
                                                                     }
-                                                                    layout="fill"
-                                                                    objectFit="cover"
                                                                 />
                                                             </div>
                                                         </div>

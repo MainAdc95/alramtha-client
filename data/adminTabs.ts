@@ -93,6 +93,27 @@ export const tabs: {
     },
     {
         role: "is_admin",
+        name: "خبر بصورة",
+        icon: "/liveStream.svg",
+        link: "/admin",
+        isDisabled: true,
+    },
+    {
+        role: "is_admin",
+        name: "كاريكاتير",
+        icon: "/liveStream.svg",
+        link: "/admin",
+        isDisabled: true,
+    },
+    {
+        role: "is_admin",
+        name: "ترند العالم",
+        icon: "/liveStream.svg",
+        link: "/admin",
+        isDisabled: true,
+    },
+    {
+        role: "is_admin",
         name: "البث المباشر",
         icon: "/liveStream.svg",
         link: "/admin",

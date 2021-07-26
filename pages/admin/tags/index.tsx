@@ -20,7 +20,7 @@ const Tags = () => {
     return (
         <>
             <HeadLayout title="Admin tags" />
-            <WithRole role="is_editor">
+            <WithRole role="is_admin">
                 <Layout>
                     <div className={classes.head}>
                         <Box

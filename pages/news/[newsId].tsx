@@ -10,6 +10,7 @@ import { transformYoutubeLinks } from "../../utils/parseSmTextEditor";
 import ShareNews from "../../components/news/shareNews";
 import SideBar from "../../components/sideBar";
 import { Box } from "@material-ui/core";
+import SectionNews from "../../components/sectionNews";
 
 // Styles
 import styles from "../../styles/News.module.scss";
@@ -110,11 +111,12 @@ const NewsPage = ({ news: n }: IProps) => {
                                                                             ?.sizes
                                                                             ?.l
                                                                     }
-                                                                    priority={
-                                                                        true
+                                                                    alt={
+                                                                        news
+                                                                            ?.thumbnail
+                                                                            ?.image_description ||
+                                                                        ""
                                                                     }
-                                                                    layout="fill"
-                                                                    objectFit="cover"
                                                                 />
                                                             </div>
                                                         </div>
@@ -136,11 +138,9 @@ const NewsPage = ({ news: n }: IProps) => {
                                                                             ?.sizes
                                                                             ?.l
                                                                     }
-                                                                    priority={
-                                                                        true
+                                                                    alt={
+                                                                        img.image_description
                                                                     }
-                                                                    layout="fill"
-                                                                    objectFit="cover"
                                                                 />
                                                             </div>
                                                         </div>
@@ -227,6 +227,11 @@ const NewsPage = ({ news: n }: IProps) => {
                                         </div>
                                         <ShareNews />
                                     </Box>
+                                    {news.section && (
+                                        <Box mt={5}>
+                                            <SectionNews data={news.section} />
+                                        </Box>
+                                    )}
                                 </div>
                             </div>
                             <div className={styles.sidebarContainer}>

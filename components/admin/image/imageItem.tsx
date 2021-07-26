@@ -5,9 +5,6 @@ import {
     Button,
     Menu,
     MenuItem,
-    Box,
-    Typography,
-    Grid,
     Theme,
     createStyles,
 } from "@material-ui/core";
@@ -19,9 +16,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: "10%",
-            margin: "0.5%",
-            paddingBottom: "10%",
+            width: "100%",
             position: "relative",
             boxShadow:
                 "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)",
@@ -32,8 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
                     opacity: 1,
                 },
             },
+            // "&:after": {
+            //     content: "",
+            //     display: "block",
+            //     paddingBottom: "50%",
+            // },
         },
-        settingsContainer: {},
         toolbar: {
             position: "absolute",
             alignItems: "center",
@@ -45,6 +44,13 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "100%",
             justifyContent: "space-between",
             boxShadow: theme.shadows[10],
+        },
+        imgContainer: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
         },
     })
 );
@@ -72,11 +78,10 @@ const ImageItem = ({ image, handleOpenDel }: IProps) => {
     };
 
     return (
-        <Grid classes={{ root: classes.root }} item>
-            <div className={classes.settingsContainer}>
-                <Box className={classes.toolbar}>
-                    {/* <Typography>{image.image_description}</Typography> */}
-                    <Box width={45}>
+        <div className={`${classes.root} admin-image-item`}>
+            <div>
+                <div className={classes.toolbar}>
+                    <div>
                         <Button
                             style={{ minWidth: "100%" }}
                             size="small"
@@ -86,8 +91,8 @@ const ImageItem = ({ image, handleOpenDel }: IProps) => {
                         >
                             <MoreHorizIcon />
                         </Button>
-                    </Box>
-                </Box>
+                    </div>
+                </div>
                 <Menu
                     anchorEl={anchorEl}
                     keepMounted
@@ -99,8 +104,14 @@ const ImageItem = ({ image, handleOpenDel }: IProps) => {
                     <MenuItem onClick={delAction}>حذف</MenuItem>
                 </Menu>
             </div>
-            <ImageOpt src={image?.sizes?.m} layout="fill" objectFit="cover" />
-        </Grid>
+            <div className={classes.imgContainer}>
+                <ImageOpt
+                    src={image?.sizes?.s}
+                    layout="fill"
+                    objectFit="cover"
+                />
+            </div>
+        </div>
     );
 };
 

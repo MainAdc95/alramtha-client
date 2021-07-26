@@ -18,7 +18,10 @@ const BannerCard = ({ data, type }: IProps) => {
                     <Slider spaceBetween={1}>
                         {data.news.map((news: INews) => (
                             <SwiperSlide key={news.news_id}>
-                                <div className="newsContainer">
+                                <div
+                                    className="newsContainer"
+                                    style={{ height: "100%" }}
+                                >
                                     <ImageOpt
                                         priority={true}
                                         src={news.thumbnail?.sizes?.m}
@@ -28,23 +31,19 @@ const BannerCard = ({ data, type }: IProps) => {
                                 </div>
                                 <Link href={`/news/${news.news_id}`}>
                                     <div className="overlay">
+                                        <a
+                                            style={{
+                                                backgroundColor: `${data.color}`,
+                                            }}
+                                        >
+                                            {data.section_name}
+                                        </a>
                                         <div className="card-content">
-                                            <a
-                                                style={{
-                                                    backgroundColor: `${data.color}`,
-                                                }}
-                                            >
-                                                {data.section_name}
-                                            </a>
                                             <Link
                                                 href={`/news/${news.news_id}`}
                                             >
                                                 <p>{news.title}</p>
                                             </Link>
-                                            {/* <ul>
-                                            <li>{news.created_at}</li>
-                                            <li>0 القراء</li>
-                                        </ul> */}
                                         </div>
                                     </div>
                                 </Link>
@@ -60,23 +59,19 @@ const BannerCard = ({ data, type }: IProps) => {
                         />
                         <Link href={`/news/${data?.news[0]?.news_id}`}>
                             <div className="overlay">
+                                <a
+                                    style={{
+                                        backgroundColor: `${data.color}`,
+                                    }}
+                                >
+                                    {data.section_name}
+                                </a>
                                 <div className="card-content">
-                                    <a
-                                        style={{
-                                            backgroundColor: `${data.color}`,
-                                        }}
-                                    >
-                                        {data.section_name}
-                                    </a>
                                     <Link
                                         href={`/news/${data.news[0]?.news_id}`}
                                     >
                                         <p>{data.news[0]?.title}</p>
                                     </Link>
-                                    {/* <ul>
-                                    <li>{data.news[0]?.created_at}</li>
-                                    <li>0 القراء</li>
-                                </ul> */}
                                 </div>
                             </div>
                         </Link>

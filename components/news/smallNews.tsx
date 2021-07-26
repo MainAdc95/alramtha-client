@@ -7,35 +7,35 @@ import { useRouter } from "next/router";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 
 interface IProps {
-    data: INews;
+    news: INews;
 }
 
-const SmallNews = ({ data }: IProps) => {
+const SmallNews = ({ news }: IProps) => {
     const router = useRouter();
 
     const shallow = () => {
         window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
-        router.push(`/news/${data.news_id}`, undefined, { shallow: true });
+        router.push(`/news/${news.news_id}`, undefined, { shallow: true });
     };
 
-    if (data)
+    if (news)
         return (
             <li className="small-news">
                 <div onClick={() => shallow()} className="news-img">
                     <div>
                         <ImageOpt
-                            src={data.thumbnail?.sizes?.s}
-                            layout="fill"
-                            objectFit="cover"
+                            src={news.thumbnail?.sizes?.s}
+                            alt={news.thumbnail.image_description}
+                            empty={news.thumbnail ? false : true}
                         />
                     </div>
                 </div>
                 <div className="news-info">
-                    <a onClick={() => shallow()}>{data.title}</a>
+                    <a onClick={() => shallow()}>{news.title}</a>
                     <div>
-                        <p>{new Date(data.created_at).toLocaleString("ar")} </p>
+                        <p>{new Date(news.created_at).toLocaleString("ar")} </p>
                         <div className="readers-container">
-                            <p>{data.readers || 0}</p>
+                            <p>{news.readers || 0}</p>
                             <VisibilityIcon />
                         </div>
                     </div>

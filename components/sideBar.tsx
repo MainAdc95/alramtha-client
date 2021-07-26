@@ -102,7 +102,7 @@ const SideBar = ({ newsId }: IProps) => {
                                     mvNews.news.map((item) => (
                                         <SmallNews
                                             key={item.news_id}
-                                            data={item}
+                                            news={item}
                                         />
                                     ))}
                             </ul>
@@ -115,7 +115,7 @@ const SideBar = ({ newsId }: IProps) => {
                                     news.news.map((item) => (
                                         <SmallNews
                                             key={item.news_id}
-                                            data={item}
+                                            news={item}
                                         />
                                     ))}
                             </ul>

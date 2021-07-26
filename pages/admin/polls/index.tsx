@@ -24,7 +24,7 @@ const News = () => {
     return (
         <>
             <HeadLayout title="Admin poll" />
-            <WithRole role="is_editor">
+            <WithRole role="is_admin">
                 <Layout>
                     <div className={classes.head}>
                         <Box
@@ -50,11 +50,11 @@ const News = () => {
                     </div>
                     <div className={classes.body}>
                         {error ? (
-                            <p>حدث خطأ أثناء جلب الأقسام.</p>
+                            <p>حدث خطأ أثناء تحميل الأستطلاعات.</p>
                         ) : !polls ? (
-                            <p>تحميل...</p>
+                            <p>جاري التحمبل...</p>
                         ) : !polls.length ? (
-                            <p>لا توجد أقسام أضيفت حتى الآن.</p>
+                            <p>لم يتعم العثور على اي استطلاعات.</p>
                         ) : (
                             <PollList polls={polls} loading={isValidating} />
                         )}

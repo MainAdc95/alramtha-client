@@ -6,11 +6,10 @@ import {
     Button as MuButton,
     Menu,
     MenuItem,
+    TextField,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import { IImage } from "../../../types/image";
-import useSWR from "swr";
 import { useState } from "react";
 
 // components
@@ -24,6 +23,7 @@ import ImageForm from "../../../components/admin/image/imageForm";
 // icons
 import AddIcon from "@material-ui/icons/Add";
 import SortIcon from "@material-ui/icons/Sort";
+import SearchIcon from "@material-ui/icons/Search";
 
 type Sort = "الأحدث" | "الأقدم";
 
@@ -32,10 +32,20 @@ const sortOptions: Sort[] = ["الأحدث", "الأقدم"];
 const Gallery = () => {
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });
-    const { data: images, error, isValidating } = useSWR<IImage[]>(`/images`);
-    const [selectedSort, setSelectedSort] = useState<Sort | null>("الأحدث");
+    const [search, setSearch] = useState("");
+    const [filters, setFilters] = useState({
+        search: "",
+        order: "الأحدث",
+    });
     const [isAdd, setAdd] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    const handleFilter = (k, v) => {
+        setFilters({
+            ...filters,
+            [k]: v,
+        });
+    };
 
     const closeAdd = () => {
         setAdd(false);
@@ -51,14 +61,23 @@ const Gallery = () => {
 
     const handleMenuItemClick = (
         event: React.MouseEvent<HTMLElement>,
-        value: Sort
+        v: Sort
     ) => {
-        setSelectedSort(value);
+        handleFilter("order", v);
         setAnchorEl(null);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    // __________________________ search
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
+    };
+
+    const searchCall = () => {
+        handleFilter("search", search);
     };
 
     return (
@@ -70,19 +89,54 @@ const Gallery = () => {
                         <Box
                             display="flex"
                             justifyContent="space-between"
+                            alignItems="center"
                             width="100%"
                         >
-                            <div>
+                            <div style={{ whiteSpace: "nowrap" }}>
                                 <h1 className={classes.title}>معرض الصور</h1>
                             </div>
-                            <Box display="flex" alignItems="center">
+                            <Box ml={5} mr={5} display="flex" width="100%">
+                                <Box
+                                    onClick={searchCall}
+                                    style={{
+                                        minHeight: "100%",
+                                        width: "50px",
+                                        background: "rgb(2, 135, 254)",
+                                        borderRadius: "0 5px 5px 0",
+                                        cursor: "pointer",
+                                    }}
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <SearchIcon style={{ color: "white" }} />
+                                </Box>
+                                <TextField
+                                    value={search}
+                                    label="الحث..."
+                                    name="search"
+                                    onChange={handleSearch}
+                                    fullWidth
+                                    variant="outlined"
+                                    onKeyDown={(e: any) => {
+                                        if (e.keyCode === 13) {
+                                            searchCall();
+                                        }
+                                    }}
+                                />
+                            </Box>
+                            <Box
+                                style={{ whiteSpace: "nowrap" }}
+                                display="flex"
+                                alignItems="center"
+                            >
                                 <Box mr={2}>
                                     <MuButton
                                         startIcon={<SortIcon />}
                                         variant="outlined"
                                         onClick={handleClickListItem}
                                     >
-                                        {selectedSort}
+                                        {filters.order}
                                     </MuButton>
                                 </Box>
                                 <Menu
@@ -102,9 +156,9 @@ const Gallery = () => {
                                     {sortOptions.map((sort) => (
                                         <MenuItem
                                             key={sort}
-                                            selected={sort === selectedSort}
-                                            onClick={(event) =>
-                                                handleMenuItemClick(event, sort)
+                                            selected={sort === filters.order}
+                                            onClick={(e) =>
+                                                handleMenuItemClick(e, sort)
                                             }
                                         >
                                             {sort}
@@ -122,19 +176,7 @@ const Gallery = () => {
                         </Box>
                     </div>
                     <div className={classes.body}>
-                        {error ? (
-                            <p>حدث خطأ أثناء إحضار معرض الصور.</p>
-                        ) : !images ? (
-                            <p>جار التحميل...</p>
-                        ) : !images.length ? (
-                            <p>لا توجد صور المضافة حتى الان.</p>
-                        ) : (
-                            <ImageList
-                                images={images}
-                                sortOption={selectedSort}
-                                loading={isValidating}
-                            />
-                        )}
+                        <ImageList filters={filters} />
                     </div>
                     {isAdd && <ImageForm close={closeAdd} />}
                 </Layout>

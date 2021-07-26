@@ -23,9 +23,8 @@ const LargeNews = ({ news, styles }: IProps) => {
                                         ? news.thumbnail?.sizes?.m
                                         : ""
                                 }
-                                layout="fill"
+                                alt={news?.thumbnail?.image_description || ""}
                                 empty={news.thumbnail ? false : true}
-                                objectFit="cover"
                             />
                         </div>
                     </div>

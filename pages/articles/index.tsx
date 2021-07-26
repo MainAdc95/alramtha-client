@@ -50,13 +50,6 @@ const Article = () => {
                             </span>
                         </h1>
                     </div>
-                    <Pagination
-                        onChange={handleChangePage}
-                        count={count}
-                        page={page}
-                        shape="rounded"
-                        color="primary"
-                    />
                     {!data ? (
                         <div className={styles.loadingContainer}>
                             <CircularProgress color="primary" />
@@ -70,6 +63,13 @@ const Article = () => {
                             ))}
                         </div>
                     )}
+                    <Pagination
+                        onChange={handleChangePage}
+                        count={count}
+                        page={page}
+                        shape="rounded"
+                        color="primary"
+                    />
                 </div>
                 <div className={styles.sidebar}>
                     <SideBar />

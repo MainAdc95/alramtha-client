@@ -59,6 +59,14 @@ const useStyles = makeStyles({
             borderRadius: "0",
         },
     },
+    sectionContainer: {
+        // maxWidth: "100px",
+        width: "auto",
+        color: "white",
+        padding: "5px",
+        borderRadius: "5px",
+        textAlign: "center",
+    },
 });
 
 interface IProps {
@@ -159,6 +167,22 @@ const NewsItem = ({
                         </div>
                     ))}
                 </div>
+            </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
+                {news.section ? (
+                    <div
+                        style={{ backgroundColor: news.section.color }}
+                        className={classes.sectionContainer}
+                    >
+                        <p>{news.section.section_name}</p>
+                    </div>
+                ) : (
+                    <Typography align="center">-</Typography>
+                )}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
                 {new Date(news.created_at).toLocaleString("ar")}

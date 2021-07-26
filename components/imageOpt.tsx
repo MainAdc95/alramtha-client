@@ -37,7 +37,26 @@ const ImageOpt = ({
 
     return (
         <>
-            <div className="image-opt">
+            <div
+                className="image-opt"
+                style={
+                    error
+                        ? {
+                              display: "flex",
+                              height: "100%",
+                              width: "100%",
+                              maxHeight: "80%",
+                              maxWidth: "100%",
+                              minHeight: "100%",
+                              minWidth: "100%",
+                              position: "static",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              backgroundColor: "#0288fec0",
+                          }
+                        : null
+                }
+            >
                 <div
                     style={
                         error
@@ -45,10 +64,12 @@ const ImageOpt = ({
                                   display: "flex",
                                   height: "100%",
                                   width: "100%",
-                                  position: "static",
+                                  maxHeight: "80%",
+                                  maxWidth: "100%",
+                                  minHeight: "100%",
+                                  minWidth: "100%",
                                   justifyContent: "center",
                                   alignItems: "center",
-                                  backgroundColor: "#0288fec0",
                               }
                             : width && height
                             ? {
@@ -69,6 +90,8 @@ const ImageOpt = ({
                                 ? {
                                       width: "100px",
                                       height: "100px",
+                                      maxHeight: "80%",
+                                      maxWidth: "100%",
                                       margin: "auto",
                                       display: "block",
                                   }
@@ -90,7 +113,6 @@ const ImageOpt = ({
                         }
                         alt={alt}
                         onError={(e: any) => setError(true)}
-                        onLoad={(e: any) => console.log(e.target.src)}
                     />
                 </div>
             </div>

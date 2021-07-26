@@ -4,20 +4,20 @@ import ImageOpt from "../imageOpt";
 import { INews } from "../../types/news";
 
 interface IProps {
-    data: INews;
+    news: INews;
 }
 
-const MediumNews = ({ data }: IProps) => {
+const MediumNews = ({ news }: IProps) => {
     return (
         <div className="medium-news">
             <ImageOpt
-                src={data.thumbnail?.sizes?.m}
-                layout="fill"
-                objectFit="cover"
+                src={news.thumbnail?.sizes?.m}
+                alt={news.thumbnail.image_description}
+                empty={news.thumbnail ? false : true}
             />
             <div className="overlay">
-                <Link href={`/news/${data.news_id}`}>
-                    <a>{data.title}</a>
+                <Link href={`/news/${news.news_id}`}>
+                    <a>{news.title}</a>
                 </Link>
             </div>
         </div>

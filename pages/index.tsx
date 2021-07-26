@@ -35,7 +35,7 @@ interface IProps {
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections, strips, files, tmrNews, article } = info;
+    const { sections, strips, tmrNews, article } = info;
 
     return (
         <>
@@ -129,15 +129,15 @@ const Home = ({ info }: IProps) => {
                                                 href={`/articles/${article.article_id}`}
                                             >
                                                 <div className="overlay">
+                                                    <a
+                                                        style={{
+                                                            backgroundColor:
+                                                                "rgb(1, 224, 1)",
+                                                        }}
+                                                    >
+                                                        كتاب وآراء
+                                                    </a>
                                                     <div className="card-content">
-                                                        <a
-                                                            style={{
-                                                                backgroundColor:
-                                                                    "rgb(1, 224, 1)",
-                                                            }}
-                                                        >
-                                                            كتاب وآراء
-                                                        </a>
                                                         <Link
                                                             href={`/articles/${article.article_id}`}
                                                         >

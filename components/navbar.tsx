@@ -178,6 +178,11 @@ const Navbar = () => {
                             placeholder="بحث…"
                             value={search}
                             onChange={handleSearch}
+                            onKeyDown={(e: any) => {
+                                if (e.keyCode === 13) {
+                                    searchCall();
+                                }
+                            }}
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,

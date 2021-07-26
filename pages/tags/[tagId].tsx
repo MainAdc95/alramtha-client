@@ -72,13 +72,6 @@ const Tags = ({ tag }: IProps) => {
                             <span>{tag.tag_name} (اخبار)</span>
                         </h1>
                     </div>
-                    <Pagination
-                        onChange={handleChangeNpage}
-                        count={nCount}
-                        page={nPage}
-                        shape="rounded"
-                        color="primary"
-                    />
                     {!nData ? (
                         <div className={styles.loadingContainer}>
                             <CircularProgress color="primary" />
@@ -92,18 +85,18 @@ const Tags = ({ tag }: IProps) => {
                             ))}
                         </div>
                     )}
+                    <Pagination
+                        onChange={handleChangeNpage}
+                        count={nCount}
+                        page={nPage}
+                        shape="rounded"
+                        color="primary"
+                    />
                     <div style={{ marginTop: "50px" }} className="author-title">
                         <h1>
                             <span>{tag.tag_name} (مقالات)</span>
                         </h1>
                     </div>
-                    <Pagination
-                        onChange={handleChangeApage}
-                        count={aCount}
-                        page={aPage}
-                        shape="rounded"
-                        color="primary"
-                    />
                     {!aData ? (
                         <div className={styles.loadingContainer}>
                             <CircularProgress color="primary" />
@@ -117,6 +110,13 @@ const Tags = ({ tag }: IProps) => {
                             ))}
                         </div>
                     )}
+                    <Pagination
+                        onChange={handleChangeApage}
+                        count={aCount}
+                        page={aPage}
+                        shape="rounded"
+                        color="primary"
+                    />
                 </div>
                 <div className={styles.sidebar}>
                     <SideBar />

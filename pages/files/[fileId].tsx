@@ -53,13 +53,6 @@ const File = ({ file }: IProps) => {
                             <span>{file.text}</span>
                         </h1>
                     </div>
-                    <Pagination
-                        onChange={handleChangePage}
-                        count={count}
-                        page={page}
-                        shape="rounded"
-                        color="primary"
-                    />
                     {!data ? (
                         <div className={styles.loadingContainer}>
                             <CircularProgress color="primary" />
@@ -74,6 +67,13 @@ const File = ({ file }: IProps) => {
                         </div>
                     )}
                 </div>
+                <Pagination
+                    onChange={handleChangePage}
+                    count={count}
+                    page={page}
+                    shape="rounded"
+                    color="primary"
+                />
                 <div className={styles.sidebar}>
                     <SideBar />
                 </div>

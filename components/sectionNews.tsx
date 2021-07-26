@@ -16,28 +16,25 @@ interface IProps {
 }
 
 const SectionNews = ({ data }: IProps) => {
-    if (data?.news?.length)
-        return (
-            <div style={{ marginBottom: "25px" }}>
-                <div className="author-title">
-                    <h1>
-                        <span
-                            style={{
-                                borderColor: `${data.color}`,
-                            }}
-                        >
-                            {data.section_name}
-                        </span>
-                    </h1>
-                </div>
-                <NewsList section={data} />
-                <div>
-                    <img style={{ maxWidth: "100%" }} src="/blueAdvBig.jpg" />
-                </div>
+    return (
+        <div style={{ marginBottom: "25px" }}>
+            <div className="author-title">
+                <h1>
+                    <span
+                        style={{
+                            borderColor: `${data.color}`,
+                        }}
+                    >
+                        {data.section_name}
+                    </span>
+                </h1>
             </div>
-        );
-
-    return null;
+            <NewsList section={data} />
+            <div>
+                <img style={{ maxWidth: "100%" }} src="/blueAdvBig.jpg" />
+            </div>
+        </div>
+    );
 };
 
 const NewsList = ({ section }: { section: ISection }) => {
@@ -45,6 +42,7 @@ const NewsList = ({ section }: { section: ISection }) => {
     const rowsPerPage = 4;
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
+    const [activeNews, setActiveNews] = useState<INews[]>([]);
     const { data } = useSWR<{ results: number; news: INews[] }>(
         `/news?p=${page}&r=${rowsPerPage}&type=published&sectionId=${section.section_id}`
     );
@@ -52,6 +50,7 @@ const NewsList = ({ section }: { section: ISection }) => {
     useEffect(() => {
         if (data) {
             setCount(Math.ceil(data.results / rowsPerPage));
+            setActiveNews(data.news);
         }
     }, [data]);
 
@@ -61,15 +60,20 @@ const NewsList = ({ section }: { section: ISection }) => {
 
     return (
         <div className={classes.root}>
-            {!data ? (
+            {!activeNews ? (
                 <div className={classes.loadingContainer}>
                     <CircularProgress color="primary" />
                 </div>
             ) : (
                 <div className={classes.list}>
-                    {data.news?.map((n) => (
+                    {activeNews?.map((n) => (
                         <LargeNews key={n.news_id} news={n} />
                     ))}
+                </div>
+            )}
+            {!data && (
+                <div className={classes.loadingContainer}>
+                    <CircularProgress color="primary" />
                 </div>
             )}
             <Pagination
@@ -86,6 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             marginBottom: "30px",
+            position: "relative",
         },
         list: {
             display: "grid",
@@ -106,7 +111,6 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "550px",
         },
     })
 );

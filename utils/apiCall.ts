@@ -1,7 +1,7 @@
 import axios, { Method } from "axios";
 
-export const isProduction: boolean = false;
-// https://www.alramsah.com
+export const isProduction: boolean = true;
+
 export const domain = isProduction
     ? "https://www.alramsah.com"
     : `http://localhost:5000`;

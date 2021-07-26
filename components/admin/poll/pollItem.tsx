@@ -62,10 +62,9 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
     poll: IPoll;
     handleOpenDel: any;
-    handleOpenEdit: any;
 }
 
-const PollItem = ({ poll, handleOpenDel, handleOpenEdit }: IProps) => {
+const PollItem = ({ poll, handleOpenDel }: IProps) => {
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -89,11 +88,6 @@ const PollItem = ({ poll, handleOpenDel, handleOpenEdit }: IProps) => {
 
     const handleMouseLeave = () => {
         setHover(false);
-    };
-
-    const handleEdit = () => {
-        handleClose();
-        handleOpenEdit(poll);
     };
 
     return (
@@ -166,8 +160,6 @@ const PollItem = ({ poll, handleOpenDel, handleOpenEdit }: IProps) => {
                 <Box width={45}>
                     <Button
                         style={{ minWidth: "100%" }}
-                        aria-controls="simple-menu"
-                        aria-haspopup="true"
                         size="small"
                         variant="contained"
                         color="secondary"
@@ -187,7 +179,7 @@ const PollItem = ({ poll, handleOpenDel, handleOpenEdit }: IProps) => {
                 >
                     <Link href={`/admin/polls/addPoll?pollId=${poll.poll_id}`}>
                         <a>
-                            <MenuItem onClick={handleEdit}>تعديل</MenuItem>
+                            <MenuItem>تعديل</MenuItem>
                         </a>
                     </Link>
                     <MenuItem onClick={delAction}>حذف</MenuItem>

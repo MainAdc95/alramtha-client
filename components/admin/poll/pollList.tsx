@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import { TablePagination, LinearProgress } from "@material-ui/core";
 import { useState } from "react";
 import { IPoll } from "../../../types/poll";
-import useSWR, { mutate } from "swr";
+import { mutate } from "swr";
 import { apiCall } from "../../../utils/apiCall";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
@@ -50,7 +50,6 @@ const PollList = ({ polls, loading }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isDel, setDel] = useState<IPoll | null>(null);
-    const [isEdit, setEdit] = useState<IPoll | null>(null);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [delLoading, setDelLoading] = useState(false);
     const [page, setPage] = useState(0);
@@ -70,10 +69,6 @@ const PollList = ({ polls, loading }: IProps) => {
 
     const handleCloseDel = () => {
         setDel(null);
-    };
-
-    const handleOpenEdit = (poll: IPoll) => {
-        setEdit(poll);
     };
 
     const handleDelete = async () => {
@@ -150,7 +145,6 @@ const PollList = ({ polls, loading }: IProps) => {
                                     key={poll.poll_id}
                                     poll={poll}
                                     handleOpenDel={handleOpenDel}
-                                    handleOpenEdit={handleOpenEdit}
                                 />
                             ))}
                     </TableBody>
