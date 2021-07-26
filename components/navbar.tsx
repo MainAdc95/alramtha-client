@@ -246,7 +246,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "flex-start",
             margin: "0 auto",
             [theme.breakpoints.down("xs")]: {
-                justifyContent: "center",
+                justifyContent: "space-around",
             },
         },
         title: {
