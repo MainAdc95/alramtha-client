@@ -8,7 +8,7 @@ interface IProps {
     layout?: "fixed" | "intrinsic" | "responsive" | "fill" | undefined;
     objectFit?: NonNullable<JSX.IntrinsicElements["img"]["style"]>["objectFit"];
     width?: number;
-    location?: "aws" | "local";
+    location?: "aws" | "local" | "other";
     height?: number;
     draggable?: boolean;
     size?: "s" | "m" | "l";
@@ -108,6 +108,8 @@ const ImageOpt = ({
                             error
                                 ? "https://www.alramsah.com/no-photos.svg"
                                 : location === "local"
+                                ? src
+                                : location === "other"
                                 ? src
                                 : apiImage(src)
                         }

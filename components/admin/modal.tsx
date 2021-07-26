@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "100%",
             height: "100%",
             backgroundColor: "rgba(0, 0, 0, 0.3)",
-            zIndex: 10,
+            zIndex: 1300,
             overflowY: "auto",
         },
         wrapper: {

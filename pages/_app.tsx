@@ -152,19 +152,20 @@ const DataHandler = () => {
     }, []);
 
     const handleAsync = async () => {
-        // const location = await apiCall<ILocation>(
-        //     "get",
-        //     "https://geolocation-db.com/json/7bad3e80-c704-11eb-a4bc-19a5c6a04c5d",
-        //     null,
-        //     "out"
-        // );
-        // const weather = await apiCall(
-        //     "get",
-        //     `http://api.weatherapi.com/v1/current.json?key=2a19e2cc7cc841ecb9e194434211306&q=${location.IPv4}`,
-        //     { key: "2a19e2cc7cc841ecb9e194434211306" },
-        //     "out"
-        // );
-        // dispatch(setLocation(location));
+        const location = await apiCall<ILocation>(
+            "get",
+            "https://geolocation-db.com/json/037714e0-ec1b-11eb-9e6f-31f179bdc488",
+            null,
+            "out"
+        );
+        const weather = await apiCall(
+            "get",
+            `http://api.weatherapi.com/v1/current.json?key=2a19e2cc7cc841ecb9e194434211306&q=${location.IPv4}`,
+            { key: "2a19e2cc7cc841ecb9e194434211306" },
+            "out"
+        );
+
+        dispatch(setLocation({ ...location, weather }));
     };
 
     return null;
