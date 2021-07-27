@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { apiImage, domain } from "../utils/apiCall";
 
 interface IProps {
     title?: string;
@@ -9,7 +10,7 @@ interface IProps {
     children?: React.ReactNode | React.ReactNode[];
 }
 
-const alramsahSum = `موقع الرمسة .. صوت الحقيقة .. يقارب الصورة من كل زواياها ويقربها للقاريء يعنى بأخبار العرب والعالم  ، ويقدم أخبار أونلاين من العالم في مختلف المجالات، السياسية والاقتصادية  والثقافية والرياضية والصحية.
+const alramsahSuDescription = `موقع الرمسة .. صوت الحقيقة .. يقارب الصورة من كل زواياها ويقربها للقاريء يعنى بأخبار العرب والعالم  ، ويقدم أخبار أونلاين من العالم في مختلف المجالات، السياسية والاقتصادية  والثقافية والرياضية والصحية.
 
 الرمسة موقع يؤمن بان الصحافة رسالة انسانية واخلاقية بامتياز هويته العربية يفتخر بها ولا يفرط  بها . التزامه الوطني والقومي تتم ترجمته  كتابة لا شعارات 
 
@@ -20,7 +21,7 @@ const alramsahSum = `موقع الرمسة .. صوت الحقيقة .. يقار�
 
 موقع سياسي اقتصادي ثقافي فني تتوزع موادنا بين خبر وتقرير وتحليل ومقابلة وترجمة ودراسة ومقالة وفيديو`;
 
-const HeadLayout = ({ title, description, image, children }: IProps) => {
+const HeadLayout = ({ title, description, image, url, children }: IProps) => {
     return (
         <Head>
             <meta property="og:type" content="website" />
@@ -41,25 +42,30 @@ const HeadLayout = ({ title, description, image, children }: IProps) => {
                 <>
                     <meta
                         name="description"
-                        content={description || alramsahSum}
+                        content={description || alramsahSuDescription}
                     />
                     <meta
                         property="og:description"
-                        content={description || alramsahSum}
+                        content={description || alramsahSuDescription}
                     />
                     <meta
-                        property="twitter:image"
-                        content={description || alramsahSum}
+                        property="twitter:description"
+                        content={description || alramsahSuDescription}
                     />
                 </>
             )}
             {image && (
                 <>
-                    <meta property="og:image" content={image} />
-                    <meta property="twitter:image" content={image} />
-                    <meta property="twitter:card" content={image} />
+                    <meta
+                        property="og:image"
+                        itemProp="image"
+                        content={apiImage(image)}
+                    />
+                    <meta property="twitter:image" content={apiImage(image)} />
                 </>
             )}
+            <meta name="twitter:card" content="summary_large_image" />
+            {url && <meta property="og:url" content={domain + url} />}
             {children}
         </Head>
     );

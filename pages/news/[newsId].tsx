@@ -71,7 +71,12 @@ const NewsPage = ({ news: n }: IProps) => {
     if (news)
         return (
             <>
-                <HeadLayout title={news.title} />
+                <HeadLayout
+                    title={news.title}
+                    url={`/news/${news.news_id}`}
+                    image={news.thumbnail?.sizes?.l}
+                    description={news.intro}
+                />
                 <div className={styles.page}>
                     <div className={`${styles.container}`}>
                         <div className={styles.sideContentContainer}>

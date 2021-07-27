@@ -12,7 +12,7 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head />
-                <body>
+                <body dir="rtl">
                     <Main />
                     <NextScript />
                 </body>

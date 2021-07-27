@@ -136,6 +136,7 @@ const News = () => {
                                     label="الحث..."
                                     name="search"
                                     onChange={handleSearch}
+                                    size="small"
                                     fullWidth
                                     variant="outlined"
                                     onKeyDown={(e: any) => {

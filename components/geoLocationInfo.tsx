@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { RootReducer } from "../store/reducers";
 import { countries } from "../data/countries";
 import ImageOpt from "./imageOpt";
 
@@ -30,15 +29,8 @@ const GeoLocationInfo = () => {
         switch (txt) {
             case "Clear":
                 return "صافي";
-            default:
-                return txt;
-        }
-    };
-
-    const translateCity = (txt: String) => {
-        switch (txt) {
-            case "Abu Dhabi":
-                return "أبو ظبي";
+            case "Sunny":
+                return "مشمس";
             default:
                 return txt;
         }
@@ -47,32 +39,56 @@ const GeoLocationInfo = () => {
     if (location)
         return (
             <Box className={classes.root}>
-                {activeCountry && (
-                    <Box>
+                <Box width="100%" display="flex">
+                    {activeCountry && (
+                        <Box>
+                            <ImageOpt
+                                width={50}
+                                height={30}
+                                location="other"
+                                src={activeCountry.flag}
+                            />
+                        </Box>
+                    )}
+                    <p className={classes.greet}>
+                        مرحبا بقرائنا من{" "}
+                        <span className={classes.name}>
+                            {activeCountry.name}
+                        </span>
+                    </p>
+                </Box>
+                <Box mt={2} width="100%">
+                    <h6 className={classes.conditionTitle}>
+                        الطقس{" "}
+                        {translateCondition(
+                            location.weather.current.condition.text
+                        )}{" "}
+                    </h6>
+                    <Box width="100%" mt={1} display="flex">
                         <ImageOpt
-                            width={100}
+                            width={50}
                             height={50}
                             location="other"
-                            src={activeCountry.flag}
+                            src={location.weather.current.condition.icon}
                         />
+                        <Box ml={2} display="flex" flexDirection="column">
+                            <p>
+                                درجة الحرارة{" "}
+                                <span className={classes.degree}>
+                                    {location.weather.current.temp_c}
+                                    °c
+                                </span>
+                            </p>
+                            <p style={{ marginTop: "5px" }}>
+                                المشعورة{" "}
+                                <span className={classes.degree}>
+                                    {location.weather.current.feelslike_c}
+                                    °c
+                                </span>
+                            </p>
+                        </Box>
                     </Box>
-                )}
-                <Typography className={classes.city}>
-                    {translateCity(location.city)}
-                </Typography>
-                <p>
-                    الطقس{" "}
-                    {translateCondition(
-                        location.weather.current.condition.text
-                    )}{" "}
-                    {location.weather.current.temp_c} °c
-                </p>
-                <ImageOpt
-                    width={50}
-                    height={50}
-                    location="other"
-                    src={location.weather.current.condition.icon}
-                />
+                </Box>
             </Box>
         );
 
@@ -85,7 +101,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "white",
             width: "100%",
             margin: "auto",
-            whiteSpace: "nowrap",
+            padding: "5px 0",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -94,9 +110,23 @@ const useStyles = makeStyles((theme: Theme) =>
         city: {
             marginTop: "10px",
         },
-        name: {},
-        imgContainer: {},
-        img: {},
+        greet: {
+            marginLeft: theme.spacing(2),
+            fontSize: "15px",
+        },
+        name: {
+            color: "rgb(2, 135, 254)",
+            fontWeight: 900,
+        },
+        conditionTitle: {
+            textAlign: "center",
+            fontSize: "16px",
+        },
+        degree: {
+            fontWeight: 900,
+            fontSize: "15px",
+            marginLeft: "5px",
+        },
     })
 );
 

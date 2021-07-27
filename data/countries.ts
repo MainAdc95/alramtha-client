@@ -4,6 +4,41 @@ export const countries = [
         name: "الإمارات العربية المتحدة",
         alpha2Code: "AE",
     },
+    {
+        flag: "https://restcountries.eu/data/pse.svg",
+        name: "فلسطين",
+        alpha2Code: "PS",
+    },
+    {
+        flag: "https://restcountries.eu/data/pse.svg",
+        name: "فلسطين",
+        alpha2Code: "IL",
+    },
+    {
+        flag: "https://restcountries.eu/data/jor.svg",
+        name: "الأردن",
+        alpha2Code: "JO",
+    },
+    {
+        flag: "https://restcountries.eu/data/syr.svg",
+        name: "الجمهورية العربية السورية",
+        alpha2Code: "SY",
+    },
+    {
+        flag: "https://restcountries.eu/data/irq.svg",
+        name: "العراق",
+        alpha2Code: "IQ",
+    },
+    {
+        flag: "https://restcountries.eu/data/lbn.svg",
+        name: "لبنان",
+        alpha2Code: "LB",
+    },
+    {
+        flag: "https://restcountries.eu/data/sau.svg",
+        name: "المملكة العربية السعودية",
+        alpha2Code: "SA",
+    },
 ];
 
 // export const countries = [

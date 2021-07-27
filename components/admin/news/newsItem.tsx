@@ -18,8 +18,6 @@ import ImageOpt from "../../imageOpt";
 const useStyles = makeStyles({
     root: {
         "&:hover": {
-            boxShadow:
-                "0px 0px 5px 1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
             backgroundColor: "rgb(245, 245, 245)",
         },
     },
@@ -31,12 +29,11 @@ const useStyles = makeStyles({
     },
     sticky: {
         zIndex: 1,
-    },
-    stickyHover: {
-        zIndex: 1,
         right: "0",
         position: "sticky",
+        backgroundColor: "rgb(2, 135, 254)",
     },
+    stickyHover: {},
     imgsContainer: {
         display: "flex",
         height: "50px",
@@ -60,7 +57,6 @@ const useStyles = makeStyles({
         },
     },
     sectionContainer: {
-        // maxWidth: "100px",
         width: "auto",
         color: "white",
         padding: "5px",
@@ -210,7 +206,7 @@ const NewsItem = ({
             </TableCell>
             <TableCell
                 classes={{
-                    root: isHover ? classes.stickyHover : classes.sticky,
+                    root: classes.sticky,
                 }}
             >
                 <Box width={45}>
