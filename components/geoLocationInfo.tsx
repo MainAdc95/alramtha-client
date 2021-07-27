@@ -36,7 +36,7 @@ const GeoLocationInfo = () => {
         }
     };
 
-    if (location)
+    if (location && activeCountry)
         return (
             <Box className={classes.root}>
                 <Box width="100%" display="flex">
