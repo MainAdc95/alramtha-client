@@ -92,7 +92,7 @@ const NewsPage = ({ news: n }: IProps) => {
                                             </li>
                                         </ul>
                                     </div>
-                                    <ShareNews />
+                                    <ShareNews uri={`/news/${news.news_id}`} />
                                     <Box width="100%">
                                         <div className={styles.newsImgsWrapper}>
                                             <Slider>
@@ -230,7 +230,9 @@ const NewsPage = ({ news: n }: IProps) => {
                                                 ))}
                                             </ul>
                                         </div>
-                                        <ShareNews />
+                                        <ShareNews
+                                            uri={`/news/${news.news_id}`}
+                                        />
                                     </Box>
                                     {news.section && (
                                         <Box mt={5}>

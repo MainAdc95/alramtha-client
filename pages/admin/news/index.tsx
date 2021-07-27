@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // components
@@ -26,6 +26,7 @@ import AddIcon from "@material-ui/icons/Add";
 import SortIcon from "@material-ui/icons/Sort";
 import SearchIcon from "@material-ui/icons/Search";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 interface IFilter {
     search: string;
@@ -36,11 +37,13 @@ interface IFilter {
 const order = ["الأحدث", "الأقدم"];
 
 const News = () => {
+    const router = useRouter();
     const locale = useSelector((state: RootReducer) => state.locale);
     const { data: sections } = useSWR<ISection[]>("/sections");
     const classes = useStyles({ locale });
     const [search, setSearch] = useState("");
     const [anchorElSec, setAnchorElSec] = useState<null | HTMLElement>(null);
+    const [query, setQuery] = useState("");
     const [anchorElOrder, setAnchorElOrder] =
         useState<null | HTMLElement>(null);
     const [filters, setFilters] = useState<IFilter>({
@@ -49,7 +52,48 @@ const News = () => {
         section: "",
     });
 
+    useEffect(() => {
+        setQuery(
+            `?order=${filters.order}&section=${
+                typeof filters.section !== "string"
+                    ? filters.section.section_id
+                    : filters.section
+            }&search=${filters.search}`
+        );
+    }, [filters]);
+
+    useEffect(() => {
+        if (sections) {
+            const query: any = router.query;
+            const foundSection = sections.find(
+                (s) => s.section_id === query.section
+            );
+
+            setFilters({
+                ...filters,
+                search: query.search || "",
+                section: foundSection || "",
+                order: query.order || "الأحدث",
+            });
+            setSearch(query.search || "");
+        }
+    }, [sections]);
+
+    const checkNewValue = (name, k, v) => {
+        if (name === k) return v;
+        else return filters[name];
+    };
+
     const handleFilter = (k, v) => {
+        router.push(
+            `?order=${checkNewValue("order", k, v)}&section=${
+                checkNewValue("section", k, v)?.section_id ||
+                checkNewValue("section", k, v)
+            }&search=${checkNewValue("search", k, v)}`,
+            null,
+            { shallow: true }
+        );
+
         setFilters({
             ...filters,
             [k]: v,
@@ -246,7 +290,7 @@ const News = () => {
                                         </Menu>
                                     </div>
                                 </Box>
-                                <Link href="/admin/news/addNews">
+                                <Link href={"/admin/news/addNews" + query}>
                                     <a className="ltr">
                                         <Button
                                             startIcon={<AddIcon />}
@@ -258,7 +302,7 @@ const News = () => {
                         </Box>
                     </div>
                     <div className={classes.body}>
-                        <NewsList filters={filters} />
+                        <NewsList filters={filters} query={query} />
                     </div>
                 </Layout>
             </WithRole>

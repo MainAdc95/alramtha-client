@@ -1,7 +1,7 @@
 import { domain } from "../../utils/apiCall";
 import ImageOpt from "../imageOpt";
 
-const ShareNews = () => {
+const ShareNews = ({ uri }) => {
     return (
         <div className="share-news">
             <p>شارك على وسائل التواصل الاجتماعي:</p>

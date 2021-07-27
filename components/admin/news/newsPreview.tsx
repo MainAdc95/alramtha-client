@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { transformYoutubeLinks } from "../../../utils/parseSmTextEditor";
 
 // Components
-import ShareNews from "../../news/shareNews";
 import SideBar from "../../sideBar";
 import { Box } from "@material-ui/core";
 import Modal from "../modal";
@@ -56,7 +55,6 @@ const NewsPreview = ({ news, close }: IProps) => {
                                             </li>
                                         </ul>
                                     </div>
-                                    <ShareNews />
                                     <Box width="100%">
                                         <div className={styles.newsImgsWrapper}>
                                             <Slider>
@@ -187,7 +185,6 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                 ))}
                                             </ul>
                                         </div>
-                                        <ShareNews />
                                     </Box>
                                 </div>
                             </div>

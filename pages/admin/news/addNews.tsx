@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useState, useEffect } from "react";
 
 // components
 import WithRole from "../../../protectors/withRole";
@@ -22,8 +23,27 @@ const Form = () => {
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });
 
+    const [filters, setFilters] = useState<any>({
+        search: "",
+        order: "",
+        section: "",
+    });
+    console.log(filters);
+    useEffect(() => {
+        const query: any = router.query;
+
+        setFilters({
+            ...filters,
+            search: query.search || "",
+            section: query.section || "",
+            order: query.order || "الأحدث",
+        });
+    }, []);
+
     const handleBack = () => {
-        router.push("/admin/news");
+        router.push(
+            `/admin/news?order=${filters.order}&section=${filters.section}&search=${filters.search}`
+        );
     };
 
     return (

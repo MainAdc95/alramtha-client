@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         zIndex: 1,
         right: "0",
         position: "sticky",
-        backgroundColor: "rgb(2, 135, 254)",
+        // backgroundColor: "rgb(2, 135, 254)",
     },
     stickyHover: {},
     imgsContainer: {
@@ -70,6 +70,7 @@ interface IProps {
     handleOpenDel: any;
     handleOpenPublish: any;
     toggleArchive: any;
+    query: string;
 }
 
 const NewsItem = ({
@@ -77,9 +78,9 @@ const NewsItem = ({
     handleOpenDel,
     handleOpenPublish,
     toggleArchive,
+    query,
 }: IProps) => {
     const classes = useStyles();
-    const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -105,21 +106,8 @@ const NewsItem = ({
         handleClose();
     };
 
-    const handleMouseOver = () => {
-        setHover(true);
-    };
-
-    const handleMouseLeave = () => {
-        setHover(false);
-    };
-
     return (
-        <TableRow
-            onMouseOver={handleMouseOver}
-            onMouseLeave={handleMouseLeave}
-            classes={{ root: classes.root }}
-            key={news.news_id}
-        >
+        <TableRow classes={{ root: classes.root }} key={news.news_id}>
             <TableCell
                 classes={{
                     root: classes.tableCell,
@@ -231,7 +219,9 @@ const NewsItem = ({
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     onClose={handleClose}
                 >
-                    <Link href={`/admin/news/addNews?newsId=${news.news_id}`}>
+                    <Link
+                        href={`/admin/news/addNews${query}&newsId=${news.news_id}`}
+                    >
                         <MenuItem>
                             <a>تعديل</a>
                         </MenuItem>

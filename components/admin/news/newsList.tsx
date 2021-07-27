@@ -7,13 +7,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Pagination } from "@material-ui/lab";
-import {
-    TablePagination,
-    LinearProgress,
-    Tabs,
-    Tab,
-    Box,
-} from "@material-ui/core";
+import { LinearProgress, Tabs, Tab, Box } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { INews } from "../../../types/news";
 import { mutate } from "swr";
@@ -61,9 +55,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
     filters: any;
+    query: string;
 }
 
-const NewsList = ({ filters }: IProps) => {
+const NewsList = ({ filters, query }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isPublish, setPublish] = useState<INews | null>(null);
@@ -129,7 +124,13 @@ const NewsList = ({ filters }: IProps) => {
             );
 
             mutate(
-                `/news?p=${page + 1}&r=${rowsPerPage}&type=${
+                `/news?isAdmin=true&p=${page}&r=${rowsPerPage}${
+                    filters.section
+                        ? `&sectionId=${filters.section.section_id}`
+                        : ""
+                }&order=${filters.order === "الأحدث" ? "desc" : "asc"}${
+                    filters.search ? `&text=${filters.search}` : ""
+                }&type=${
                     value === 0
                         ? "published"
                         : value === 1
@@ -171,8 +172,18 @@ const NewsList = ({ filters }: IProps) => {
             );
 
             mutate(
-                `/news?p=${page + 1}&r=${rowsPerPage}&type=${
-                    value === 0 ? "published" : "draft"
+                `/news?isAdmin=true&p=${page}&r=${rowsPerPage}${
+                    filters.section
+                        ? `&sectionId=${filters.section.section_id}`
+                        : ""
+                }&order=${filters.order === "الأحدث" ? "desc" : "asc"}${
+                    filters.search ? `&text=${filters.search}` : ""
+                }&type=${
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
                 }`,
                 (data: { news: INews[] }) => {
                     return {
@@ -202,7 +213,13 @@ const NewsList = ({ filters }: IProps) => {
             );
 
             mutate(
-                `/news?p=${page + 1}&r=${rowsPerPage}&type=${
+                `/news?isAdmin=true&p=${page}&r=${rowsPerPage}${
+                    filters.section
+                        ? `&sectionId=${filters.section.section_id}`
+                        : ""
+                }&order=${filters.order === "الأحدث" ? "desc" : "asc"}${
+                    filters.search ? `&text=${filters.search}` : ""
+                }&type=${
                     value === 0
                         ? "published"
                         : value === 1
@@ -291,6 +308,7 @@ const NewsList = ({ filters }: IProps) => {
                                         handleOpenDel={handleOpenDel}
                                         toggleArchive={toggleArchive}
                                         handleOpenPublish={togglePublish}
+                                        query={query}
                                     />
                                 ))}
                             </TableBody>

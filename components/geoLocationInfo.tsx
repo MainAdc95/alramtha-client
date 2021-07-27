@@ -80,7 +80,7 @@ const GeoLocationInfo = () => {
                                 </span>
                             </p>
                             <p style={{ marginTop: "5px" }}>
-                                المشعورة{" "}
+                                المحسوسة{" "}
                                 <span className={classes.degree}>
                                     {location.weather.current.feelslike_c}
                                     °c
