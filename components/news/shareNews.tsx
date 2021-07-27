@@ -9,7 +9,9 @@ const ShareNews = ({ uri }) => {
                 <li>
                     <a
                         target="_blank"
-                        href={`https://facebook.com/sharer.php?u=${domain}`}
+                        href={`https://facebook.com/sharer.php?u=${
+                            domain + uri
+                        }`}
                     >
                         <ImageOpt
                             src="/facebook.png"
@@ -22,7 +24,9 @@ const ShareNews = ({ uri }) => {
                 <li>
                     <a
                         target="_blank"
-                        href={`https://twitter.com/intent/tweet?url=${domain}`}
+                        href={`https://twitter.com/intent/tweet?url=${
+                            domain + uri
+                        }`}
                     >
                         <ImageOpt
                             src="/twitter.png"
@@ -36,7 +40,9 @@ const ShareNews = ({ uri }) => {
                     <a
                         className="facebook"
                         target="_blank"
-                        href={`https://web.whatsapp.com/send?text=${domain}`}
+                        href={`https://web.whatsapp.com/send?text=${
+                            domain + uri
+                        }`}
                     >
                         <ImageOpt
                             src="/whatsapp.png"
