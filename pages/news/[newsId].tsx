@@ -29,7 +29,7 @@ interface IProps {
 
 const NewsPage = ({ news: n }: IProps) => {
     const router = useRouter();
-    const [news, setNews] = useState<INews | null>(null);
+    const [news, setNews] = useState<INews | null>(n);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

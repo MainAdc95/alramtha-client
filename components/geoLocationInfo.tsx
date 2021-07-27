@@ -57,14 +57,14 @@ const GeoLocationInfo = () => {
                         </span>
                     </p>
                 </Box>
-                <Box mt={2} width="100%">
+                <Box mt={1} width="100%">
                     <h6 className={classes.conditionTitle}>
                         الطقس{" "}
                         {translateCondition(
                             location.weather.current.condition.text
                         )}{" "}
                     </h6>
-                    <Box width="100%" mt={1} display="flex">
+                    <Box width="100%" mt={0.5} display="flex">
                         <ImageOpt
                             width={50}
                             height={50}
@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             color: "white",
-            width: "100%",
+            width: "200px",
             margin: "auto",
             padding: "5px 0",
             display: "flex",
