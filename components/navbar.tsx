@@ -104,9 +104,10 @@ const Navbar = () => {
                             </p>
                         </Box>
                         <Box className={classes.adsContainer}>
-                            <img
-                                className={classes.adsImg}
-                                src="/blueAdvBig.jpg"
+                            <ImageOpt
+                                src={
+                                    "216927209_307535321123053_8884778464859107853_n.jpg"
+                                }
                             />
                         </Box>
                         <Box>
@@ -348,6 +349,9 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: "all 0.2s ease",
         },
         adsContainer: {
+            position: "relative",
+            width: "100%",
+            height: "100%",
             maxHeight: "100%",
             overflow: "hidden",
             display: "flex",
@@ -356,9 +360,6 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down("xs")]: {
                 display: "none",
             },
-        },
-        adsImg: {
-            objectFit: "cover",
         },
         sectionsContainer: {
             backgroundColor: theme.palette.grey[100],

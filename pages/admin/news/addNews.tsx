@@ -28,7 +28,7 @@ const Form = () => {
         order: "",
         section: "",
     });
-    console.log(filters);
+
     useEffect(() => {
         const query: any = router.query;
 
@@ -66,7 +66,10 @@ const Form = () => {
                         </div>
                     </div>
                     <div className={classes.body}>
-                        <NewsForm news={news} />
+                        <NewsForm
+                            url={`/admin/news?order=${filters.order}&section=${filters.section}&search=${filters.search}`}
+                            news={news}
+                        />
                     </div>
                 </Layout>
             </WithRole>

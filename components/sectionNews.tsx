@@ -10,12 +10,15 @@ import { ISection } from "../types/section";
 import Pagination from "@material-ui/lab/Pagination";
 import LargeNews from "./news/largeNews";
 import { useEffect, useState } from "react";
+import ImageOpt from "./imageOpt";
 
 interface IProps {
     data: any;
 }
 
 const SectionNews = ({ data }: IProps) => {
+    const classes = useStyles();
+
     return (
         <div style={{ marginBottom: "25px" }}>
             <div className="author-title">
@@ -30,8 +33,10 @@ const SectionNews = ({ data }: IProps) => {
                 </h1>
             </div>
             <NewsList section={data} />
-            <div>
-                <img style={{ maxWidth: "100%" }} src="/blueAdvBig.jpg" />
+            <div className={classes.imgContainer}>
+                <ImageOpt
+                    src={"216927209_307535321123053_8884778464859107853_n.jpg"}
+                />
             </div>
         </div>
     );
@@ -111,6 +116,11 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+        },
+        imgContainer: {
+            position: "relative",
+            width: "100%",
+            height: "200px",
         },
     })
 );

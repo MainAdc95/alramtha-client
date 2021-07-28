@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { votePoll } from "../store/actions/poll";
 import { RootReducer } from "../store/reducers";
 import NewsLetter from "./newsLetter";
+import ImageOpt from "./imageOpt";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -151,10 +152,10 @@ const SideBar = ({ newsId }: IProps) => {
                     </div>
                 </div>
                 <div className="side-bar-adv">
-                    <Image
-                        src="/blueAdv.jpg"
-                        layout="fill"
-                        objectFit="contain"
+                    <ImageOpt
+                        src={
+                            "216189601_570914960941599_8493229825136087917_n.jpg"
+                        }
                     />
                 </div>
             </div>

@@ -34,6 +34,7 @@ import { IFile } from "../../../types/file";
 
 interface IProps {
     news?: INews;
+    url?: string;
 }
 
 interface IState {
@@ -64,7 +65,7 @@ interface IError {
     resources: string[];
 }
 
-const NewsForm = ({ news }: IProps) => {
+const NewsForm = ({ news, url }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const { data: sections } = useSWR<ISection[]>(`/sections`);
@@ -319,7 +320,7 @@ const NewsForm = ({ news }: IProps) => {
                 );
             }
 
-            router.push("/admin/news");
+            router.push(url || "/admin/news");
         } catch (err) {
             setErrors((prevErrors) => ({ ...prevErrors, ...err }));
         } finally {
