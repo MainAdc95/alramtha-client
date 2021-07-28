@@ -124,10 +124,10 @@ const SideBar = ({ newsId }: IProps) => {
                     </TabPanel>
                 </Box>
                 <div className="side-bar-adv">
-                    <Image
-                        src="/blueAdv.jpg"
-                        layout="fill"
-                        objectFit="contain"
+                    <ImageOpt
+                        src={
+                            "216189601_570914960941599_8493229825136087917_n.jpg"
+                        }
                     />
                 </div>
                 <div style={{ margin: "3rem 0" }}>
