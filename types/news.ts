@@ -19,6 +19,7 @@ export interface INews {
     readers: number;
     resources: Resource[];
     images: IImage[];
+    thumbnail_description: string;
     tags: ITag[];
     is_published: boolean;
     is_archived: boolean;

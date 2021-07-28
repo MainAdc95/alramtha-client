@@ -6,11 +6,16 @@ import {
     Tab,
     Tabs,
     CircularProgress,
+    Button,
 } from "@material-ui/core";
 import { useState } from "react";
 import ImageOpt from "../../../components/imageOpt";
 import { rss } from "../../../data/rss";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { apiCall } from "../../../utils/apiCall";
+import { useRouter } from "next/router";
+import { addToCreateNews } from "../../../store/actions/news";
 
 // styles
 import styles from "../../../styles/NewsFeed.module.scss";
@@ -19,9 +24,7 @@ import styles from "../../../styles/NewsFeed.module.scss";
 import WithRole from "../../../protectors/withRole";
 import Layout from "../../../components/admin/layout";
 import HeadLayout from "../../../components/headLayout";
-
-// icons
-import { apiCall } from "../../../utils/apiCall";
+import ImageForm from "../../../components/admin/image/imageForm";
 
 function a11yProps(index: any) {
     return {
@@ -30,7 +33,9 @@ function a11yProps(index: any) {
     };
 }
 
-const Tags = () => {
+const NewsFeed = () => {
+    const router = useRouter();
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [provider, setProvider] = useState(0);
     const [service, setService] = useState(0);
@@ -38,6 +43,9 @@ const Tags = () => {
     const [selectedService, setSelectedService] = useState<any>(null);
     const [news, setNews] = useState<any>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [activeImg, setActiveImg] = useState<number | null>(null);
+    const [thumbnail, setThumbnail] = useState("");
+    const [activeNews, setActiveNews] = useState<any>(null);
 
     // ___________________________________ provider
     useEffect(() => {
@@ -76,6 +84,48 @@ const Tags = () => {
     const handleService = (event: React.ChangeEvent<{}>, newValue: number) => {
         setService(newValue);
         setSelectedService(selectedProvider?.services[newValue]);
+    };
+
+    // _________________________________ active image
+    const handleImg = (index?: number) => {
+        setActiveImg(activeImg === null ? index : null);
+    };
+
+    // _________________________________ create nwes
+    const toggleThumbnail = (url?: string) => {
+        setThumbnail(thumbnail ? "" : url);
+    };
+
+    const handleAddRss = (index: number) => {
+        const foundNews = news[index];
+
+        if (foundNews) {
+            const tmpNews = {
+                thumbnail: null,
+                title: foundNews.title,
+                text: foundNews.content,
+            };
+
+            if (foundNews.enclosure?.url) {
+                setActiveNews(tmpNews);
+                return toggleThumbnail(foundNews.enclosure?.url);
+            }
+
+            dispatch(addToCreateNews(tmpNews));
+
+            router.push("/admin/news/addNews#rss");
+        }
+    };
+
+    const sendUrlImg = (image: any) => {
+        dispatch(
+            addToCreateNews({
+                ...activeNews,
+                thumbnail: image,
+            })
+        );
+
+        router.push("/admin/news/addNews#rss");
     };
 
     return (
@@ -158,83 +208,111 @@ const Tags = () => {
                                 </Box>
                             ) : !news ? (
                                 <p className={classes.msg}>
-                                    حدث خطأ اثناء استدعاء المعلومات من المصدر.
+                                    حدث خطأ اثناء تحميل المعلومات من المصدر.
                                 </p>
                             ) : !news.length ? (
                                 <p className={classes.msg}>
                                     لم يتم العثور على اي معلومات.
                                 </p>
                             ) : (
-                                <Rss news={news} />
+                                <Rss
+                                    handleImg={handleImg}
+                                    handleAddRss={handleAddRss}
+                                    news={news}
+                                />
                             )}
                         </div>
                     </div>
                 </Layout>
             </WithRole>
+            {activeImg !== null && (
+                <div
+                    onClick={() => handleImg()}
+                    className={styles.activeImgContainer}
+                >
+                    <img
+                        className={styles.activeImg}
+                        src={news[activeImg].enclosure.url}
+                    />
+                </div>
+            )}
+            {thumbnail && (
+                <ImageForm
+                    url={thumbnail}
+                    sendUrlImg={sendUrlImg}
+                    close={toggleThumbnail}
+                />
+            )}
         </>
     );
 };
 
-const Rss = ({ news }: any) => {
-    const [activeImg, setActiveImg] = useState<number | null>(null);
+interface IRssProps {
+    news: any;
+    handleImg: any;
+    handleAddRss: any;
+}
 
-    // _________________________________ active image
-    const handleImg = (index: number) => {
-        setActiveImg(activeImg === null ? index : null);
-    };
-
+const Rss = ({ news, handleImg, handleAddRss }: IRssProps) => {
     return (
-        <div>
+        <div className={styles.newsList}>
             {news.map((news, i) => (
                 <div key={i} className={styles.container}>
-                    <div
-                        className={
-                            news.enclosure?.url
-                                ? `${
-                                      activeImg === i
-                                          ? styles.activeImgContainer
-                                          : ""
-                                  } ${styles.imgContainer}`
-                                : styles.emptyImgContainer
-                        }
-                        onClick={() => handleImg(i)}
-                    >
-                        {news.enclosure?.url ? (
-                            <img
-                                src={news.enclosure.url}
-                                className={`${
-                                    activeImg === i ? styles.activeImg : ""
-                                } ${styles.img}`}
-                                alt=""
-                            />
-                        ) : (
-                            <img
-                                src="/no-photos.svg"
-                                className={styles.noImg}
-                                alt=""
-                            />
-                        )}
-                    </div>
-                    <div>
-                        <h3 className={styles.title}>{`${news.title}`}</h3>
-                        <p className={styles.content}>{news.content}</p>
-                        <a
-                            href={news.link}
-                            className={styles.link}
-                            target="_blank"
+                    <div className={styles.content}>
+                        <div
+                            className={
+                                news.enclosure?.url
+                                    ? styles.imgContainer
+                                    : styles.emptyImgContainer
+                            }
+                            onClick={
+                                news.enclosure?.url ? () => handleImg(i) : null
+                            }
                         >
-                            الرابط
-                        </a>
-                        {news.enclosure?.url && (
+                            {news.enclosure?.url ? (
+                                <img
+                                    src={news.enclosure.url}
+                                    className={styles.img}
+                                    alt=""
+                                />
+                            ) : (
+                                <img
+                                    src="/no-photos.svg"
+                                    className={styles.noImg}
+                                    alt=""
+                                />
+                            )}
+                        </div>
+                        <div className={styles.textContainer}>
+                            <h3 className={styles.title}>{`${news.title}`}</h3>
                             <a
-                                href={news.enclosure.url}
+                                href={news.link}
                                 className={styles.link}
                                 target="_blank"
                             >
-                                الصورة
+                                الرابط
                             </a>
-                        )}
-                        <p className={styles.date}>{news.pubDate}</p>
+                            {news.enclosure?.url && (
+                                <a
+                                    href={news.enclosure.url}
+                                    className={styles.link}
+                                    target="_blank"
+                                >
+                                    الصورة
+                                </a>
+                            )}
+                            <p className={styles.date}>{news.pubDate}</p>
+                            <p className={styles.content}>{news.content}</p>
+                        </div>
+                        <div className={styles.controlBar}>
+                            <Button
+                                onClick={() => handleAddRss(i)}
+                                color="primary"
+                                variant="contained"
+                            >
+                                أنشاء خبر
+                            </Button>
+                        </div>
                     </div>
                 </div>
             ))}
@@ -268,4 +346,4 @@ const useStyles = makeStyles((theme: Theme) => {
     });
 });
 
-export default Tags;
+export default NewsFeed;

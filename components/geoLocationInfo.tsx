@@ -36,6 +36,15 @@ const GeoLocationInfo = () => {
         }
     };
 
+    const translateCity = (txt: String) => {
+        switch (txt) {
+            case "Abu Dhabi":
+                return "أبوظبي";
+            default:
+                return txt;
+        }
+    };
+
     if (location && activeCountry)
         return (
             <Box className={classes.root}>

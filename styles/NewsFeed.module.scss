@@ -28,7 +28,7 @@
     0%,
     100% {
         background-color: rgb(231, 231, 231);
-        transform: translate(0, -15px);
+        transform: translate(0, 15px);
     }
     50% {
         background-color: rgb(200, 200, 200);
@@ -38,28 +38,52 @@
 
 @include keyframes(hoverMiddle) {
     0% {
-        transform: translate(0, -15px);
-        position: fixed;
+        transform: scale(0);
+        opacity: 0;
     }
 
     100% {
-        width: 1000px;
-        transform: translate(0, 0);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        zindex: 1000;
+        opacity: 1;
+
+        transform: scale(1);
     }
 }
 
-.container {
-    display: flex;
-    width: 100%;
-    margin-bottom: 30px;
-    align-items: flex-start;
-    border-bottom: 1px solid rgb(202, 202, 202);
-    padding-bottom: 20px;
-    min-height: 220px;
+.newsList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+
+    .container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+        box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 20%),
+            0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+        border-radius: 10px;
+        overflow: hidden;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .textContainer {
+            height: 200px;
+            margin-top: 40px;
+            overflow-y: auto;
+            padding: 0 10px;
+
+            .content {
+                margin-top: 10px;
+            }
+        }
+
+        .controlBar {
+            margin-top: 10px;
+        }
+    }
 }
 
 .contentNavbar {
@@ -75,17 +99,12 @@
 .imgContainer,
 .emptyImgContainer {
     position: relative;
-    box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 20%),
-        0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
-    width: 400px;
-    min-width: 400px;
-    margin-left: 30px;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     overflow: hidden;
     &:after {
         content: "";
         display: block;
-        padding-bottom: 55%;
+        padding-bottom: 56.2%;
     }
 
     transition: all 0.1s ease;
@@ -96,18 +115,16 @@
 }
 
 .activeImgContainer {
-    box-shadow: initial;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    position: fixed;
-    overflow-x: initial;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0;
-    right: 0;
-    top: 0;
-    z-index: 1300;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10;
 }
 
 .emptyImgContainer {
@@ -134,15 +151,9 @@
 }
 
 .activeImg {
-    min-height: initial;
-    min-width: initial;
-    height: initial;
-    width: initial;
-    object-fit: initial;
-    position: static;
-    cursor: zoom-out;
-    box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 30%),
-        0px 1px 1px 0px rgb(0 0 0 / 24%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    max-height: 100%;
+    max-width: 100%;
+    @include animation("hoverMiddle 0.3s");
 }
 
 .noImg {

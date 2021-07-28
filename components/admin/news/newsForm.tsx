@@ -48,6 +48,7 @@ interface IState {
     subTitles: { sub_title: string }[];
     tags: ITag[];
     resources: { resource: string }[];
+    thumbnail_description: string;
 }
 
 interface IError {
@@ -113,6 +114,7 @@ const NewsForm = ({ news }: IProps) => {
         subTitles: [],
         resources: [{ resource: "الرمسة" }],
         tags: [],
+        thumbnail_description: "",
     });
 
     useEffect(() => {
@@ -140,6 +142,12 @@ const NewsForm = ({ news }: IProps) => {
                         text: toCreate.text,
                     });
                 case "rss":
+                    return setState({
+                        ...state,
+                        thumbnail: toCreate.thumbnail,
+                        title: toCreate.title,
+                        text: toCreate.text,
+                    });
                 default:
                     return null;
             }
@@ -164,6 +172,7 @@ const NewsForm = ({ news }: IProps) => {
                 tags: news.tags || [],
                 images: news.images || [],
                 is_published: news.is_published || false,
+                thumbnail_description: news.thumbnail_description || "",
             });
         }
 
@@ -539,6 +548,20 @@ const NewsForm = ({ news }: IProps) => {
                                 }
                             />
                             <Box mt={3} mb={3}>
+                                <Divider />
+                            </Box>
+                            <div className={classes.formGroup}>
+                                <TextField
+                                    name="thumbnail_description"
+                                    label="شرح الصورة"
+                                    multiline={true}
+                                    state={state}
+                                    setState={setState}
+                                    errors={errors}
+                                    variant="outlined"
+                                />
+                            </div>
+                            <Box mb={3}>
                                 <Divider />
                             </Box>
                             <ImageInput

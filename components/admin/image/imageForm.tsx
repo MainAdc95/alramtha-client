@@ -1,10 +1,11 @@
 import { Grid, Typography, CircularProgress, Box } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { apiCall } from "../../../utils/apiCall";
 import { mutate } from "swr";
 import { useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
 
 // components
 import Modal from "../modal";
@@ -23,6 +24,8 @@ interface IError {
 interface IProps {
     close: Function;
     selectMultiple?: any;
+    url?: string;
+    sendUrlImg?: any;
 }
 
 interface IState {
@@ -33,12 +36,11 @@ interface IFile {
     file_id: string;
     img: string | ArrayBuffer;
     name: string;
-    file: any;
     image_description: string;
     cropedImg?: string;
 }
 
-const ImageForm = ({ close, selectMultiple }: IProps) => {
+const ImageForm = ({ close, selectMultiple, url, sendUrlImg }: IProps) => {
     const classes = useStyles();
     const fileInput = useRef<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -51,6 +53,33 @@ const ImageForm = ({ close, selectMultiple }: IProps) => {
         images: [],
     });
 
+    useEffect(() => {
+        if (url) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    setState({
+                        ...state,
+                        images: [
+                            ...state.images,
+                            {
+                                file_id: `${Date.now()}`,
+                                img: reader.result,
+                                name: uuid(),
+                                image_description: "",
+                            },
+                        ],
+                    });
+                };
+                reader.readAsDataURL(xhr.response);
+            };
+            xhr.open("GET", url);
+            xhr.responseType = "blob";
+            xhr.send();
+        }
+    }, []);
+
     const handleChange = async (e) => {
         if (e.target.files.length) {
             let files: IFile[] = [];
@@ -61,7 +90,6 @@ const ImageForm = ({ close, selectMultiple }: IProps) => {
                     file_id: `${Date.now()}`,
                     img: res,
                     name: f.name,
-                    file: f,
                     image_description: "",
                 });
             }
@@ -123,6 +151,8 @@ const ImageForm = ({ close, selectMultiple }: IProps) => {
                 `/images?authId=${user.user_id}`,
                 { images: data }
             );
+
+            sendUrlImg(images[0]);
 
             mutate("/images");
 

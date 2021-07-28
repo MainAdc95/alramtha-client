@@ -124,6 +124,19 @@ const NewsPage = ({ news: n }: IProps) => {
                                                                     }
                                                                 />
                                                             </div>
+                                                            {news.thumbnail_description && (
+                                                                <div
+                                                                    className={
+                                                                        styles.imageDescriptionContainer
+                                                                    }
+                                                                >
+                                                                    <p>
+                                                                        {
+                                                                            news.thumbnail_description
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </SwiperSlide>
                                                 )}

@@ -1,5 +1,5 @@
 import parse from "html-react-parser";
-import { apiCall } from "../../utils/apiCall";
+import { apiCall, apiImage } from "../../utils/apiCall";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import HeadLayout from "../../components/headLayout";
@@ -48,7 +48,11 @@ const NewsPage = ({ article }: IProps) => {
     if (article)
         return (
             <>
-                <HeadLayout title={article.title} />
+                <HeadLayout
+                    title={article.title}
+                    image={apiImage(article.thumbnail?.sizes?.l)}
+                    description={article.intro}
+                />
                 <div className={styles.page}>
                     <div className={`${styles.container}`}>
                         <div className={styles.sideContentContainer}>

@@ -165,6 +165,8 @@ const DataHandler = () => {
             "out"
         );
 
+        console.log({ ...location, weather });
+
         dispatch(setLocation({ ...location, weather }));
     };
 

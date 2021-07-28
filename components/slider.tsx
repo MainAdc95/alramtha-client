@@ -21,7 +21,7 @@ const Slider = ({
             style={{ width: "100%", height: "100%" }}
             spaceBetween={spaceBetween || 10}
             navigation
-            autoplay={{ disableOnInteraction: true, delay: 2500 }}
+            autoplay={{ disableOnInteraction: true, delay: 3500 }}
             slidesPerView={slidesPerView || 1}
             breakpoints={breakingpoints || null}
         >

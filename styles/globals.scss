@@ -52,6 +52,7 @@ iframe {
 
 .twitter-iframe-container {
     margin: 10px 0;
+    direction: rtl;
 
     iframe {
         border: 3px solid rgb(2, 135, 254) !important;
@@ -320,6 +321,10 @@ td {
             list-style: none;
             display: flex;
             align-items: center;
+
+            a {
+                cursor: pointer;
+            }
         }
     }
 }

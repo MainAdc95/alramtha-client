@@ -25,7 +25,7 @@ const SmallNews = ({ news }: IProps) => {
                     <div>
                         <ImageOpt
                             src={news.thumbnail?.sizes?.s}
-                            alt={news.thumbnail.image_description}
+                            alt={news.thumbnail?.image_description || ""}
                             empty={news.thumbnail ? false : true}
                         />
                     </div>

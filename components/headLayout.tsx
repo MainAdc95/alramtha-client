@@ -38,32 +38,35 @@ const HeadLayout = ({ title, description, image, url, children }: IProps) => {
                 property="twitter:title"
                 content={title ? `${title} | الرمسة` : `الرمسة`}
             />
-            {description && (
-                <>
-                    <meta
-                        name="description"
-                        content={description || alramsahSuDescription}
-                    />
-                    <meta
-                        property="og:description"
-                        content={description || alramsahSuDescription}
-                    />
-                    <meta
-                        property="twitter:description"
-                        content={description || alramsahSuDescription}
-                    />
-                </>
-            )}
-            {image && (
-                <>
-                    <meta
-                        property="og:image"
-                        itemProp="image"
-                        content={apiImage(image)}
-                    />
-                    <meta property="twitter:image" content={apiImage(image)} />
-                </>
-            )}
+            <meta
+                name="description"
+                content={description || alramsahSuDescription}
+            />
+            <meta
+                property="og:description"
+                content={description || alramsahSuDescription}
+            />
+            <meta
+                property="twitter:description"
+                content={description || alramsahSuDescription}
+            />
+            <meta
+                property="og:image"
+                itemProp="image"
+                content={
+                    image
+                        ? apiImage(image)
+                        : "https://www.alramsah.com/logo.svg"
+                }
+            />
+            <meta
+                property="twitter:image"
+                content={
+                    image
+                        ? apiImage(image)
+                        : "https://www.alramsah.com/logo.svg"
+                }
+            />
             <meta name="twitter:card" content="summary_large_image" />
             {url && <meta property="og:url" content={domain + url} />}
             {children}

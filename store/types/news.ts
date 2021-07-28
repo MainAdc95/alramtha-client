@@ -3,7 +3,7 @@ import { INews } from "../../types/news";
 
 type AddToCreateNews = {
     type: typeof ADD_TO_CREATE_NEWS;
-    news: INews;
+    news: any;
 };
 
 type RemoveToCreateNews = {
