@@ -70,6 +70,7 @@ interface IProps {
     handleOpenDel: any;
     handleOpenPublish: any;
     toggleArchive: any;
+    toggleTransArtic: any;
     query: string;
 }
 
@@ -79,6 +80,7 @@ const NewsItem = ({
     handleOpenPublish,
     toggleArchive,
     query,
+    toggleTransArtic,
 }: IProps) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -103,6 +105,11 @@ const NewsItem = ({
 
     const archiveAction = () => {
         toggleArchive(news);
+        handleClose();
+    };
+
+    const transformToArticle = () => {
+        toggleTransArtic(news);
         handleClose();
     };
 
@@ -237,6 +244,9 @@ const NewsItem = ({
                             الحذف بشكل نهائي
                         </MenuItem>
                     )}
+                    <MenuItem onClick={transformToArticle}>
+                        تحويل الى مقالة
+                    </MenuItem>
                 </Menu>
             </TableCell>
         </TableRow>

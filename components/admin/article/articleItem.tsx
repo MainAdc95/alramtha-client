@@ -15,10 +15,6 @@ import { IArticle } from "../../../types/article";
 import { apiImage } from "../../../utils/apiCall";
 import ImageOpt from "../../imageOpt";
 
-// icons
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
-
 const useStyles = makeStyles({
     root: {
         "&:hover": {
@@ -70,6 +66,7 @@ interface IProps {
     handleOpenDel: any;
     handleOpenPublish: any;
     toggleArchive: any;
+    query: string;
 }
 
 const ArticleItem = ({
@@ -77,6 +74,7 @@ const ArticleItem = ({
     handleOpenDel,
     handleOpenPublish,
     toggleArchive,
+    query,
 }: IProps) => {
     const classes = useStyles();
     const [isHover, setHover] = useState(false);
@@ -157,17 +155,6 @@ const ArticleItem = ({
                     ))}
                 </div>
             </TableCell>
-            <TableCell
-                classes={{
-                    root: classes.tableCell,
-                }}
-            >
-                {article.is_published ? (
-                    <CheckIcon color="primary" />
-                ) : (
-                    <ClearIcon color="secondary" />
-                )}
-            </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
                 {new Date(article.created_at).toLocaleString("ar")}
             </TableCell>
@@ -220,7 +207,7 @@ const ArticleItem = ({
                     onClose={handleClose}
                 >
                     <Link
-                        href={`/admin/articles/articleForm?articleId=${article.article_id}`}
+                        href={`/admin/articles/articleForm${query}&articleId=${article.article_id}`}
                     >
                         <MenuItem>
                             <a>تعديل</a>

@@ -122,8 +122,8 @@ const News = () => {
         event: React.MouseEvent<HTMLElement>,
         v: string
     ) => {
-        handleFilter("order", v);
         setAnchorElOrder(null);
+        handleFilter("order", v);
     };
 
     const handleOrderListClick = (e: React.MouseEvent<HTMLElement>) => {

@@ -39,6 +39,7 @@ const Gallery = () => {
     });
     const [isAdd, setAdd] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [mutateUrl, setMutateUrl] = useState("");
 
     const handleFilter = (k, v) => {
         setFilters({
@@ -176,9 +177,14 @@ const Gallery = () => {
                         </Box>
                     </div>
                     <div className={classes.body}>
-                        <ImageList filters={filters} />
+                        <ImageList
+                            filters={filters}
+                            setMutateUrl={setMutateUrl}
+                        />
                     </div>
-                    {isAdd && <ImageForm close={closeAdd} />}
+                    {isAdd && (
+                        <ImageForm close={closeAdd} mutateUrl={mutateUrl} />
+                    )}
                 </Layout>
             </WithRole>
         </>

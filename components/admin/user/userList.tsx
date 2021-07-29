@@ -6,19 +6,17 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TablePagination, LinearProgress } from "@material-ui/core";
-import { useState } from "react";
+import { LinearProgress, Box } from "@material-ui/core";
+import { useState, useEffect } from "react";
 import { IUser } from "../../../types/user";
-import { mutate } from "swr";
-import { apiCall } from "../../../utils/apiCall";
 import { useSelector } from "react-redux";
+import { Pagination } from "@material-ui/lab";
 import { RootReducer } from "../../../store/reducers";
 import useSWR from "swr";
 
 // components
 import UserItem from "./userItem";
 import UserForm from "./userForm";
-import ActionModal from "../actionModal";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,29 +46,22 @@ const UserList = () => {
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isDel, setDel] = useState<IUser | null>(null);
     const [isEdit, setEdit] = useState<IUser | null>(null);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [delLoading, setDelLoading] = useState(false);
-    const [page, setPage] = useState(0);
+    const rowsPerPage = 10;
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
     const { data, error, isValidating } = useSWR<{
         results: number;
         users: IUser[];
-    }>(`/users?p=${page + 1}&r=${rowsPerPage}&authId=${user.user_id}`);
+    }>(`/users?p=${page}&r=${rowsPerPage}&authId=${user.user_id}`);
+
+    useEffect(() => {
+        if (data) {
+            setCount(Math.ceil(data.results / rowsPerPage));
+        }
+    }, [data]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const handleOpenDel = (user: IUser) => {
-        setDel(user);
-    };
-
-    const handleCloseDel = () => {
-        setDel(null);
     };
 
     const handleToggleEdit = (user: IUser) => {
@@ -81,11 +72,19 @@ const UserList = () => {
         setEdit(user);
     };
 
-    if (error) return <p>An error has occured while fetching users.</p>;
+    if (error) return <p>لقد حدث خطأ أثناء تحميل الأعضاء.</p>;
     else if (!data) return <p>جار التحميل...</p>;
-    else if (!data.users?.length) return <p>There were no users found.</p>;
+    else if (!data.users?.length) return <p>لم يتم العثور على أي اعضاء.</p>;
     return (
         <>
+            <Box display="flex" mb={4}>
+                <Pagination
+                    color="secondary"
+                    onChange={handleChangePage}
+                    page={page}
+                    count={count}
+                />
+            </Box>
             <TableContainer
                 className={classes.tableContainer}
                 component={Paper}
@@ -133,23 +132,19 @@ const UserList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                component="div"
-                count={data.results}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                labelRowsPerPage="صفوف لكل صفحة:"
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
+            <Box display="flex" mt={4}>
+                <Pagination
+                    color="secondary"
+                    onChange={handleChangePage}
+                    page={page}
+                    count={count}
+                />
+            </Box>
             {isEdit && (
                 <UserForm
                     close={handleToggleEdit}
                     user={isEdit}
-                    mutateUrl={`/users?p=${page + 1}&r=${rowsPerPage}&authId=${
-                        user.user_id
-                    }`}
+                    mutateUrl={`/users?p=${page}&r=${rowsPerPage}&authId=${user.user_id}`}
                 />
             )}
         </>

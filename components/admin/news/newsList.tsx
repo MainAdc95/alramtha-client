@@ -22,6 +22,7 @@ import ActionModal from "../actionModal";
 
 // icons
 import CheckIcon from "@material-ui/icons/Check";
+import TransformIcon from "@material-ui/icons/Transform";
 
 function a11yProps(index: any) {
     return {
@@ -62,6 +63,7 @@ const NewsList = ({ filters, query }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isPublish, setPublish] = useState<INews | null>(null);
+    const [transArtic, setTransArtic] = useState<INews | null>(null);
     const [value, setValue] = useState(0);
     const rowsPerPage = 20;
     const [page, setPage] = useState(1);
@@ -81,6 +83,7 @@ const NewsList = ({ filters, query }: IProps) => {
     const [isDel, setDel] = useState<INews | null>(null);
     const [delLoading, setDelLoading] = useState(false);
     const [publishLoading, setPublishLoading] = useState(false);
+    const [transArticLoading, setTransArticLoading] = useState(false);
     // archive
     const [isArch, setArch] = useState<INews | null>(null);
     const [archiveLoading, setArchiveLoading] = useState(false);
@@ -109,6 +112,14 @@ const NewsList = ({ filters, query }: IProps) => {
         }
 
         setPublish(news);
+    };
+
+    const toggleTransArtic = (news?: INews) => {
+        if (transArtic) {
+            return setTransArtic(null);
+        }
+
+        setTransArtic(news);
     };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -151,6 +162,45 @@ const NewsList = ({ filters, query }: IProps) => {
             handleCloseDel();
         } catch (err) {
             setDelLoading(false);
+        }
+    };
+
+    const handleTransArtic = async () => {
+        try {
+            setTransArticLoading(true);
+            await apiCall(
+                "post",
+                `/news/${transArtic.news_id}/transform_article?authId=${user.user_id}`
+            );
+
+            mutate(
+                `/news?isAdmin=true&p=${page}&r=${rowsPerPage}${
+                    filters.section
+                        ? `&sectionId=${filters.section.section_id}`
+                        : ""
+                }&order=${filters.order === "الأحدث" ? "desc" : "asc"}${
+                    filters.search ? `&text=${filters.search}` : ""
+                }&type=${
+                    value === 0
+                        ? "published"
+                        : value === 1
+                        ? "draft"
+                        : "archived"
+                }`,
+                (data: { news: INews[] }) => {
+                    return {
+                        ...data,
+                        news: data.news.filter(
+                            (p) => p.news_id !== transArtic.news_id
+                        ),
+                    };
+                }
+            );
+
+            setTransArticLoading(false);
+            toggleTransArtic();
+        } catch (err) {
+            setTransArticLoading(false);
         }
     };
 
@@ -248,7 +298,7 @@ const NewsList = ({ filters, query }: IProps) => {
                 </Tabs>
             </Box>
             {!data.news?.length ? (
-                <p>لم يتم العثور على اي أخبار</p>
+                <p>لم يتم العثور على اي أخبار.</p>
             ) : (
                 <>
                     <Box display="flex" mb={4}>
@@ -309,6 +359,7 @@ const NewsList = ({ filters, query }: IProps) => {
                                         toggleArchive={toggleArchive}
                                         handleOpenPublish={togglePublish}
                                         query={query}
+                                        toggleTransArtic={toggleTransArtic}
                                     />
                                 ))}
                             </TableBody>
@@ -352,6 +403,18 @@ const NewsList = ({ filters, query }: IProps) => {
                     msg={`هل انت متاكد انك تريد نشر  ${isPublish.title}؟`}
                     handler={handlePublish}
                     loading={publishLoading}
+                />
+            )}
+            {transArtic && (
+                <ActionModal
+                    close={toggleTransArtic}
+                    btnIcon={<TransformIcon />}
+                    type="confirmation"
+                    btnTxt="تحويل"
+                    title="تحويل الخبر الى مقالة"
+                    msg={`هل انت متاكد انك تريد تحويل  (${transArtic.title}) الى مقالة؟`}
+                    handler={handleTransArtic}
+                    loading={transArticLoading}
                 />
             )}
         </>

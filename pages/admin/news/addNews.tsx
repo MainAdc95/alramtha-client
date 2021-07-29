@@ -22,7 +22,6 @@ const Form = () => {
     );
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });
-
     const [filters, setFilters] = useState<any>({
         search: "",
         order: "",

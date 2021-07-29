@@ -29,6 +29,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 
 interface IProps {
     article?: IArticle;
+    url?: string;
 }
 
 interface IState {
@@ -54,7 +55,7 @@ interface IError {
     section: string[];
 }
 
-const ArticleForm = ({ article }: IProps) => {
+const ArticleForm = ({ article, url }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
@@ -208,7 +209,7 @@ const ArticleForm = ({ article }: IProps) => {
                 );
             }
 
-            router.push("/admin/articles");
+            router.push(url || "/admin/articles");
         } catch (err) {
             setErrors((prevErrors) => ({ ...prevErrors, ...err }));
         } finally {

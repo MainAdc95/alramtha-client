@@ -19,6 +19,8 @@ import Select from "../../form/select";
 
 interface IProps {
     message?: IMessage;
+    fromRss?: any;
+    close?: any;
 }
 
 interface IState {
@@ -35,10 +37,12 @@ interface IError {
     images: string[];
 }
 
-const MessageForm = ({ message }: IProps) => {
+const MessageForm = ({ message, fromRss, close }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
-    const { data: users } = useSWR<IUser[]>(`/users?authId=${user.user_id}`);
+    const { data } = useSWR<{ results: number; users: IUser[] }>(
+        `/users?p=1&r=100&authId=${user.user_id}`
+    );
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
     const [imagesPick, setImagesPick] =
@@ -66,6 +70,13 @@ const MessageForm = ({ message }: IProps) => {
         if (forward === "forward") setForward(true);
 
         if (router.query.replay) setReplay(String(router.query.replay));
+
+        if (fromRss)
+            setState({
+                ...state,
+                subject: "يرجى اعادة صياغة الخبر وانشاء مادة صالحة للنشر.",
+                text: `<a href="${fromRss.link}" target="_blank">${fromRss.link}</a>`,
+            });
     }, []);
 
     useEffect(() => {
@@ -98,6 +109,10 @@ const MessageForm = ({ message }: IProps) => {
             if (isForward || replay || !message) {
                 await apiCall("post", `/message?authId=${user.user_id}`, state);
             } else {
+            }
+
+            if (fromRss) {
+                return close();
             }
 
             router.push("/admin/messages");
@@ -173,7 +188,7 @@ const MessageForm = ({ message }: IProps) => {
                                     state={state}
                                     setState={setState}
                                 >
-                                    {users?.map((user) => (
+                                    {data?.users?.map((user) => (
                                         <MenuItem value={user.user_id}>
                                             {user.username}
                                         </MenuItem>
@@ -185,7 +200,7 @@ const MessageForm = ({ message }: IProps) => {
                             <ImageInput
                                 text="اختر بعض الصور"
                                 name="images"
-                                handler={handlePick}
+                                handler={() => handlePick()}
                                 toForm={() => handlePick(true)}
                                 type="multiple"
                                 images={state.images}

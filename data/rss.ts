@@ -7,8 +7,151 @@ export const rss = [
         icon: "/sputnik.png",
         services: [
             {
-                name: "أرشيف",
+                name: "عام",
                 link: "https://arabic.sputniknews.com/export/rss2/archive/index.xml",
+            },
+        ],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
+        isDisabled: false,
+        icon: "/france.jpg",
+        services: [
+            {
+                name: "عالم",
+                link: "https://www.france24.com/ar/rss",
+            },
+            {
+                name: "أوروبا",
+                link: "https://www.france24.com/ar/%D8%A3%D9%88%D8%B1%D9%88%D8%A8%D8%A7/rss",
+            },
+            {
+                name: "فرنسا",
+                link: "https://www.france24.com/ar/%D9%81%D8%B1%D9%86%D8%B3%D8%A7/rss",
+            },
+            {
+                name: "افريقيا",
+                link: "https://www.france24.com/ar/%D8%A3%D9%81%D8%B1%D9%8A%D9%82%D9%8A%D8%A7/rss",
+            },
+            {
+                name: "الشرق الأوسط",
+                link: "https://www.france24.com/ar/%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%A3%D9%88%D8%B3%D8%B7/rss",
+            },
+            {
+                name: "أمريكا",
+                link: "https://www.france24.com/ar/%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D8%A7/rss",
+            },
+            {
+                name: "آسيا",
+                link: "https://www.france24.com/ar/%D8%A2%D8%B3%D9%8A%D8%A7/rss",
+            },
+            {
+                name: "اقتصاد",
+                link: "https://www.france24.com/ar/%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF/rss",
+            },
+            {
+                name: "رياضة",
+                link: "https://www.france24.com/ar/%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9/rss",
+            },
+            {
+                name: "ثقافة",
+                link: "https://www.france24.com/ar/%D8%AB%D9%82%D8%A7%D9%81%D8%A9/rss",
+            },
+        ],
+    },
+    {
+        id: Date.now(),
+        width: 50,
+        height: 50,
+        isDisabled: false,
+        icon: "/rt.png",
+        services: [
+            {
+                name: "عام",
+                link: "https://arabic.rt.com/rss/",
+            },
+        ],
+    },
+    {
+        id: Date.now(),
+        width: 140,
+        height: 60,
+        isDisabled: false,
+        icon: "/youm7.jpg",
+        services: [
+            {
+                name: "سياسة",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=319",
+            },
+            {
+                name: "حوادث",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=319",
+            },
+            {
+                name: "تقارير مصرية",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=97",
+            },
+            {
+                name: "أخبار محافظات",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=296",
+            },
+            {
+                name: "اقتصاد وبورصة",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=297",
+            },
+            {
+                name: "أخبار الرياضة",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=298",
+            },
+            {
+                name: "كرة عالمية",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=332",
+            },
+            {
+                name: "فن",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=84",
+            },
+            {
+                name: "تليفزيون",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=251",
+            },
+            {
+                name: "أخبار عربية",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=88",
+            },
+            {
+                name: "أخبار عالمية",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=286",
+            },
+            {
+                name: "ثقافة",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=94",
+            },
+            {
+                name: "المرأة والمنوعات",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=89",
+            },
+            {
+                name: "صحة و طب",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=245",
+            },
+            {
+                name: "علوم و تكنولوجيا",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=328",
+            },
+            {
+                name: "صحافة المواطن",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=335",
+            },
+            {
+                name: "ألبومات اليوم السابع",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=291",
+            },
+            {
+                name: "أخبار عاجلة",
+                link: "https://www.youm7.com/rss/SectionRss?SectionID=203",
             },
         ],
     },
@@ -232,6 +375,39 @@ export const rss = [
         id: Date.now(),
         width: 100,
         height: 38,
+        isDisabled: false,
+        icon: "/welle.jpg",
+        services: [
+            {
+                name: "مواضيع",
+                link: "http://rss.dw.de/rdf/rss-ar-all",
+            },
+            {
+                name: "سياسة واقتصاد",
+                link: "http://rss.dw.de/rdf/rss-ar-bus",
+            },
+            {
+                name: "أخبار",
+                link: "http://rss.dw.de/rdf/rss-ar-news",
+            },
+            {
+                name: "قضايا اجتماعية",
+                link: "http://rss.dw.de/rdf/rss-ar-cul",
+            },
+            {
+                name: "ثقافة",
+                link: "http://rss.dw.de/rdf/rss-ar-cul",
+            },
+            {
+                name: "علوم وتكنولوجيا",
+                link: "http://rss.dw.de/rdf/rss-ar-sci",
+            },
+        ],
+    },
+    {
+        id: Date.now(),
+        width: 100,
+        height: 38,
         isDisabled: true,
         icon: "/byan.jpg",
         services: [],
@@ -249,14 +425,6 @@ export const rss = [
         width: 100,
         height: 38,
         isDisabled: true,
-        icon: "/welle.jpg",
-        services: [],
-    },
-    {
-        id: Date.now(),
-        width: 100,
-        height: 38,
-        isDisabled: true,
         icon: "/emaritesNews.jpg",
         services: [],
     },
@@ -266,14 +434,6 @@ export const rss = [
         height: 38,
         isDisabled: true,
         icon: "/china.jpeg",
-        services: [],
-    },
-    {
-        id: Date.now(),
-        width: 100,
-        height: 38,
-        isDisabled: true,
-        icon: "/france.jpg",
         services: [],
     },
     {

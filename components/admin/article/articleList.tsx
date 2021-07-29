@@ -6,14 +6,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import {
-    TablePagination,
-    LinearProgress,
-    Tabs,
-    Tab,
-    Box,
-} from "@material-ui/core";
-import { useState } from "react";
+import { LinearProgress, Tabs, Tab, Box } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
+import { useState, useEffect } from "react";
 import { IArticle } from "../../../types/article";
 import { mutate } from "swr";
 import { apiCall } from "../../../utils/apiCall";
@@ -58,18 +53,26 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const ArticleList = () => {
+interface IProps {
+    filters: any;
+    query: string;
+}
+
+const ArticleList = ({ filters, query }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [page, setPage] = useState(0);
     const [isPublish, setPublish] = useState<IArticle | null>(null);
     const [value, setValue] = useState(0);
+    const rowsPerPage = 20;
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
     const { data, error, isValidating } = useSWR<{
         results: number;
         articles: IArticle[];
     }>(
-        `/articles?p=${page + 1}&r=${rowsPerPage}&type=${
+        `/articles?p=${page}&r=${rowsPerPage}&order=${
+            filters.order === "الأحدث" ? "desc" : "asc"
+        }${filters.search ? `&search=${filters.search}` : ""}&type=${
             value === 0 ? "published" : value === 1 ? "draft" : "archived"
         }`
     );
@@ -83,10 +86,11 @@ const ArticleList = () => {
     const [isArch, setArch] = useState<IArticle | null>(null);
     const [archiveLoading, setArchiveLoading] = useState(false);
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    useEffect(() => {
+        if (data) {
+            setCount(Math.ceil(data.results / rowsPerPage));
+        }
+    }, [data]);
 
     const handleOpenDel = (article: IArticle) => {
         setDel(article);
@@ -210,7 +214,7 @@ const ArticleList = () => {
         }
     };
 
-    if (error) return <p>An error has occured while fetching article.</p>;
+    if (error) return <p>لقد حدث خطأ أثناء تحميل المقالات.</p>;
     else if (!data) return <p>جار التحميل...</p>;
     return (
         <>
@@ -222,9 +226,17 @@ const ArticleList = () => {
                 </Tabs>
             </Box>
             {!data.articles?.length ? (
-                <p>لم يتم العثور على المقالات</p>
+                <p>لم يتم العثور على المقالات.</p>
             ) : (
                 <>
+                    <Box display="flex" mb={4}>
+                        <Pagination
+                            color="secondary"
+                            onChange={handleChangePage}
+                            page={page}
+                            count={count}
+                        />
+                    </Box>
                     <TableContainer
                         className={classes.tableContainer}
                         component={Paper}
@@ -242,9 +254,6 @@ const ArticleList = () => {
                                     </TableCell>
                                     <TableCell className={classes.mediumCell}>
                                         صورة
-                                    </TableCell>
-                                    <TableCell className={classes.smallCell}>
-                                        نشرت
                                     </TableCell>
                                     <TableCell className={classes.smallCell}>
                                         تاريخ الانشاء
@@ -271,21 +280,20 @@ const ArticleList = () => {
                                         handleOpenDel={handleOpenDel}
                                         handleOpenPublish={togglePublish}
                                         toggleArchive={toggleArchive}
+                                        query={query}
                                     />
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                        component="div"
-                        count={data.results}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        labelRowsPerPage="صفوف لكل صفحة:"
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
+                    <Box display="flex" mt={4}>
+                        <Pagination
+                            color="secondary"
+                            onChange={handleChangePage}
+                            page={page}
+                            count={count}
+                        />
+                    </Box>
                 </>
             )}
             {isDel && (

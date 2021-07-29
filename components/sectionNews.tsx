@@ -11,6 +11,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import LargeNews from "./news/largeNews";
 import { useEffect, useState } from "react";
 import ImageOpt from "./imageOpt";
+import Link from "next/link";
 
 interface IProps {
     data: any;
@@ -28,7 +29,9 @@ const SectionNews = ({ data }: IProps) => {
                             borderColor: `${data.color}`,
                         }}
                     >
-                        {data.section_name}
+                        <Link href={`/sections/${data.section_id}`}>
+                            <a>{data.section_name}</a>
+                        </Link>
                     </span>
                 </h1>
             </div>

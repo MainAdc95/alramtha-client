@@ -55,6 +55,20 @@ const TextEditor = ({
                             setEditor(e);
                         }
                     }}
+                    onPaste={(event, editor) => {
+                        const clipedText = event.clipboardData.getData("Text");
+
+                        editor.execCommand(
+                            "mceInsertContent",
+                            false,
+                            `<div>${clipedText.replace(
+                                /\r?\n/g,
+                                "<br>"
+                            )}</div><p>&nbsp;</p>`
+                        );
+
+                        event.preventDefault();
+                    }}
                     apiKey="p2f3wrzpsomvt0lvr2uphccyzhlnxzopddrmptrb4addcxon"
                     init={{
                         height: 400,

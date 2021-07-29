@@ -16,6 +16,7 @@ import TextField from "../../form/input";
 import Button from "../../form/button";
 import EditIcon from "@material-ui/icons/Edit";
 import ImageEditor from "../../form/imageEditor";
+import axios from "axios";
 
 interface IError {
     image: string[];
@@ -26,6 +27,7 @@ interface IProps {
     selectMultiple?: any;
     url?: string;
     sendUrlImg?: any;
+    mutateUrl?: any;
 }
 
 interface IState {
@@ -40,7 +42,13 @@ interface IFile {
     cropedImg?: string;
 }
 
-const ImageForm = ({ close, selectMultiple, url, sendUrlImg }: IProps) => {
+const ImageForm = ({
+    close,
+    selectMultiple,
+    url,
+    sendUrlImg,
+    mutateUrl,
+}: IProps) => {
     const classes = useStyles();
     const fileInput = useRef<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -55,28 +63,34 @@ const ImageForm = ({ close, selectMultiple, url, sendUrlImg }: IProps) => {
 
     useEffect(() => {
         if (url) {
-            var xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                var reader = new FileReader();
-                reader.onloadend = function () {
-                    setState({
-                        ...state,
-                        images: [
-                            ...state.images,
-                            {
-                                file_id: `${Date.now()}`,
-                                img: reader.result,
-                                name: uuid(),
-                                image_description: "",
-                            },
+            axios
+                .get(url, { responseType: "blob" })
+                .then((r) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        setState({
+                            ...state,
+                            images: [
+                                ...state.images,
+                                {
+                                    file_id: `${Date.now()}`,
+                                    img: reader.result,
+                                    name: uuid(),
+                                    image_description: "",
+                                },
+                            ],
+                        });
+                    };
+
+                    reader.readAsDataURL(r.data);
+                })
+                .catch((e) =>
+                    setErrors({
+                        image: [
+                            "المصدر لم يسمح بتحميل الصورة بشكل آلي يرجي تحميل الصورة يدويا.",
                         ],
-                    });
-                };
-                reader.readAsDataURL(xhr.response);
-            };
-            xhr.open("GET", url);
-            xhr.responseType = "blob";
-            xhr.send();
+                    })
+                );
         }
     }, []);
 
@@ -152,9 +166,9 @@ const ImageForm = ({ close, selectMultiple, url, sendUrlImg }: IProps) => {
                 { images: data }
             );
 
-            sendUrlImg(images[0]);
+            if (sendUrlImg) sendUrlImg(images[0]);
 
-            mutate("/images");
+            mutate(mutateUrl);
 
             if (selectMultiple) {
                 selectMultiple(images);

@@ -32,9 +32,10 @@ const useStyles = makeStyles({
 
 interface IProps {
     filters: any;
+    setMutateUrl?: any;
 }
 
-const ImageList = ({ filters }: IProps) => {
+const ImageList = ({ filters, setMutateUrl }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isDel, setDel] = useState<null | IImage>(null);
@@ -53,6 +54,12 @@ const ImageList = ({ filters }: IProps) => {
     );
 
     useEffect(() => {
+        setMutateUrl(
+            `/images?p=${page}&r=${rowsPerPage}&search=${filters.search}&date=${
+                filters.order === "الأحدث" ? "desc" : "asc"
+            }`
+        );
+
         if (data) {
             setCount(Math.ceil(data.results / rowsPerPage));
         }

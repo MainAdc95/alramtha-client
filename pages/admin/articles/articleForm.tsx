@@ -4,6 +4,7 @@ import { RootReducer } from "../../../store/reducers";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { IArticle } from "../../../types/article";
+import { useState, useEffect } from "react";
 
 // components
 import WithRole from "../../../protectors/withRole";
@@ -22,9 +23,26 @@ const Form = () => {
     );
     const locale = useSelector((state: RootReducer) => state.locale);
     const classes = useStyles({ locale });
+    const [filters, setFilters] = useState<any>({
+        search: "",
+        order: "",
+        section: "",
+    });
+
+    useEffect(() => {
+        const query: any = router.query;
+
+        setFilters({
+            ...filters,
+            search: query.search || "",
+            order: query.order || "الأحدث",
+        });
+    }, []);
 
     const handleBack = () => {
-        router.push("/admin/articles");
+        router.push(
+            `/admin/articles?order=${filters.order}&search=${filters.search}`
+        );
     };
 
     return (
@@ -47,7 +65,10 @@ const Form = () => {
                         </div>
                     </div>
                     <div className={classes.body}>
-                        <ArticleForm article={article} />
+                        <ArticleForm
+                            article={article}
+                            url={`/admin/articles?order=${filters.order}&search=${filters.search}`}
+                        />
                     </div>
                 </Layout>
             </WithRole>

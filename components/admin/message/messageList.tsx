@@ -5,15 +5,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Pagination } from "@material-ui/lab";
 import Paper from "@material-ui/core/Paper";
-import {
-    TablePagination,
-    LinearProgress,
-    Box,
-    Divider,
-    Typography,
-} from "@material-ui/core";
-import { useState } from "react";
+import { LinearProgress, Box, Divider, Typography } from "@material-ui/core";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
 import useSWR from "swr";
@@ -58,20 +53,22 @@ const MessageList = () => {
     const classes = useStyles();
     const [isDetails, setDetails] = useState<IMessage | null>(null);
     const user = useSelector((state: RootReducer) => state.auth.user);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [page, setPage] = useState(0);
+    const rowsPerPage = 10;
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
     const { data, error, isValidating } = useSWR<{
-        count: number;
+        results: number;
         messages: IMessage[];
-    }>(`/messages?p=${page + 1}&r=${rowsPerPage}&authId=${user.user_id}`);
+    }>(`/messages?p=${page}&r=${rowsPerPage}&authId=${user.user_id}`);
+
+    useEffect(() => {
+        if (data) {
+            setCount(Math.ceil(data.results / rowsPerPage));
+        }
+    }, [data]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
     };
 
     const handleToggleDetails = (message: IMessage) => {
@@ -82,11 +79,19 @@ const MessageList = () => {
         setDetails(message);
     };
 
-    if (error) return <p>حدث خطأ أثناء جلب الرسائل.</p>;
+    if (error) return <p>حدث خطأ أثناء تحميل الرسائل.</p>;
     else if (!data) return <p>جار التحميل...</p>;
     else if (!data.messages?.length) return <p>لم يتم العثور على اي رسائل.</p>;
     return (
         <>
+            <Box display="flex" mb={4}>
+                <Pagination
+                    color="secondary"
+                    onChange={handleChangePage}
+                    page={page}
+                    count={count}
+                />
+            </Box>
             <TableContainer
                 className={classes.tableContainer}
                 component={Paper}
@@ -130,16 +135,14 @@ const MessageList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                component="div"
-                count={data.count}
-                labelRowsPerPage="صفوف لكل صفحة:"
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
+            <Box display="flex" mt={4}>
+                <Pagination
+                    color="secondary"
+                    onChange={handleChangePage}
+                    page={page}
+                    count={count}
+                />
+            </Box>
             {isDetails && (
                 <MessageDetails
                     message={isDetails}

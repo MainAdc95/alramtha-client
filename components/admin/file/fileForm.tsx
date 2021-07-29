@@ -36,7 +36,8 @@ interface IError {
 const FileForm = ({ file }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
-    const [imagesPick, setImagesPick] = useState(false);
+    const [imagesPick, setImagesPick] =
+        useState<null | { toForm: boolean }>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [errors, setErrors] = useState<IError>({
@@ -110,8 +111,12 @@ const FileForm = ({ file }: IProps) => {
         return true;
     };
 
-    const handlePick = () => {
-        setImagesPick(!imagesPick);
+    const handlePick = (toForm?: boolean) => {
+        if (imagesPick) {
+            return setImagesPick(null);
+        }
+
+        setImagesPick({ toForm: !!toForm });
     };
 
     return (
@@ -137,9 +142,10 @@ const FileForm = ({ file }: IProps) => {
                                 text="اختر بعض الصور الفرعية"
                                 errors={errors}
                                 name="image"
-                                handler={handlePick}
+                                handler={() => handlePick()}
                                 type="single"
                                 images={state.image ? [state.image] : []}
+                                toForm={() => handlePick(true)}
                             />
                             <Box mt={3} mb={3}>
                                 <Divider />
@@ -161,6 +167,7 @@ const FileForm = ({ file }: IProps) => {
             {imagesPick && (
                 <ImagePicker
                     type="single"
+                    openForm={imagesPick.toForm}
                     close={handlePick}
                     state={state}
                     setState={setState}

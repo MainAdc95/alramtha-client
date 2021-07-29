@@ -52,7 +52,6 @@ const HeadLayout = ({ title, description, image, url, children }: IProps) => {
             />
             <meta
                 property="og:image"
-                itemProp="image"
                 content={
                     image
                         ? apiImage(image)

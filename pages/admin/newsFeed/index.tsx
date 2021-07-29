@@ -8,6 +8,7 @@ import {
     CircularProgress,
     Button,
 } from "@material-ui/core";
+import parser from "html-react-parser";
 import { useState } from "react";
 import ImageOpt from "../../../components/imageOpt";
 import { rss } from "../../../data/rss";
@@ -25,6 +26,8 @@ import WithRole from "../../../protectors/withRole";
 import Layout from "../../../components/admin/layout";
 import HeadLayout from "../../../components/headLayout";
 import ImageForm from "../../../components/admin/image/imageForm";
+import MessageForm from "../../../components/admin/message/messageForm";
+import Modal from "../../../components/admin/modal";
 
 function a11yProps(index: any) {
     return {
@@ -46,6 +49,7 @@ const NewsFeed = () => {
     const [activeImg, setActiveImg] = useState<number | null>(null);
     const [thumbnail, setThumbnail] = useState("");
     const [activeNews, setActiveNews] = useState<any>(null);
+    const [message, setMessage] = useState<any>(null);
 
     // ___________________________________ provider
     useEffect(() => {
@@ -68,15 +72,18 @@ const NewsFeed = () => {
         (async () => {
             if (selectedService) {
                 setLoading(true);
-                const data = await apiCall<string>(
-                    "get",
-                    `/rss/${selectedService.link}`,
-                    null
-                );
+                try {
+                    const data = await apiCall<string>("post", `/rss`, {
+                        url: selectedService.link,
+                    });
 
-                // @ts-ignore
-                setNews(data?.items || []);
-                setLoading(false);
+                    // @ts-ignore
+                    setNews(data?.items || []);
+                    setLoading(false);
+                } catch (err) {
+                    setNews([]);
+                    setLoading(false);
+                }
             }
         })();
     }, [selectedService]);
@@ -128,10 +135,19 @@ const NewsFeed = () => {
         router.push("/admin/news/addNews#rss");
     };
 
+    // __________________________________ message
+    const toggleMessage = (index?: number) => {
+        if (message) {
+            return setMessage(null);
+        }
+
+        setMessage(news[index]);
+    };
+
     return (
         <>
             <HeadLayout title="Admin news feed" />
-            <WithRole role="all">
+            <WithRole role="is_admin">
                 <Layout>
                     <div className={classes.head}>
                         <Box
@@ -216,6 +232,7 @@ const NewsFeed = () => {
                                 </p>
                             ) : (
                                 <Rss
+                                    toggleMessage={toggleMessage}
                                     handleImg={handleImg}
                                     handleAddRss={handleAddRss}
                                     news={news}
@@ -224,25 +241,34 @@ const NewsFeed = () => {
                         </div>
                     </div>
                 </Layout>
-            </WithRole>
-            {activeImg !== null && (
-                <div
-                    onClick={() => handleImg()}
-                    className={styles.activeImgContainer}
-                >
-                    <img
-                        className={styles.activeImg}
-                        src={news[activeImg].enclosure.url}
+                {activeImg !== null && (
+                    <div
+                        onClick={() => handleImg()}
+                        className={styles.activeImgContainer}
+                    >
+                        <img
+                            className={styles.activeImg}
+                            src={news[activeImg].enclosure.url}
+                        />
+                    </div>
+                )}
+                {thumbnail && (
+                    <ImageForm
+                        url={thumbnail}
+                        sendUrlImg={sendUrlImg}
+                        close={toggleThumbnail}
                     />
-                </div>
-            )}
-            {thumbnail && (
-                <ImageForm
-                    url={thumbnail}
-                    sendUrlImg={sendUrlImg}
-                    close={toggleThumbnail}
-                />
-            )}
+                )}
+                {message && (
+                    <Modal
+                        width="1200px"
+                        type="parent"
+                        closeInfo={{ close: toggleMessage, check: false }}
+                    >
+                        <MessageForm fromRss={message} close={toggleMessage} />
+                    </Modal>
+                )}
+            </WithRole>
         </>
     );
 };
@@ -251,9 +277,10 @@ interface IRssProps {
     news: any;
     handleImg: any;
     handleAddRss: any;
+    toggleMessage: any;
 }
 
-const Rss = ({ news, handleImg, handleAddRss }: IRssProps) => {
+const Rss = ({ news, handleImg, handleAddRss, toggleMessage }: IRssProps) => {
     return (
         <div className={styles.newsList}>
             {news.map((news, i) => (
@@ -271,6 +298,7 @@ const Rss = ({ news, handleImg, handleAddRss }: IRssProps) => {
                         >
                             {news.enclosure?.url ? (
                                 <img
+                                    loading="lazy"
                                     src={news.enclosure.url}
                                     className={styles.img}
                                     alt=""
@@ -302,16 +330,29 @@ const Rss = ({ news, handleImg, handleAddRss }: IRssProps) => {
                                 </a>
                             )}
                             <p className={styles.date}>{news.pubDate}</p>
-                            <p className={styles.content}>{news.content}</p>
+                            <p className={styles.content}>
+                                {news.content ? parser(news.content) : ""}
+                            </p>
                         </div>
                         <div className={styles.controlBar}>
-                            <Button
-                                onClick={() => handleAddRss(i)}
-                                color="primary"
-                                variant="contained"
-                            >
-                                أنشاء خبر
-                            </Button>
+                            <Box mr={1}>
+                                <Button
+                                    onClick={() => handleAddRss(i)}
+                                    color="primary"
+                                    variant="contained"
+                                >
+                                    أنشاء خبر
+                                </Button>
+                            </Box>
+                            <Box>
+                                <Button
+                                    onClick={() => toggleMessage(i)}
+                                    color="primary"
+                                    variant="contained"
+                                >
+                                    انشاء رسالة
+                                </Button>
+                            </Box>
                         </div>
                     </div>
                 </div>

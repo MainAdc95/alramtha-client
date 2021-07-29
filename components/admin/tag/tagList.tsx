@@ -6,10 +6,11 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TablePagination, LinearProgress } from "@material-ui/core";
-import { useState } from "react";
+import { LinearProgress, Box } from "@material-ui/core";
+import { useState, useEffect } from "react";
 import { ITag } from "../../../types/tag";
 import { mutate } from "swr";
+import { Pagination } from "@material-ui/lab";
 import { apiCall } from "../../../utils/apiCall";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
@@ -46,21 +47,23 @@ const TagList = () => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isDel, setDel] = useState<ITag | null>(null);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [delLoading, setDelLoading] = useState(false);
-    const [page, setPage] = useState(0);
+    const rowsPerPage = 20;
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
     const { data, error, isValidating } = useSWR<{
         results: number;
         tags: ITag[];
-    }>(`/tags?p=${page + 1}&r=${rowsPerPage}`);
+    }>(`/tags?p=${page}&r=${rowsPerPage}`);
+
+    useEffect(() => {
+        if (data) {
+            setCount(Math.ceil(data.results / rowsPerPage));
+        }
+    }, [data]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
     };
 
     const handleOpenDel = (tag: ITag) => {
@@ -104,6 +107,14 @@ const TagList = () => {
     else if (!data.tags?.length) return <p>There were no tags found.</p>;
     return (
         <>
+            <Box display="flex" mb={4}>
+                <Pagination
+                    color="secondary"
+                    onChange={handleChangePage}
+                    page={page}
+                    count={count}
+                />
+            </Box>
             <TableContainer
                 className={classes.tableContainer}
                 component={Paper}
@@ -151,16 +162,14 @@ const TagList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                component="div"
-                count={data.results}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                labelRowsPerPage="صفوف لكل صفحة:"
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
+            <Box display="flex" mt={4}>
+                <Pagination
+                    color="secondary"
+                    onChange={handleChangePage}
+                    page={page}
+                    count={count}
+                />
+            </Box>
             {isDel && (
                 <ActionModal
                     close={handleCloseDel}

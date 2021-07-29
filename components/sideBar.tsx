@@ -180,11 +180,11 @@ const Poll = ({ poll }: { poll: IPoll }) => {
     const classes = useStyles();
     const [vote, setVote] = useState<string | null>(null);
     const [isDisabled, setDisabled] = useState(false);
-    const [plus, setPlus] = useState(false);
+    const [plus, setPlus] = useState<number | null>(null);
 
     useEffect(() => {
         if (poll) {
-            setPlus(false);
+            setPlus(null);
         }
     }, [poll]);
 
@@ -206,8 +206,9 @@ const Poll = ({ poll }: { poll: IPoll }) => {
 
     const handleSubmit = async () => {
         setDisabled(true);
-        setPlus(true);
-        await apiCall("post", `/poll/vote/${vote}`);
+        const number = Math.ceil(Math.random() * (15 - 5) + 5);
+        setPlus(number);
+        await apiCall("post", `/poll/vote/${vote}`, { number });
         dispatch(votePoll(poll.poll_id, vote));
     };
 
@@ -260,7 +261,7 @@ const Poll = ({ poll }: { poll: IPoll }) => {
                                                               o.option_id
                                                                   ? o.votes +
                                                                     (plus
-                                                                        ? 8
+                                                                        ? plus
                                                                         : 0)
                                                                   : o.votes) /
                                                                   poll.options.reduce(
@@ -273,7 +274,7 @@ const Poll = ({ poll }: { poll: IPoll }) => {
                                                                               o.votes
                                                                           ),
                                                                       plus
-                                                                          ? 8
+                                                                          ? plus
                                                                           : 0
                                                                   )) *
                                                               100
@@ -292,13 +293,14 @@ const Poll = ({ poll }: { poll: IPoll }) => {
                                         <p className={classes.votes}>
                                             {Math.ceil(
                                                 ((vote === o.option_id
-                                                    ? o.votes + (plus ? 8 : 0)
+                                                    ? o.votes +
+                                                      (plus ? plus : 0)
                                                     : o.votes) /
                                                     poll.options.reduce(
                                                         (total, o) =>
                                                             total +
                                                             Number(o.votes),
-                                                        plus ? 8 : 0
+                                                        plus ? plus : 0
                                                     )) *
                                                     100
                                             )}{" "}
@@ -329,7 +331,7 @@ const Poll = ({ poll }: { poll: IPoll }) => {
                                 اجمالي عدد الاصوات{" "}
                                 {poll.options.reduce(
                                     (total, o) => total + Number(o.votes),
-                                    plus ? 8 : 0
+                                    plus ? plus : 0
                                 )}
                             </p>
                         )}

@@ -263,6 +263,7 @@ const ImagePicker = ({
                                 onChange={handleSearch}
                                 fullWidth
                                 variant="outlined"
+                                size="small"
                             />
                         </Box>
                         <Box display="flex">
@@ -454,6 +455,9 @@ const ImagePicker = ({
                 <ImageForm
                     selectMultiple={selectMultiple}
                     close={closeImageForm}
+                    mutateUrl={`/images?p=${page}&r=${rowsPerPage}&search=${
+                        filters.search
+                    }&date=${filters.order === "الأحدث" ? "desc" : "asc"}`}
                 />
             )}
         </>
