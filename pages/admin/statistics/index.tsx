@@ -46,7 +46,7 @@ const Admin = () => {
         labels: data?.sections?.map((s) => s.section_name),
         datasets: [
             {
-                label: "عدد الاخبار حسب الأقسام",
+                label: "عدد مشاهدات الاخبار حسب الأقسام",
                 data: data?.sections?.map((s) =>
                     s.news.reduce((v, n) => {
                         return n + v;
@@ -124,7 +124,7 @@ const Admin = () => {
         labels: months,
         datasets: [
             {
-                label: "عدد الأخبار لهذه السنة",
+                label: "عدد مشاهدات الأخبار لهذه السنة",
                 data: data?.news ? generateData(data.news) : [],
                 fill: true,
                 backgroundColor: "#9e005c3b",
