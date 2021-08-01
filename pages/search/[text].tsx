@@ -30,7 +30,6 @@ const Search = () => {
     );
 
     useEffect(() => {
-        console.log(router.query.text);
         setState({
             ...state,
             activeSearch: String(router.query.text),

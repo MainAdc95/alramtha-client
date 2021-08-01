@@ -55,7 +55,7 @@ const Contact = () => {
 
     return (
         <>
-            <HeadLayout title="تواصل بنا"></HeadLayout>
+            <HeadLayout title="تواصل بنا" />
             <div className={styles.page}>
                 <div className="container">
                     <Grid container className="grid-root" spacing={1}>

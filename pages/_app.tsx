@@ -84,6 +84,14 @@ class Alramsah extends App<AppInitialProps> {
                         href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap"
                         rel="stylesheet"
                     ></link>
+                    <meta
+                        name="author"
+                        content="CPMC (Crown Phoenix Marketing Consultancy L.L.C)"
+                    />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1.0"
+                    ></meta>
                 </Head>
                 <StylesProvider jss={jss}>
                     <Theme>
@@ -164,8 +172,6 @@ const DataHandler = () => {
             { key: "2a19e2cc7cc841ecb9e194434211306" },
             "out"
         );
-
-        console.log({ ...location, weather });
 
         dispatch(setLocation({ ...location, weather }));
     };
