@@ -1,4 +1,10 @@
-import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
+import {
+    createStyles,
+    makeStyles,
+    Theme,
+    Box,
+    CircularProgress,
+} from "@material-ui/core";
 import { Line, Pie } from "react-chartjs-2";
 
 // components
@@ -132,39 +138,46 @@ const Admin = () => {
         ],
     };
 
-    if (data)
-        return (
-            <>
-                <HeadLayout title="Admin" />
-                <WithRole role="is_admin">
-                    <Layout>
-                        <Box className={classes.double}>
-                            <div className={classes.newPerDayContainer}>
-                                <Line data={newsPerDay} />
-                            </div>
-                            <div>
-                                <Line data={news} />
-                            </div>
+    return (
+        <>
+            <HeadLayout title="Admin" />
+            <WithRole role="is_admin">
+                <Layout>
+                    {!data ? (
+                        <Box mt={10} display="flex" justifyContent="center">
+                            <CircularProgress />
                         </Box>
-                        <Box className={classes.double}>
-                            <div>
-                                <Pie data={sections} />
-                            </div>
-                            <Box>
-                                <Box mb={2}>
-                                    <h3>أكثر 20 خبر قراءة لهذا الشهر</h3>
-                                </Box>
-                                <div className={classes.newsList}>
-                                    {data?.latestNews?.map((n) => (
-                                        <LargeNews news={n} />
-                                    ))}
+                    ) : (
+                        <>
+                            <Box className={classes.double}>
+                                <div className={classes.newPerDayContainer}>
+                                    <Line data={newsPerDay} />
+                                </div>
+                                <div>
+                                    <Line data={news} />
                                 </div>
                             </Box>
-                        </Box>
-                    </Layout>
-                </WithRole>
-            </>
-        );
+                            <Box className={classes.double}>
+                                <div>
+                                    <Pie data={sections} />
+                                </div>
+                                <Box>
+                                    <Box mb={2}>
+                                        <h3>أكثر 20 خبر قراءة لهذا الشهر</h3>
+                                    </Box>
+                                    <div className={classes.newsList}>
+                                        {data?.latestNews?.map((n) => (
+                                            <LargeNews news={n} />
+                                        ))}
+                                    </div>
+                                </Box>
+                            </Box>
+                        </>
+                    )}
+                </Layout>
+            </WithRole>
+        </>
+    );
     return null;
 };
 

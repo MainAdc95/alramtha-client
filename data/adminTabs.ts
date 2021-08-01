@@ -9,6 +9,13 @@ export const tabs: {
 }[] = [
     {
         role: "is_admin",
+        name: "الأحصائيات",
+        icon: "/bar-chart.png",
+        link: "/admin",
+        isDisabled: false,
+    },
+    {
+        role: "is_admin",
         name: "التغذية الاخبارية",
         icon: "/newsFeed.svg",
         link: "/admin/newsFeed",
