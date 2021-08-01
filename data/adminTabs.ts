@@ -11,7 +11,7 @@ export const tabs: {
         role: "is_admin",
         name: "الأحصائيات",
         icon: "/bar-chart.png",
-        link: "/admin",
+        link: "/admin/statistics",
         isDisabled: false,
     },
     {
