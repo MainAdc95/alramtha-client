@@ -1,10 +1,4 @@
-import {
-    createStyles,
-    makeStyles,
-    Theme,
-    Box,
-    Typography,
-} from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { countries } from "../data/countries";
@@ -33,19 +27,23 @@ const GeoLocationInfo = () => {
                 return "مشمس";
             case "Overcast":
                 return "غائم";
+            case "Partly cloudy":
+                return "غائم جزئيا";
+            case "Mist":
+                return "ضبابي";
             default:
                 return txt;
         }
     };
 
-    const translateCity = (txt: String) => {
-        switch (txt) {
-            case "Abu Dhabi":
-                return "أبوظبي";
-            default:
-                return txt;
-        }
-    };
+    // const translateCity = (txt: String) => {
+    //     switch (txt) {
+    //         case "Abu Dhabi":
+    //             return "أبوظبي";
+    //         default:
+    //             return txt;
+    //     }
+    // };
 
     if (location && activeCountry)
         return (
