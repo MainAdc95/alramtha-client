@@ -66,14 +66,14 @@ const File = ({ file }: IProps) => {
                             ))}
                         </div>
                     )}
+                    <Pagination
+                        onChange={handleChangePage}
+                        count={count}
+                        page={page}
+                        shape="rounded"
+                        color="primary"
+                    />
                 </div>
-                <Pagination
-                    onChange={handleChangePage}
-                    count={count}
-                    page={page}
-                    shape="rounded"
-                    color="primary"
-                />
                 <div className={styles.sidebar}>
                     <SideBar />
                 </div>
