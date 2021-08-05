@@ -69,9 +69,7 @@ const NewsForm = ({ news, url }: IProps) => {
     const classes = useStyles();
     const router = useRouter();
     const { data: sections } = useSWR<ISection[]>(`/sections`);
-    const {
-        data: { files },
-    } = useSWR<{ files: IFile[] }>(`/files?p=1&r=100`);
+    const { data: dataFiles } = useSWR<{ files: IFile[] }>(`/files?p=1&r=100`);
     const [loading, setLoading] = useState<boolean>(false);
     const toCreate: any = useSelector(
         (state: RootReducer) => state.news.toCreate
@@ -430,7 +428,7 @@ const NewsForm = ({ news, url }: IProps) => {
                                     state={state}
                                     setState={setState}
                                 >
-                                    {files?.map((file) => (
+                                    {dataFiles?.files?.map((file) => (
                                         <MenuItem value={file.file_id}>
                                             {file.text}
                                         </MenuItem>
