@@ -337,6 +337,8 @@ const Statistics = () => {
                             borderBottom: "1px solid rgb(185, 185, 185)",
                             paddingBottom: "20px",
                             marginBottom: "20px",
+                            overflow: "auto",
+                            whiteSpace: "nowrap",
                         }}
                     >
                         <Box ml={3} mr={3}>
@@ -345,6 +347,14 @@ const Statistics = () => {
                             </Typography>
                         </Box>
                         <Box>
+                            <Typography variant="h5">
+                                اجمالي عدد القرآت لليوم:{" "}
+                                {data?.trtNews?.reduce((v, n) => {
+                                    return n.readers + v;
+                                }, 0)}
+                            </Typography>
+                        </Box>
+                        <Box ml={3} mr={3}>
                             <Typography variant="h5">
                                 اجمالي عدد القرآت:{" "}
                                 {data?.news?.reduce((v, n) => {
@@ -362,18 +372,33 @@ const Statistics = () => {
                             whiteSpace: "nowrap",
                         }}
                         display="flex"
+                        justifyContent="space-evenly"
                     >
                         {data?.sections?.map((s) => (
-                            <Box mr={2} ml={2}>
+                            <Box
+                                mr={2}
+                                ml={2}
+                                display="flex"
+                                flexDirection="column"
+                                alignItems="center"
+                            >
                                 <Typography
                                     style={{ color: s.color }}
                                     key={s.section_id}
                                     variant="h5"
                                 >
-                                    {s.section_name}:{" "}
+                                    {s.section_name}
+                                </Typography>
+                                <Typography
+                                    style={{ color: s.color }}
+                                    key={s.section_id}
+                                    variant="h5"
+                                >
+                                    (
                                     {s.news?.reduce((v, n) => {
                                         return n.readers + v;
                                     }, 0)}
+                                    )
                                 </Typography>
                             </Box>
                         ))}
@@ -395,8 +420,8 @@ const Statistics = () => {
                                         <ImageOpt
                                             src={country.flag}
                                             location="other"
-                                            width={60}
-                                            height={35}
+                                            width={40}
+                                            height={20}
                                         />
                                     )}
                                     <Box ml={2}>
@@ -413,12 +438,12 @@ const Statistics = () => {
                                                 v.created_at
                                             ).toLocaleString("ar")}
                                         </Typography>
-                                        <Typography variant="subtitle2">
+                                        {/* <Typography variant="subtitle2">
                                             {v.user_data.ip}
                                         </Typography>
                                         <Typography variant="subtitle2">
                                             {v.user_data.browser}
-                                        </Typography>
+                                        </Typography> */}
                                     </Box>
                                 </Box>
                             );
@@ -492,7 +517,7 @@ const useStyles = makeStyles((theme: Theme) => {
         newsList: {
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gridGap: "20px",
+            gridColumnGap: "20px",
             maxHeight: "500px",
             overflowY: "auto",
         },
@@ -502,10 +527,11 @@ const useStyles = makeStyles((theme: Theme) => {
         visitorsContainer: {
             display: "grid",
             [theme.breakpoints.up("lg")]: {
-                gridTemplateColumns: "repeat(3, 1fr)",
+                gridTemplateColumns: "repeat(7, 1fr)",
             },
             gridTemplateColumns: "repeat(2, 1fr)",
-            maxHeight: "400px",
+            gridGap: "20px",
+            maxHeight: "300px",
             overflowY: "auto",
         },
     });
