@@ -45,12 +45,12 @@ const LargeNews = ({ news, styles }: IProps) => {
                 </Link>
                 <ul>
                     <li>{new Date(news.created_at).toLocaleString("ar")}</li>
-                    <li>
+                    {/* <li>
                         <div className="readers-container">
                             <p>{news.readers || 0}</p>
                             <VisibilityIcon />
                         </div>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </div>

@@ -44,12 +44,12 @@ const ArticleItem = ({ article, styles }: IProps) => {
                 </Link>
                 <ul>
                     <li>{new Date(article.created_at).toLocaleString("ar")}</li>
-                    <li>
+                    {/* <li>
                         <div className="readers-container">
                             <p>{article.readers || 0}</p>
                             <VisibilityIcon />
                         </div>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </div>

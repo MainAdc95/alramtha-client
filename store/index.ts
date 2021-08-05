@@ -11,5 +11,5 @@ const makeStore = () =>
     );
 
 export const wrapper = createWrapper<Store<RootReducer>>(makeStore, {
-    debug: true,
+    debug: false,
 });

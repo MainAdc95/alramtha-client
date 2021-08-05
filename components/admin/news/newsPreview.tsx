@@ -141,14 +141,14 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                     </p>
                                                 </Box>
                                             )}
-                                            <div
+                                            {/* <div
                                                 className={
                                                     styles.readersContainer
                                                 }
                                             >
                                                 <p>{news.readers || 0}</p>
                                                 <VisibilityIcon />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {news.intro && (
                                             <blockquote

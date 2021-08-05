@@ -24,7 +24,8 @@ interface IProps {
     required?: boolean;
     onChange?: any;
     value?: any;
-    children?: React.ReactNode[];
+    children?: React.ReactNode;
+    notEmpty?: boolean;
 }
 
 const Select = ({
@@ -39,6 +40,7 @@ const Select = ({
     required,
     value,
     children,
+    notEmpty,
 }: IProps) => {
     const classes = useStyles();
 
@@ -66,9 +68,11 @@ const Select = ({
                     onChange={handleChange}
                     required={required}
                 >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
+                    {!notEmpty && (
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                    )}
                     {children}
                 </MuSelect>
             </FormControl>

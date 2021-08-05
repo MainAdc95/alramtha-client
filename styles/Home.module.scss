@@ -87,7 +87,7 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             grid-template-rows: 1fr 1fr 1fr 1fr;
-            grid-gap: 1px;
+            grid-gap: 5px;
             grid-template-areas:
                 "a c c d f h"
                 "a c c d f h"

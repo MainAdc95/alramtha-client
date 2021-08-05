@@ -8,9 +8,10 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 
 interface IProps {
     news: INews;
+    showReaders?: boolean;
 }
 
-const SmallNews = ({ news }: IProps) => {
+const SmallNews = ({ news, showReaders }: IProps) => {
     const router = useRouter();
 
     const shallow = () => {
@@ -34,10 +35,12 @@ const SmallNews = ({ news }: IProps) => {
                     <a onClick={() => shallow()}>{news.title}</a>
                     <div>
                         <p>{new Date(news.created_at).toLocaleString("ar")} </p>
-                        <div className="readers-container">
-                            <p>{news.readers || 0}</p>
-                            <VisibilityIcon />
-                        </div>
+                        {showReaders && (
+                            <div className="readers-container">
+                                <p>{news.readers || 0}</p>
+                                <VisibilityIcon />
+                            </div>
+                        )}
                     </div>
                 </div>
             </li>

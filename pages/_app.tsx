@@ -166,6 +166,9 @@ const DataHandler = () => {
             null,
             "out"
         );
+
+        await apiCall("post", "/visitors");
+
         const weather = await apiCall(
             "get",
             `https://api.weatherapi.com/v1/current.json?key=2a19e2cc7cc841ecb9e194434211306&q=${location.IPv4}`,

@@ -174,7 +174,6 @@ const NewsPage = ({ news: n }: IProps) => {
                                                             styles.resource
                                                         }
                                                     >
-                                                        المصدر:
                                                         {news.resources.map(
                                                             (r) => (
                                                                 <span
@@ -188,7 +187,7 @@ const NewsPage = ({ news: n }: IProps) => {
                                                                             styles.coma
                                                                         }
                                                                     >
-                                                                        ,
+                                                                        -
                                                                     </span>
                                                                 </span>
                                                             )
@@ -197,14 +196,14 @@ const NewsPage = ({ news: n }: IProps) => {
                                                     </p>
                                                 </Box>
                                             )}
-                                            <div
+                                            {/* <div
                                                 className={
                                                     styles.readersContainer
                                                 }
                                             >
                                                 <p>{news.readers || 0}</p>
                                                 <VisibilityIcon />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {news.intro && (
                                             <blockquote

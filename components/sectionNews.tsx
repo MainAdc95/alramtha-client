@@ -30,7 +30,15 @@ const SectionNews = ({ data }: IProps) => {
                         }}
                     >
                         <Link href={`/sections/${data.section_id}`}>
-                            <a>{data.section_name}</a>
+                            <a>
+                                <ImageOpt
+                                    src="/next.svg"
+                                    location="local"
+                                    width={20}
+                                    height={20}
+                                />
+                                <strong>{data.section_name}</strong>
+                            </a>
                         </Link>
                     </span>
                 </h1>

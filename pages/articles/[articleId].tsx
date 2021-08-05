@@ -25,7 +25,7 @@ interface IProps {
     article: IArticle;
 }
 
-const NewsPage = ({ article }: IProps) => {
+const ArticlePage = ({ article }: IProps) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -131,7 +131,7 @@ const NewsPage = ({ article }: IProps) => {
                                                 ))}
                                             </Slider>
                                         </div>
-                                        <div className={styles.newsInfo}>
+                                        {/* <div className={styles.newsInfo}>
                                             <div
                                                 className={
                                                     styles.readersContainer
@@ -140,7 +140,7 @@ const NewsPage = ({ article }: IProps) => {
                                                 <p>{article.readers || 0}</p>
                                                 <VisibilityIcon />
                                             </div>
-                                        </div>
+                                        </div> */}
                                         {article.intro && (
                                             <blockquote
                                                 className={styles.newsQoute}
@@ -200,4 +200,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
 };
 
-export default NewsPage;
+export default ArticlePage;

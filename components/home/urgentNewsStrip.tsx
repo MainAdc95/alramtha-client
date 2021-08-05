@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme, Box } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Marquee from "react-marquee-slider";
 import Link from "next/link";
 import { IStrip, StripType } from "../../types/strip";
@@ -11,6 +11,24 @@ interface IProps {
 const UrgentNewsStrip = ({ strips }: IProps) => {
     const classes = useStyles();
     const [vol, setVol] = useState(50);
+
+    useEffect(() => {
+        const handler = () => {
+            if (window.innerWidth <= 1200) {
+                setVol(30);
+            } else if (window.innerWidth <= 500) {
+                setVol(15);
+            } else if (window.innerWidth > 1200) {
+                setVol(50);
+            }
+        };
+
+        window.addEventListener("resize", handler);
+
+        return () => {
+            window.removeEventListener("resize", handler);
+        };
+    }, []);
 
     const handleVol = (v?: number) => {
         setVol(v);
