@@ -529,7 +529,7 @@ const useStyles = makeStyles((theme: Theme) => {
             [theme.breakpoints.up("lg")]: {
                 gridTemplateColumns: "repeat(7, 1fr)",
             },
-            gridTemplateColumns: "repeat(2, 1fr)",
+            gridTemplateColumns: "repeat(5, 1fr)",
             gridGap: "20px",
             maxHeight: "300px",
             overflowY: "auto",
