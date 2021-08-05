@@ -84,8 +84,12 @@ const FileList = () => {
 
             mutate(
                 `/files?p=${page}&r=${rowsPerPage}`,
-                (files: IFile[]) =>
-                    files.filter((p) => p.file_id !== isDel.file_id),
+                (data: { results: number; files: IFile[] }) => ({
+                    ...data,
+                    files: data.files.filter(
+                        (f) => f.file_id !== isDel.file_id
+                    ),
+                }),
                 false
             );
 

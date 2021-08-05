@@ -391,12 +391,14 @@ const Statistics = () => {
                                     display="flex"
                                     key={v.visitor_id}
                                 >
-                                    <ImageOpt
-                                        src={country.flag}
-                                        location="other"
-                                        width={60}
-                                        height={35}
-                                    />
+                                    {country.flag && (
+                                        <ImageOpt
+                                            src={country.flag}
+                                            location="other"
+                                            width={60}
+                                            height={35}
+                                        />
+                                    )}
                                     <Box ml={2}>
                                         <Typography variant="subtitle2">
                                             {country.name}

@@ -35,7 +35,7 @@ interface IProps {
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections, strips, tmrNews, article } = info;
+    const { sections, strips, tmrNews, article, files } = info;
 
     return (
         <>
@@ -155,7 +155,7 @@ const Home = ({ info }: IProps) => {
                         </div>
                     </div>
                     <UrgentNewsStrip strips={strips} />
-                    {/* <Box className={styles.filesContainer}>
+                    <Box className={styles.filesContainer}>
                         <Slider
                             slidesPerView={6}
                             spaceBetween={10}
@@ -227,7 +227,7 @@ const Home = ({ info }: IProps) => {
                                 </SwiperSlide>
                             ))}
                         </Slider>
-                    </Box> */}
+                    </Box>
                     <div className={styles.swiper}>
                         <div className="container">
                             <div className="author-title">
