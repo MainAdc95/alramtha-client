@@ -159,7 +159,7 @@ const FileForm = ({ file }: IProps) => {
                             color="purple"
                             variant="contained"
                             loading={loading}
-                            text={file ? "احفظ التغييرات" : "اضافة الوسم"}
+                            text={file ? "احفظ التغييرات" : "اضافة الملف"}
                         />
                     </div>
                 </div>
