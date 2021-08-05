@@ -391,7 +391,7 @@ const Statistics = () => {
                                     display="flex"
                                     key={v.visitor_id}
                                 >
-                                    {country.flag && (
+                                    {country?.flag && (
                                         <ImageOpt
                                             src={country.flag}
                                             location="other"
@@ -400,9 +400,11 @@ const Statistics = () => {
                                         />
                                     )}
                                     <Box ml={2}>
-                                        <Typography variant="subtitle2">
-                                            {country.name}
-                                        </Typography>
+                                        {country?.name && (
+                                            <Typography variant="subtitle2">
+                                                {country.name}
+                                            </Typography>
+                                        )}
                                         <Typography variant="subtitle2">
                                             {v.user_data.city}
                                         </Typography>
