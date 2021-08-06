@@ -118,7 +118,6 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                             styles.resource
                                                         }
                                                     >
-                                                        المصدر:
                                                         {news.resources.map(
                                                             (r) => (
                                                                 <span
@@ -132,12 +131,11 @@ const NewsPreview = ({ news, close }: IProps) => {
                                                                             styles.coma
                                                                         }
                                                                     >
-                                                                        ,
+                                                                        -
                                                                     </span>
                                                                 </span>
                                                             )
                                                         )}
-                                                        .
                                                     </p>
                                                 </Box>
                                             )}

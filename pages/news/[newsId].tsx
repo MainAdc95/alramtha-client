@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 
 // icons
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import GoogleAds from "../../components/googleAds";
 
 interface IProps {
     news: INews;
@@ -192,7 +193,6 @@ const NewsPage = ({ news: n }: IProps) => {
                                                                 </span>
                                                             )
                                                         )}
-                                                        .
                                                     </p>
                                                 </Box>
                                             )}
@@ -245,6 +245,9 @@ const NewsPage = ({ news: n }: IProps) => {
                                         <ShareNews
                                             uri={`/news/${news.news_id}`}
                                         />
+                                    </Box>
+                                    <Box mt={2}>
+                                        <GoogleAds />
                                     </Box>
                                     {news.section && (
                                         <Box mt={5}>

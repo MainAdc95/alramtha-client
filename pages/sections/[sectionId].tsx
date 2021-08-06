@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { GetServerSideProps } from "next";
 import { ISection } from "../../types/section";
 import Pagination from "@material-ui/lab/Pagination";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Box } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
 // Components
@@ -15,6 +15,7 @@ import { apiCall } from "../../utils/apiCall";
 
 // style sheet
 import styles from "../../styles/Section.module.scss";
+import GoogleAds from "../../components/googleAds";
 
 interface IProps {
     section: ISection;
@@ -68,13 +69,16 @@ const Section = ({ section }: IProps) => {
                             ))}
                         </div>
                     )}
-                    <Pagination
-                        onChange={handleChangePage}
-                        count={count}
-                        page={page}
-                        shape="rounded"
-                        color="primary"
-                    />
+                    <Box mb={2}>
+                        <Pagination
+                            onChange={handleChangePage}
+                            count={count}
+                            page={page}
+                            shape="rounded"
+                            color="primary"
+                        />
+                    </Box>
+                    <GoogleAds />
                 </div>
                 <div className={styles.sidebar}>
                     <SideBar />

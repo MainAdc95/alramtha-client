@@ -15,6 +15,7 @@ import styles from "../../styles/Section.module.scss";
 
 // icons
 import SearchIcon from "@material-ui/icons/Search";
+import GoogleAds from "../../components/googleAds";
 
 const Search = () => {
     const router = useRouter();
@@ -123,6 +124,7 @@ const Search = () => {
                                 shape="rounded"
                                 color="primary"
                             />
+                            <GoogleAds />
                         </>
                     )}
                 </div>

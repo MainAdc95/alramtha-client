@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 
 // icons
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import GoogleAds from "../../components/googleAds";
 
 interface IProps {
     article: IArticle;
@@ -176,6 +177,7 @@ const ArticlePage = ({ article }: IProps) => {
                                             uri={`/articles/${article.article_id}`}
                                         />
                                     </Box>
+                                    <GoogleAds />
                                 </div>
                             </div>
                             <div className={styles.sidebarContainer}>

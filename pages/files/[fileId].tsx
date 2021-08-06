@@ -15,6 +15,7 @@ import { apiCall } from "../../utils/apiCall";
 
 // style sheet
 import styles from "../../styles/Section.module.scss";
+import GoogleAds from "../../components/googleAds";
 
 interface IProps {
     file: IFile;
@@ -73,6 +74,7 @@ const File = ({ file }: IProps) => {
                         shape="rounded"
                         color="primary"
                     />
+                    <GoogleAds />
                 </div>
                 <div className={styles.sidebar}>
                     <SideBar />

@@ -19,10 +19,8 @@ interface IProps {
 }
 
 const SectionNews = ({ data }: IProps) => {
-    const classes = useStyles();
-
     return (
-        <div style={{ marginBottom: "25px" }}>
+        <div style={{ marginTop: "30px" }}>
             <div className="author-title">
                 <h1>
                     <span

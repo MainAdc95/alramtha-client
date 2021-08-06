@@ -4,7 +4,10 @@ import { Box, Button, Tabs, Tab, TextField } from "@material-ui/core";
 import Error from "./error";
 import Modal from "../admin/modal";
 import ImageOpt from "../imageOpt";
-import { apiCall, domain } from "../../utils/apiCall";
+
+import ImageForm from "../admin/image/imageForm";
+import { IImage } from "../../types/image";
+import { apiImage } from "../../utils/apiCall";
 
 interface ITextEditor {
     name: string;
@@ -27,6 +30,7 @@ const TextEditor = ({
 }: ITextEditor) => {
     const [editorIsInitialized, setEditorIsInitialized] = useState(false);
     const [isSm, setSm] = useState(false);
+    const [isImg, setImg] = useState(false);
     const [editor, setEditor] = useState<any>(null);
 
     // __________________________ event handlers
@@ -38,6 +42,25 @@ const TextEditor = ({
     // _______________________________ social media
     const handleToggleSm = () => {
         setSm(!isSm);
+    };
+
+    // _______________________________ image
+    const handleImage = () => {
+        setImg(!isImg);
+    };
+
+    const selectMultiple = (images: IImage[]) => {
+        for (let img of images) {
+            editor.execCommand(
+                "mceInsertContent",
+                false,
+                `<img src="${apiImage(img.sizes.l)}" alt="${
+                    img.image_description
+                }" /><p>&nbsp;</p>`
+            );
+        }
+
+        handleImage();
     };
 
     return (
@@ -83,13 +106,21 @@ const TextEditor = ({
                                     handleToggleSm();
                                 },
                             });
+
+                            e.ui.registry.addButton("customImage", {
+                                text: "ادراج صورة",
+                                icon: "image",
+                                onAction: function (_) {
+                                    handleImage();
+                                },
+                            });
                         },
                         menubar: true,
                         plugins:
                             "fullscreen media embed code link preview print charmap emoticons",
                         directionality: direction || "ltr",
                         toolbar:
-                            "undo redo | customSocialMedia | bold italic underline strikethrough | fontselect code fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor casechange formatpainter removeformat | pagebreak | charmap emoticons | fullscreen preview save print | pageembed embed template link anchor codesample | a11ycheck ltr rtl",
+                            "undo redo | customSocialMedia customImage | bold italic underline strikethrough | fontselect code fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor casechange formatpainter removeformat | pagebreak | charmap emoticons | fullscreen preview save print | pageembed embed template link anchor codesample | a11ycheck ltr rtl",
                     }}
                     onEditorChange={(e) => handleEditorChange(e)}
                 />
@@ -97,6 +128,12 @@ const TextEditor = ({
             </div>
             {isSm && (
                 <SocialMediaEmbeder close={handleToggleSm} editor={editor} />
+            )}
+            {isImg && (
+                <ImageForm
+                    selectMultiple={selectMultiple}
+                    close={handleImage}
+                />
             )}
         </>
     );

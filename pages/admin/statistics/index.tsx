@@ -7,7 +7,7 @@ import {
     MenuItem,
     Typography,
 } from "@material-ui/core";
-import { Line, Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import Select from "../../../components/form/select";
 
 // components
@@ -17,11 +17,8 @@ import HeadLayout from "../../../components/headLayout";
 import useSWR from "swr";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import LargeNews from "../../../components/news/largeNews";
 import { useState } from "react";
-import SmallNews from "../../../components/news/smallNews";
-import { countries } from "../../../data/countries";
-import ImageOpt from "../../../components/imageOpt";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 const months = [
     "يناير",
@@ -41,8 +38,6 @@ const months = [
 type DataType = "days" | "weeks" | "months" | "years";
 
 const ms = [...Array(12)].map((d, i) => i + 1);
-
-const days = [...Array(30)].map((d, i) => i + 1);
 
 const years = [2019, 2020, 2021];
 
@@ -403,7 +398,7 @@ const Statistics = () => {
                             </Box>
                         ))}
                     </Box>
-                    <div className={classes.visitorsContainer}>
+                    {/* <div className={classes.visitorsContainer}>
                         {data?.visitors?.map((v) => {
                             const country = countries.find(
                                 (c) => c.alpha2Code === v.user_data.country
@@ -438,17 +433,17 @@ const Statistics = () => {
                                                 v.created_at
                                             ).toLocaleString("ar")}
                                         </Typography>
-                                        {/* <Typography variant="subtitle2">
+                                        <Typography variant="subtitle2">
                                             {v.user_data.ip}
                                         </Typography>
                                         <Typography variant="subtitle2">
                                             {v.user_data.browser}
-                                        </Typography> */}
+                                        </Typography>
                                     </Box>
                                 </Box>
                             );
                         })}
-                    </div>
+                    </div> */}
                     {!data ? (
                         <Box mt={10} display="flex" justifyContent="center">
                             <CircularProgress />
@@ -463,20 +458,79 @@ const Statistics = () => {
                                     <Line data={news} />
                                 </div>
                             </Box>
-                            <Box className={classes.double}>
+                            <Box>
                                 <div>
                                     <Line data={sections} />
                                 </div>
+                            </Box>
+                            <Box className={classes.double}>
                                 <Box>
                                     <Box mb={2}>
-                                        <h3>أكثر 20 خبر قراءة</h3>
+                                        <h3>أكثر 10 خبر قراءة (24 ساعة)</h3>
+                                    </Box>
+                                    <div className={classes.newsList}>
+                                        {data?.news24hr?.map((n) => (
+                                            <Box
+                                                mb={1}
+                                                pb={1}
+                                                style={{
+                                                    borderBottom:
+                                                        "1px solid rgb(179, 179, 179)",
+                                                }}
+                                                display="flex"
+                                                justifyContent="space-between"
+                                            >
+                                                <Typography>
+                                                    {n.title}
+                                                </Typography>
+                                                <Box
+                                                    ml={2}
+                                                    display="flex"
+                                                    alignItems="center"
+                                                >
+                                                    <Typography>
+                                                        {n.readers}
+                                                    </Typography>
+                                                    <Box ml={1}>
+                                                        <VisibilityIcon />
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                        ))}
+                                    </div>
+                                </Box>
+                                <Box>
+                                    <Box mb={2}>
+                                        <h3>أكثر 10 خبر قراءة (حسب التصنيف)</h3>
                                     </Box>
                                     <div className={classes.newsList}>
                                         {data?.latestNews?.map((n) => (
-                                            <SmallNews
-                                                showReaders={true}
-                                                news={n}
-                                            />
+                                            <Box
+                                                mb={1}
+                                                pb={1}
+                                                style={{
+                                                    borderBottom:
+                                                        "1px solid rgb(179, 179, 179)",
+                                                }}
+                                                display="flex"
+                                                justifyContent="space-between"
+                                            >
+                                                <Typography>
+                                                    {n.title}
+                                                </Typography>
+                                                <Box
+                                                    ml={2}
+                                                    display="flex"
+                                                    alignItems="center"
+                                                >
+                                                    <Typography>
+                                                        {n.readers}
+                                                    </Typography>
+                                                    <Box ml={1}>
+                                                        <VisibilityIcon />
+                                                    </Box>
+                                                </Box>
+                                            </Box>
                                         ))}
                                     </div>
                                 </Box>
@@ -515,11 +569,9 @@ const useStyles = makeStyles((theme: Theme) => {
             marginBottom: "20px",
         },
         newsList: {
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridColumnGap: "20px",
             maxHeight: "500px",
             overflowY: "auto",
+            padding: "0 10px",
         },
         newPerDayContainer: {
             margin: "20px 0",

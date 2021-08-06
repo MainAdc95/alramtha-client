@@ -21,6 +21,7 @@ import styles from "../styles/Home.module.scss";
 import SectionNews from "../components/sectionNews";
 import ImageOpt from "../components/imageOpt";
 import { IArticle } from "../types/article";
+import GoogleAds from "../components/googleAds";
 
 // tmrNews === todays most read news
 
@@ -262,6 +263,7 @@ const Home = ({ info }: IProps) => {
                             </div>
                         </div>
                     </div>
+                    <GoogleAds />
                     <div className={styles.mainSection}>
                         <aside className={styles.aside}>
                             <SideBar />

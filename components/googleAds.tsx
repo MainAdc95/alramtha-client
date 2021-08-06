@@ -14,10 +14,10 @@ const GoogleAds = () => {
     }, [router.asPath]);
 
     return (
-        <div style={{ margin: "20px 0" }}>
+        <div style={{ display: "flex" }}>
             <ins
                 className="adsbygoogle"
-                style={{ display: "block" }}
+                style={{ display: "block", margin: "0 auto" }}
                 data-ad-client={process.env.NEXT_ENV_PUBLIC_GOOGLE_ADS}
                 data-ad-slot="7408573070"
                 data-ad-format="auto"
