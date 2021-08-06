@@ -29,8 +29,9 @@ class MyDocument extends Document {
                     />
                     <script
                         async
-                        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_ENV_PUBLIC_GOOGLE_ADS}`}
-                    />
+                        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS}`}
+                        crossOrigin="anonymous"
+                    ></script>
                 </Head>
                 <body dir="rtl">
                     <Main />
