@@ -14,15 +14,16 @@ const GoogleAds = () => {
     }, [router.asPath]);
 
     return (
-        <div style={{ display: "flex" }}>
-            <ins
-                className="adsbygoogle"
-                style={{ display: "block", margin: "0 auto" }}
-                data-ad-slot="7408573070"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-            ></ins>
-        </div>
+        <ins
+            className="adsbygoogle"
+            style={{
+                display: "block",
+                margin: "0 auto",
+            }}
+            data-ad-slot="7408573070"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+        />
     );
 };
 

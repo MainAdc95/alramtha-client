@@ -263,7 +263,9 @@ const Home = ({ info }: IProps) => {
                             </div>
                         </div>
                     </div>
-                    <GoogleAds />
+                    <Box maxWidth="95%" width="1200px" margin="0 auto">
+                        <GoogleAds />
+                    </Box>
                     <div className={styles.mainSection}>
                         <aside className={styles.aside}>
                             <SideBar />
