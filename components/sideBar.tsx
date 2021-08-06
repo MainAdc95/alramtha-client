@@ -22,6 +22,7 @@ import { votePoll } from "../store/actions/poll";
 import { RootReducer } from "../store/reducers";
 import NewsLetter from "./newsLetter";
 import ImageOpt from "./imageOpt";
+import GoogleAds from "./googleAds";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -64,11 +65,6 @@ const SideBar = ({ newsId }: IProps) => {
     const { data: poll } = useSWR<IPoll>("/poll/active");
     const [value, setValue] = useState(0);
 
-    // useEffect(() => {
-    //     // @ts-ignore
-    //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-    // }, []);
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -88,14 +84,7 @@ const SideBar = ({ newsId }: IProps) => {
                 <Poll poll={poll} />
                 <NewsLetter />
                 <div className="side-bar-adv">
-                    <ins
-                        className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-9735699829683533"
-                        data-ad-slot="7408573070"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"
-                    ></ins>
+                    <GoogleAds />
                 </div>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
                     <Tab
@@ -138,14 +127,7 @@ const SideBar = ({ newsId }: IProps) => {
                     </TabPanel>
                 </Box>
                 <div className="side-bar-adv">
-                    <ins
-                        className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-9735699829683533"
-                        data-ad-slot="7408573070"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"
-                    ></ins>
+                    <GoogleAds />
                 </div>
                 <div style={{ margin: "3rem 0" }}>
                     <div className="author-title">
@@ -169,14 +151,7 @@ const SideBar = ({ newsId }: IProps) => {
                     </div>
                 </div>
                 <div className="side-bar-adv">
-                    <ins
-                        className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-9735699829683533"
-                        data-ad-slot="7408573070"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"
-                    ></ins>
+                    <GoogleAds />
                 </div>
             </div>
         </StickyBox>

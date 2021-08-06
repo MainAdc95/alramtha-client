@@ -24,11 +24,6 @@ const Navbar = () => {
     const [time, setTime] = useState(DateTime.now());
     const categ = useRef<any>(null);
 
-    // useEffect(() => {
-    //     // @ts-ignore
-    //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-    // }, []);
-
     // ______________________________________ increment timer
     useEffect(() => {
         const handleCatgBar = (e) => {
