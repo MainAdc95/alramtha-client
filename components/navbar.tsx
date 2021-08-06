@@ -14,6 +14,7 @@ import GeoLocationInfo from "../components/geoLocationInfo";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import ImageOpt from "./imageOpt";
+import GoogleAds from "./googleAds";
 
 const Navbar = () => {
     const router = useRouter();
@@ -22,6 +23,11 @@ const Navbar = () => {
     const classes = useStyles();
     const [time, setTime] = useState(DateTime.now());
     const categ = useRef<any>(null);
+
+    // useEffect(() => {
+    //     // @ts-ignore
+    //     (window.adsbygoogle = window.adsbygoogle || []).push({});
+    // }, []);
 
     // ______________________________________ increment timer
     useEffect(() => {
@@ -104,11 +110,7 @@ const Navbar = () => {
                             </p>
                         </Box>
                         <Box className={classes.adsContainer}>
-                            <ImageOpt
-                                src={
-                                    "216927209_307535321123053_8884778464859107853_n.jpg"
-                                }
-                            />
+                            <GoogleAds />
                         </Box>
                         <Box>
                             <GeoLocationInfo />

@@ -118,7 +118,15 @@ class Alramsah extends App<AppInitialProps> {
 const DataHandler = () => {
     const dispatch = useDispatch();
 
+    // useEffect(() => {
+    // }, []);
+
     useEffect(() => {
+        // setTimeout(() => {
+        //     // @ts-ignore
+        //     (window.adsbygoogle = window.adsbygoogle || []).push({});
+        // }, 3000);
+
         const { isAuth } = cookie.parse(document.cookie);
         // loading instagram embed script
         const instagramScript = document.createElement("script");

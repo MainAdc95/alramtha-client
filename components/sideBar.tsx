@@ -64,6 +64,11 @@ const SideBar = ({ newsId }: IProps) => {
     const { data: poll } = useSWR<IPoll>("/poll/active");
     const [value, setValue] = useState(0);
 
+    // useEffect(() => {
+    //     // @ts-ignore
+    //     (window.adsbygoogle = window.adsbygoogle || []).push({});
+    // }, []);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -82,6 +87,16 @@ const SideBar = ({ newsId }: IProps) => {
             <div className="news-side-bar">
                 <Poll poll={poll} />
                 <NewsLetter />
+                <div className="side-bar-adv">
+                    <ins
+                        className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-9735699829683533"
+                        data-ad-slot="7408573070"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"
+                    ></ins>
+                </div>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
                     <Tab
                         label="الاكثر شهره"
@@ -94,7 +109,7 @@ const SideBar = ({ newsId }: IProps) => {
                         className="tabs-styles"
                     />
                 </Tabs>
-                <Box mt="30px">
+                <Box mt={3}>
                     <TabPanel value={value} index={0}>
                         <div>
                             <ul>
@@ -123,11 +138,14 @@ const SideBar = ({ newsId }: IProps) => {
                     </TabPanel>
                 </Box>
                 <div className="side-bar-adv">
-                    <ImageOpt
-                        src={
-                            "216189601_570914960941599_8493229825136087917_n.jpg"
-                        }
-                    />
+                    <ins
+                        className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-9735699829683533"
+                        data-ad-slot="7408573070"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"
+                    ></ins>
                 </div>
                 <div style={{ margin: "3rem 0" }}>
                     <div className="author-title">
@@ -151,11 +169,14 @@ const SideBar = ({ newsId }: IProps) => {
                     </div>
                 </div>
                 <div className="side-bar-adv">
-                    <ImageOpt
-                        src={
-                            "216189601_570914960941599_8493229825136087917_n.jpg"
-                        }
-                    />
+                    <ins
+                        className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-9735699829683533"
+                        data-ad-slot="7408573070"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"
+                    ></ins>
                 </div>
             </div>
         </StickyBox>

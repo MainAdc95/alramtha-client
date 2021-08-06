@@ -12,6 +12,7 @@ import LargeNews from "./news/largeNews";
 import { useEffect, useState } from "react";
 import ImageOpt from "./imageOpt";
 import Link from "next/link";
+import GoogleAds from "./googleAds";
 
 interface IProps {
     data: any;
@@ -19,11 +20,6 @@ interface IProps {
 
 const SectionNews = ({ data }: IProps) => {
     const classes = useStyles();
-
-    useEffect(() => {
-        // @ts-ignore
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-    }, []);
 
     return (
         <div style={{ marginBottom: "25px" }}>
@@ -49,19 +45,7 @@ const SectionNews = ({ data }: IProps) => {
                 </h1>
             </div>
             <NewsList section={data} />
-            <div className={classes.imgContainer}>
-                <ins
-                    className="adsbygoogle"
-                    style={{ display: "block" }}
-                    data-ad-client="ca-pub-9735699829683533"
-                    data-ad-slot="7408573070"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"
-                ></ins>
-                {/* <ImageOpt
-                    src={"216927209_307535321123053_8884778464859107853_n.jpg"}
-                /> */}
-            </div>
+            <GoogleAds />
         </div>
     );
 };
