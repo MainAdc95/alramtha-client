@@ -27,6 +27,25 @@ class MyDocument extends Document {
                             `,
                         }}
                     />
+                    <script
+                        async
+                        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_ENV_PUBLIC_GOOGLE_ADS}`}
+                    ></script>
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                      
+                        gtag('config', '${process.env.NEXT_ENV_PUBLIC_GOOGLE_ADS}');
+                    `,
+                        }}
+                    />
+                    <script
+                        async
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9735699829683533"
+                    ></script>
                 </Head>
                 <body dir="rtl">
                     <Main />
