@@ -346,14 +346,10 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: "all 0.2s ease",
         },
         adsContainer: {
-            position: "relative",
             width: "100%",
-            height: "100%",
-            maxHeight: "100%",
-            overflow: "hidden",
             display: "flex",
-            margin: "0 50px",
-            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
             [theme.breakpoints.down("xs")]: {
                 display: "none",
             },

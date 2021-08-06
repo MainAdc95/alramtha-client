@@ -5,7 +5,6 @@ const GoogleAds = () => {
     const router = useRouter();
 
     useEffect(() => {
-        console.log("lsdjflksdlsdjlsjjfsjdsdj");
         try {
             // @ts-ignore
             (window.adsbygoogle = window.adsbygoogle || []).push({});
