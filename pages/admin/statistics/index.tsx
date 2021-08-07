@@ -19,6 +19,8 @@ import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
 import { useState } from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import { countries } from "../../../data/countries";
+import ImageOpt from "../../../components/imageOpt";
 
 const months = [
     "يناير",
@@ -338,7 +340,12 @@ const Statistics = () => {
                     >
                         <Box ml={3} mr={3}>
                             <Typography variant="h5">
-                                اجمالي عدد الزوار: {data?.visitors?.length}
+                                اجمالي عدد الزوار:{" "}
+                                {data?.visitors?.reduce((v, visit) => {
+                                    return (
+                                        Number(visit.metricValues[0].value) + v
+                                    );
+                                }, 0)}
                             </Typography>
                         </Box>
                         <Box>
@@ -398,52 +405,52 @@ const Statistics = () => {
                             </Box>
                         ))}
                     </Box>
-                    {/* <div className={classes.visitorsContainer}>
+                    <div className={classes.visitorsContainer}>
                         {data?.visitors?.map((v) => {
+                            const {
+                                dimensionValues: [countryId],
+                                metricValues: [count],
+                            } = v;
+
                             const country = countries.find(
-                                (c) => c.alpha2Code === v.user_data.country
+                                (c) => c.alpha2Code === countryId.value
                             );
 
                             return (
                                 <Box
-                                    mt={1}
-                                    mb={1}
+                                    ml={3}
+                                    mr={3}
                                     display="flex"
+                                    flexDirection="column"
+                                    alignItems="center"
                                     key={v.visitor_id}
                                 >
                                     {country?.flag && (
-                                        <ImageOpt
-                                            src={country.flag}
-                                            location="other"
-                                            width={40}
-                                            height={20}
-                                        />
+                                        <Box mb={1}>
+                                            <ImageOpt
+                                                src={country.flag}
+                                                location="other"
+                                                width={40}
+                                                height={20}
+                                            />
+                                        </Box>
                                     )}
-                                    <Box ml={2}>
-                                        {country?.name && (
-                                            <Typography variant="subtitle2">
+                                    <Box ml={2} display="flex">
+                                        {country && (
+                                            <Typography>
                                                 {country.name}
                                             </Typography>
                                         )}
-                                        <Typography variant="subtitle2">
-                                            {v.user_data.city}
-                                        </Typography>
-                                        <Typography variant="subtitle2">
-                                            {new Date(
-                                                v.created_at
-                                            ).toLocaleString("ar")}
-                                        </Typography>
-                                        <Typography variant="subtitle2">
-                                            {v.user_data.ip}
-                                        </Typography>
-                                        <Typography variant="subtitle2">
-                                            {v.user_data.browser}
-                                        </Typography>
+                                        <Box ml={1}>
+                                            <Typography>
+                                                ({count.value})
+                                            </Typography>
+                                        </Box>
                                     </Box>
                                 </Box>
                             );
                         })}
-                    </div> */}
+                    </div>
                     {!data ? (
                         <Box mt={10} display="flex" justifyContent="center">
                             <CircularProgress />
@@ -577,14 +584,10 @@ const useStyles = makeStyles((theme: Theme) => {
             margin: "20px 0",
         },
         visitorsContainer: {
-            display: "grid",
-            [theme.breakpoints.up("lg")]: {
-                gridTemplateColumns: "repeat(7, 1fr)",
-            },
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gridGap: "20px",
-            maxHeight: "300px",
+            display: "flex",
+            whiteSpace: "nowrap",
             overflowY: "auto",
+            paddingBottom: "10px",
         },
     });
 });
