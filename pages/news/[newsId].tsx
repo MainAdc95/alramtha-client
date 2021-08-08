@@ -35,18 +35,20 @@ const NewsPage = ({ news: n }: IProps) => {
 
     useEffect(() => {
         if (!news) return setNews(n);
-
-        if (news)
+        else
             (async () => {
                 setLoading(true);
                 const news = await apiCall<INews>(
                     "get",
                     `/news/${router.query.newsId}`
                 );
+
                 setLoading(false);
 
                 setNews(news);
             })();
+
+        handleRead();
     }, [router.asPath]);
 
     useEffect(() => {
@@ -55,8 +57,6 @@ const NewsPage = ({ news: n }: IProps) => {
             window?.twttr?.widgets?.load();
             // @ts-ignore
             window?.instgrm?.Embeds?.process();
-
-            handleRead();
         }
     }, [news]);
 

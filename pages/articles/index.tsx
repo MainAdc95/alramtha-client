@@ -83,14 +83,4 @@ const Article = () => {
     );
 };
 
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//     const article = await apiCall("get", `/article/${ctx.params.articleId}`);
-
-//     return {
-//         props: {
-//             article,
-//         },
-//     };
-// };
-
 export default Article;

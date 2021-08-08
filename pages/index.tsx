@@ -22,6 +22,7 @@ import SectionNews from "../components/sectionNews";
 import ImageOpt from "../components/imageOpt";
 import { IArticle } from "../types/article";
 import GoogleAds from "../components/googleAds";
+import ArticleList from "../components/articles/articleList";
 
 // tmrNews === todays most read news
 
@@ -280,6 +281,7 @@ const Home = ({ info }: IProps) => {
                                 .map((s) => (
                                     <SectionNews key={s.section_id} data={s} />
                                 ))}
+                            <ArticleList />
                         </div>
                     </div>
                 </div>
