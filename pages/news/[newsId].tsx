@@ -56,14 +56,18 @@ const NewsPage = ({ news: n }: IProps) => {
             // @ts-ignore
             window?.instgrm?.Embeds?.process();
 
-            handleSelect();
+            handleRead();
         }
     }, [news]);
 
-    const handleSelect = async () => {
+    const handleRead = async () => {
         if (news)
             try {
-                await apiCall("post", `/news/${news.news_id}/read`);
+                await apiCall("post", `/news/read`, {
+                    newsId: news.news_id,
+                    text: news.title,
+                    sectionId: news.section.section_id,
+                });
             } catch (err) {
                 console.log(err);
             }

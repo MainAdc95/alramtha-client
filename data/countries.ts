@@ -227,7 +227,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/bra.svg",
-        name: "Brazil",
+        name: "البرازيل",
         alpha2Code: "BR",
         capital: "Brasília",
     },
@@ -401,7 +401,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/cyp.svg",
-        name: "Cyprus",
+        name: "قبرص",
         alpha2Code: "CY",
         capital: "Nicosia",
     },
@@ -413,7 +413,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/dnk.svg",
-        name: "Denmark",
+        name: "الدنمارك",
         alpha2Code: "DK",
         capital: "Copenhagen",
     },
@@ -503,7 +503,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/fra.svg",
-        name: "France",
+        name: "فرنسا",
         alpha2Code: "FR",
         capital: "Paris",
     },
@@ -665,7 +665,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/ind.svg",
-        name: "India",
+        name: "الهند",
         alpha2Code: "IN",
         capital: "New Delhi",
     },
@@ -713,7 +713,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/ita.svg",
-        name: "Italy",
+        name: "إيطاليا",
         alpha2Code: "IT",
         capital: "Rome",
     },
@@ -725,7 +725,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/jpn.svg",
-        name: "Japan",
+        name: "اليابان",
         alpha2Code: "JP",
         capital: "Tokyo",
     },
@@ -887,7 +887,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/mrt.svg",
-        name: "Mauritania",
+        name: "موريتانيا",
         alpha2Code: "MR",
         capital: "Nouakchott",
     },
@@ -983,7 +983,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/nld.svg",
-        name: "Netherlands",
+        name: "هولندا",
         alpha2Code: "NL",
         capital: "Amsterdam",
     },
@@ -1109,7 +1109,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/pol.svg",
-        name: "Poland",
+        name: "بولندا",
         alpha2Code: "PL",
         capital: "Warsaw",
     },
@@ -1151,7 +1151,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/rus.svg",
-        name: "Russian Federation",
+        name: "الاتحاد الروسي",
         alpha2Code: "RU",
         capital: "Moscow",
     },
@@ -1427,7 +1427,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/tur.svg",
-        name: "Turkey",
+        name: "تركيا",
         alpha2Code: "TR",
         capital: "Ankara",
     },

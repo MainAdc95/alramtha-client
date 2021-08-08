@@ -5,8 +5,8 @@ import useSWR from "swr";
 import { GetServerSideProps } from "next";
 import { IFile } from "../../types/file";
 import Pagination from "@material-ui/lab/Pagination";
-import { CircularProgress } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { CircularProgress, Box } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 
 // Components
 import LargeNews from "../../components/news/largeNews";
@@ -74,7 +74,9 @@ const File = ({ file }: IProps) => {
                         shape="rounded"
                         color="primary"
                     />
-                    <GoogleAds />
+                    <Box mt={2}>
+                        <GoogleAds />
+                    </Box>
                 </div>
                 <div className={styles.sidebar}>
                     <SideBar />

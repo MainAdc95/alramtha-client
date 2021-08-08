@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { GetServerSideProps } from "next";
 import { IArticle } from "../../types/article";
 import Pagination from "@material-ui/lab/Pagination";
-import { CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
 // Components
@@ -14,6 +14,7 @@ import { apiCall } from "../../utils/apiCall";
 
 // style sheet
 import styles from "../../styles/Section.module.scss";
+import GoogleAds from "../../components/googleAds";
 
 const Article = () => {
     const router = useRouter();
@@ -70,6 +71,9 @@ const Article = () => {
                         shape="rounded"
                         color="primary"
                     />
+                    <Box mt={2}>
+                        <GoogleAds />
+                    </Box>
                 </div>
                 <div className={styles.sidebar}>
                     <SideBar />

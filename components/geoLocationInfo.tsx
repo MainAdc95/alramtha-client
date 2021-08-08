@@ -31,6 +31,8 @@ const GeoLocationInfo = () => {
                 return "غائم جزئيا";
             case "Mist":
                 return "ضبابي";
+            case "Light rain shower":
+                return "زخات مطر خفيفة";
             default:
                 return txt;
         }
