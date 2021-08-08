@@ -445,10 +445,12 @@ const Statistics = () => {
                     >
                         <Box>
                             <Typography variant="h5">
-                                اجمالي عدد القرآت لليوم: {data?.trtNews}
-                                {/* {data?.trtNews?.reduce((v, n) => {
-                                    return Number(n.views) + v;
-                                }, 0)} */}
+                                اجمالي عدد القراءات لليوم: {data?.trtNews}
+                            </Typography>
+                        </Box>
+                        <Box ml={3}>
+                            <Typography variant="h5">
+                                اجمالي عدد الزوار لليوم: {data?.alrVisitors}
                             </Typography>
                         </Box>
                     </Box>
@@ -513,7 +515,7 @@ const Statistics = () => {
                     >
                         <Box ml={3} mr={3}>
                             <Typography variant="h5">
-                                اجمالي عدد القرآت: {data?.views?.length}
+                                اجمالي عدد القراءات: {data?.views?.length}
                             </Typography>
                         </Box>
                     </Box>
