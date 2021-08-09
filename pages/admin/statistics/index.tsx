@@ -17,7 +17,7 @@ import HeadLayout from "../../../components/headLayout";
 import useSWR from "swr";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/reducers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { countries } from "../../../data/countries";
 import ImageOpt from "../../../components/imageOpt";
@@ -60,6 +60,7 @@ const daysOfWeeks = [
 const Statistics = () => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
+    const [alrVisitors, setAlrVisitors] = useState([]);
     const [filters, setFilters] = useState<IFilters>({
         dataType: "days",
     });
@@ -68,6 +69,30 @@ const Statistics = () => {
             ? `/statistics?dataType=${filters.dataType}&authId=${user?.user_id}`
             : ""
     );
+
+    useEffect(() => {
+        if (data) {
+            let tmpData: any = [];
+
+            data.alrVisitors.forEach((v) => {
+                const foundVis = tmpData.find(
+                    (tmpV) => tmpV.user_data.country === v.user_data.country
+                );
+
+                if (foundVis) {
+                    const i = tmpData.indexOf(foundVis);
+
+                    tmpData[i].count += 1;
+
+                    return;
+                }
+
+                tmpData.push({ ...v, count: 1 });
+            });
+
+            setAlrVisitors(tmpData);
+        }
+    }, [data]);
 
     const getLabels = () => {
         switch (filters.dataType) {
@@ -450,10 +475,50 @@ const Statistics = () => {
                         </Box>
                         <Box ml={3}>
                             <Typography variant="h5">
-                                اجمالي عدد الزوار لليوم: {data?.alrVisitors}
+                                اجمالي عدد الزوار لليوم:{" "}
+                                {data?.alrVisitors?.length}
                             </Typography>
                         </Box>
                     </Box>
+                    <div className={classes.visitorsContainer}>
+                        {alrVisitors?.map((v) => {
+                            const country = countries.find(
+                                (c) => c.alpha2Code === v.user_data?.country
+                            );
+
+                            return (
+                                <Box
+                                    ml={3}
+                                    mr={3}
+                                    display="flex"
+                                    flexDirection="column"
+                                    alignItems="center"
+                                    key={v.visitor_id}
+                                >
+                                    {country?.flag && (
+                                        <Box mb={1}>
+                                            <ImageOpt
+                                                src={country.flag}
+                                                location="other"
+                                                width={40}
+                                                height={20}
+                                            />
+                                        </Box>
+                                    )}
+                                    <Box ml={2} display="flex">
+                                        {country && (
+                                            <Typography>
+                                                {country.name}
+                                            </Typography>
+                                        )}
+                                        <Box ml={1}>
+                                            <Typography>({v.count})</Typography>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            );
+                        })}
+                    </div>
                     <Box mt={3} mb={3}>
                         <Box mb={2}>
                             <h3>اخبار منذ 24 ساعة</h3>

@@ -83,9 +83,9 @@ const SideBar = ({ newsId }: IProps) => {
             <div className="news-side-bar">
                 <Poll poll={poll} />
                 <NewsLetter />
-                <div className="side-bar-adv">
+                <Box margin="20px 0">
                     <GoogleAds />
-                </div>
+                </Box>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
                     <Tab
                         label="الاكثر شهره"
@@ -126,9 +126,9 @@ const SideBar = ({ newsId }: IProps) => {
                         </div>
                     </TabPanel>
                 </Box>
-                <div className="side-bar-adv">
+                <Box margin="20px 0">
                     <GoogleAds />
-                </div>
+                </Box>
                 <div style={{ margin: "3rem 0" }}>
                     <div className="author-title">
                         <h1>
@@ -150,9 +150,9 @@ const SideBar = ({ newsId }: IProps) => {
                             ))}
                     </div>
                 </div>
-                <div className="side-bar-adv">
+                <Box margin="20px 0">
                     <GoogleAds />
-                </div>
+                </Box>
             </div>
         </StickyBox>
     );

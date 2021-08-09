@@ -59,7 +59,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/dza.svg",
-        name: "Algeria",
+        name: "الجزائر",
         alpha2Code: "DZ",
         capital: "Algiers",
     },
@@ -407,7 +407,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/cze.svg",
-        name: "Czech Republic",
+        name: "جمهورية التشيك",
         alpha2Code: "CZ",
         capital: "Prague",
     },
@@ -995,7 +995,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/nzl.svg",
-        name: "New Zealand",
+        name: "نيوزيلاندا",
         alpha2Code: "NZ",
         capital: "Wellington",
     },
@@ -1421,7 +1421,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/tun.svg",
-        name: "Tunisia",
+        name: "تونس",
         alpha2Code: "TN",
         capital: "Tunis",
     },
@@ -1462,12 +1462,6 @@ export const countries = [
         capital: "Kiev",
     },
     {
-        flag: "https://restcountries.eu/data/are.svg",
-        name: "United Arab Emirates",
-        alpha2Code: "AE",
-        capital: "Abu Dhabi",
-    },
-    {
         flag: "https://restcountries.eu/data/gbr.svg",
         name: "بريطانيا",
         alpha2Code: "GB",
@@ -1499,7 +1493,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/ven.svg",
-        name: "Venezuela (Bolivarian Republic of)",
+        name: "فنزويلا",
         alpha2Code: "VE",
         capital: "Caracas",
     },
