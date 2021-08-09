@@ -125,7 +125,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/aut.svg",
-        name: "Austria",
+        name: "النمسا",
         alpha2Code: "AT",
         capital: "Vienna",
     },
@@ -923,7 +923,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/mco.svg",
-        name: "Monaco",
+        name: "موناكو",
         alpha2Code: "MC",
         capital: "Monaco",
     },
@@ -1049,7 +1049,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/omn.svg",
-        name: "Oman",
+        name: "سلطنة عمان",
         alpha2Code: "OM",
         capital: "Muscat",
     },
@@ -1127,7 +1127,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/qat.svg",
-        name: "Qatar",
+        name: "قطر",
         alpha2Code: "QA",
         capital: "Doha",
     },
@@ -1145,7 +1145,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/rou.svg",
-        name: "Romania",
+        name: "رومانيا",
         alpha2Code: "RO",
         capital: "Bucharest",
     },
