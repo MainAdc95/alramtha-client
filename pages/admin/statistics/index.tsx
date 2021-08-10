@@ -490,7 +490,7 @@ const Statistics = () => {
                     </Box>
                     <div className={classes.visitorsContainer}>
                         {alrVisitors
-                            ?.sort((a, b) => a.count - b.count)
+                            ?.sort((a, b) => b.count - a.count)
                             ?.map((v) => {
                                 const country = countries.find(
                                     (c) => c.alpha2Code === v.user_data?.country
