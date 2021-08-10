@@ -563,7 +563,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/grc.svg",
-        name: "Greece",
+        name: "اليونان",
         alpha2Code: "GR",
         capital: "Athens",
     },
@@ -683,7 +683,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/irn.svg",
-        name: "Iran (Islamic Republic of)",
+        name: "إيران",
         alpha2Code: "IR",
         capital: "Tehran",
     },
@@ -701,7 +701,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/imn.svg",
-        name: "Isle of Man",
+        name: "جزيرة آيل أوف مان",
         alpha2Code: "IM",
         capital: "Douglas",
     },
@@ -1325,7 +1325,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/sdn.svg",
-        name: "Sudan",
+        name: "السودان",
         alpha2Code: "SD",
         capital: "Khartoum",
     },

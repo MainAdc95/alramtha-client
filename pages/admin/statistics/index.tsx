@@ -130,10 +130,12 @@ const Statistics = () => {
                 var data: string[] = [];
                 for (let i = 0; i < 7; i++) {
                     const date = new Date();
+                    date.setHours(24);
                     date.setDate(date.getDate() - i);
 
                     const date2 = new Date();
-                    date2.setDate(date2.getDate() - i - 1);
+                    date2.setHours(0);
+                    date2.setDate(date2.getDate() - i);
 
                     const viewsSet = views.filter(
                         (v) =>
@@ -150,9 +152,11 @@ const Statistics = () => {
 
                 for (let i = 0; i < 4; i++) {
                     const date = new Date();
+                    date.setHours(24);
                     date.setDate(date.getDate() - i * 7 + 2);
 
                     const date2 = new Date();
+                    date2.setHours(0);
                     date2.setDate(date2.getDate() - i * 7 - 7);
 
                     const viewsSet = views.filter(
@@ -215,10 +219,12 @@ const Statistics = () => {
 
                 for (let i = 0; i < 7; i++) {
                     const date = new Date();
+                    date.setHours(24);
                     date.setDate(date.getDate() - i);
 
                     const date2 = new Date();
-                    date2.setDate(date2.getDate() - i - 1);
+                    date2.setHours(0);
+                    date2.setDate(date2.getDate() - i);
 
                     const newsSet = news.filter(
                         (n) =>
@@ -235,9 +241,11 @@ const Statistics = () => {
 
                 for (let i = 0; i < 4; i++) {
                     const date = new Date();
+                    date.setHours(24);
                     date.setDate(date.getDay() - i * 7 + 2);
 
                     const date2 = new Date();
+                    date2.setHours(0);
                     date2.setDate(date2.getDay() - i * 7 - 7);
 
                     const newsSet = news.filter(
@@ -481,43 +489,47 @@ const Statistics = () => {
                         </Box>
                     </Box>
                     <div className={classes.visitorsContainer}>
-                        {alrVisitors?.map((v) => {
-                            const country = countries.find(
-                                (c) => c.alpha2Code === v.user_data?.country
-                            );
+                        {alrVisitors
+                            ?.sort((a, b) => a.count - b.count)
+                            ?.map((v) => {
+                                const country = countries.find(
+                                    (c) => c.alpha2Code === v.user_data?.country
+                                );
 
-                            return (
-                                <Box
-                                    ml={3}
-                                    mr={3}
-                                    display="flex"
-                                    flexDirection="column"
-                                    alignItems="center"
-                                    key={v.visitor_id}
-                                >
-                                    {country?.flag && (
-                                        <Box mb={1}>
-                                            <ImageOpt
-                                                src={country.flag}
-                                                location="other"
-                                                width={40}
-                                                height={20}
-                                            />
-                                        </Box>
-                                    )}
-                                    <Box ml={2} display="flex">
-                                        {country && (
-                                            <Typography>
-                                                {country.name}
-                                            </Typography>
+                                return (
+                                    <Box
+                                        ml={3}
+                                        mr={3}
+                                        display="flex"
+                                        flexDirection="column"
+                                        alignItems="center"
+                                        key={v.visitor_id}
+                                    >
+                                        {country?.flag && (
+                                            <Box mb={1}>
+                                                <ImageOpt
+                                                    src={country.flag}
+                                                    location="other"
+                                                    width={40}
+                                                    height={20}
+                                                />
+                                            </Box>
                                         )}
-                                        <Box ml={1}>
-                                            <Typography>({v.count})</Typography>
+                                        <Box ml={2} display="flex">
+                                            {country && (
+                                                <Typography>
+                                                    {country.name}
+                                                </Typography>
+                                            )}
+                                            <Box ml={1}>
+                                                <Typography>
+                                                    ({v.count})
+                                                </Typography>
+                                            </Box>
                                         </Box>
                                     </Box>
-                                </Box>
-                            );
-                        })}
+                                );
+                            })}
                     </div>
                     <Box mt={3} mb={3}>
                         <Box mb={2}>
