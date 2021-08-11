@@ -140,6 +140,8 @@ const Statistics = () => {
                     date2.setSeconds(0);
                     date2.setDate(date2.getDate() - i);
 
+                    console.log(date, date2);
+
                     const viewsSet = views.filter(
                         (v) =>
                             new Date(v.created_at) < date &&
@@ -329,7 +331,7 @@ const Statistics = () => {
             },
         ],
     };
-
+    console.log(data);
     return (
         <>
             <HeadLayout title="Admin statistics" />
