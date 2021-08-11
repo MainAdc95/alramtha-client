@@ -4,6 +4,10 @@ import {
     Theme,
     Divider,
     Box,
+    FormControl,
+    FormGroup,
+    Switch,
+    FormControlLabel,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { apiCall } from "../../../utils/apiCall";
@@ -25,6 +29,7 @@ interface IProps {
 
 interface IState {
     text: string;
+    is_active: boolean;
     image: IImage | null;
 }
 
@@ -47,6 +52,7 @@ const FileForm = ({ file }: IProps) => {
     const [state, setState] = useState<IState>({
         text: "",
         image: null,
+        is_active: true,
     });
 
     useEffect(() => {
@@ -55,6 +61,7 @@ const FileForm = ({ file }: IProps) => {
                 ...state,
                 text: file.text || "",
                 image: file.image || null,
+                is_active: file.is_active || true,
             });
         }
     }, [file]);
@@ -135,6 +142,28 @@ const FileForm = ({ file }: IProps) => {
                                     errors={errors}
                                     variant="outlined"
                                 />
+                            </div>
+                            <div className={classes.formGroup}>
+                                <FormControl component="fieldset">
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            control={
+                                                <Switch
+                                                    checked={state.is_active}
+                                                    onChange={() =>
+                                                        setState({
+                                                            ...state,
+                                                            is_active:
+                                                                !state.is_active,
+                                                        })
+                                                    }
+                                                    name="is_active"
+                                                />
+                                            }
+                                            label="فعال"
+                                        />
+                                    </FormGroup>
+                                </FormControl>
                             </div>
                         </div>
                         <div>
