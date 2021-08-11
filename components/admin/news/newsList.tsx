@@ -57,9 +57,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
     filters: any;
     query: string;
+    handleStatus: any;
 }
 
-const NewsList = ({ filters, query }: IProps) => {
+const NewsList = ({ filters, handleStatus, query }: IProps) => {
     const classes = useStyles();
     const user = useSelector((state: RootReducer) => state.auth.user);
     const [isPublish, setPublish] = useState<INews | null>(null);
@@ -87,6 +88,23 @@ const NewsList = ({ filters, query }: IProps) => {
     // archive
     const [isArch, setArch] = useState<INews | null>(null);
     const [archiveLoading, setArchiveLoading] = useState(false);
+
+    useEffect(() => {
+        console.log(filters);
+        switch (filters.status) {
+            case "published":
+                setValue(0);
+                break;
+            case "draft":
+                setValue(1);
+                break;
+            case "deleted":
+                setValue(2);
+                break;
+            default:
+                break;
+        }
+    }, []);
 
     useEffect(() => {
         if (data) {
@@ -123,6 +141,20 @@ const NewsList = ({ filters, query }: IProps) => {
     };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        switch (newValue) {
+            case 0:
+                handleStatus("published");
+                break;
+            case 1:
+                handleStatus("draft");
+                break;
+            case 2:
+                handleStatus("deleted");
+                break;
+            default:
+                break;
+        }
+
         setValue(newValue);
     };
 

@@ -21,7 +21,6 @@ import { SwiperSlide } from "swiper/react";
 import { useRouter } from "next/router";
 
 // icons
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import GoogleAds from "../../components/googleAds";
 
 interface IProps {
@@ -34,8 +33,11 @@ const NewsPage = ({ news: n }: IProps) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!news) return setNews(n);
-        else
+        if (!news) {
+            handleRead();
+
+            return setNews(n);
+        } else
             (async () => {
                 setLoading(true);
                 const news = await apiCall<INews>(

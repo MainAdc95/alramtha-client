@@ -32,6 +32,7 @@ interface IFilter {
     search: string;
     order: string;
     section: string | ISection;
+    status: "published" | "draft" | "deleted";
 }
 
 const order = ["الأحدث", "الأقدم"];
@@ -50,6 +51,7 @@ const News = () => {
         search: "",
         order: "الأحدث",
         section: "",
+        status: "published",
     });
 
     useEffect(() => {
@@ -58,7 +60,7 @@ const News = () => {
                 typeof filters.section !== "string"
                     ? filters.section.section_id
                     : filters.section
-            }&search=${filters.search}`
+            }&search=${filters.search}&status=${filters.status}`
         );
     }, [filters]);
 
@@ -74,6 +76,7 @@ const News = () => {
                 search: query.search || "",
                 section: foundSection || "",
                 order: query.order || "الأحدث",
+                status: query.status || "published",
             });
             setSearch(query.search || "");
         }
@@ -89,7 +92,11 @@ const News = () => {
             `?order=${checkNewValue("order", k, v)}&section=${
                 checkNewValue("section", k, v)?.section_id ||
                 checkNewValue("section", k, v)
-            }&search=${checkNewValue("search", k, v)}`,
+            }&search=${checkNewValue("search", k, v)}&status=${checkNewValue(
+                "status",
+                k,
+                v
+            )}`,
             null,
             { shallow: true }
         );
@@ -141,6 +148,10 @@ const News = () => {
 
     const searchCall = () => {
         handleFilter("search", search);
+    };
+
+    const handleStatus = (status: string) => {
+        handleFilter("status", status);
     };
 
     return (
@@ -302,7 +313,11 @@ const News = () => {
                         </Box>
                     </div>
                     <div className={classes.body}>
-                        <NewsList filters={filters} query={query} />
+                        <NewsList
+                            filters={filters}
+                            handleStatus={handleStatus}
+                            query={query}
+                        />
                     </div>
                 </Layout>
             </WithRole>

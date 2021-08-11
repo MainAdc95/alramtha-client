@@ -15,6 +15,9 @@ import ImageOpt from "../../imageOpt";
 import { IFile } from "../../../types/file";
 import Link from "next/link";
 
+import CheckIcon from "@material-ui/icons/Check";
+import ClearIcon from "@material-ui/icons/Clear";
+
 const useStyles = makeStyles({
     root: {
         "&:hover": {
@@ -128,6 +131,13 @@ const FileItem = ({ file, handleOpenDel }: IProps) => {
                         </a>
                     </div>
                 </div>
+            </TableCell>
+            <TableCell
+                classes={{
+                    root: classes.tableCell,
+                }}
+            >
+                {file.is_active === true ? <CheckIcon /> : <ClearIcon />}
             </TableCell>
             <TableCell style={{ whiteSpace: "nowrap" }}>
                 {new Date(file.created_at).toLocaleString("ar")}

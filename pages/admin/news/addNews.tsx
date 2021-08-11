@@ -26,6 +26,7 @@ const Form = () => {
         search: "",
         order: "",
         section: "",
+        status: "",
     });
 
     useEffect(() => {
@@ -36,12 +37,13 @@ const Form = () => {
             search: query.search || "",
             section: query.section || "",
             order: query.order || "الأحدث",
+            status: query.status || "published",
         });
     }, []);
 
     const handleBack = () => {
         router.push(
-            `/admin/news?order=${filters.order}&section=${filters.section}&search=${filters.search}`
+            `/admin/news?order=${filters.order}&section=${filters.section}&search=${filters.search}&status=${filters.status}`
         );
     };
 
@@ -66,7 +68,7 @@ const Form = () => {
                     </div>
                     <div className={classes.body}>
                         <NewsForm
-                            url={`/admin/news?order=${filters.order}&section=${filters.section}&search=${filters.search}`}
+                            url={`/admin/news?order=${filters.order}&section=${filters.section}&search=${filters.search}&status=${filters.status}`}
                             news={news}
                         />
                     </div>

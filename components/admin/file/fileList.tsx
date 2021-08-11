@@ -132,6 +132,9 @@ const FileList = () => {
                                 صورة الملف
                             </TableCell>
                             <TableCell className={classes.smallCell}>
+                                فعال
+                            </TableCell>
+                            <TableCell className={classes.smallCell}>
                                 تاريخ الانشاء
                             </TableCell>
                             <TableCell className={classes.smallCell}>
