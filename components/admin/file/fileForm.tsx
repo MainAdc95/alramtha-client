@@ -61,7 +61,7 @@ const FileForm = ({ file }: IProps) => {
                 ...state,
                 text: file.text || "",
                 image: file.image || null,
-                is_active: file.is_active || true,
+                is_active: file.is_active === true ? true : false,
             });
         }
     }, [file]);
