@@ -126,15 +126,18 @@ const Statistics = () => {
     const getSectionsData = (views: any) => {
         switch (filters.dataType) {
             case "days":
-                console.log(views);
                 var data: string[] = [];
                 for (let i = 0; i < 7; i++) {
                     const date = new Date();
                     date.setHours(24);
+                    date.setMinutes(0);
+                    date.setSeconds(0);
                     date.setDate(date.getDate() - i);
 
                     const date2 = new Date();
                     date2.setHours(0);
+                    date2.setMinutes(0);
+                    date2.setSeconds(0);
                     date2.setDate(date2.getDate() - i);
 
                     const viewsSet = views.filter(
@@ -220,10 +223,14 @@ const Statistics = () => {
                 for (let i = 0; i < 7; i++) {
                     const date = new Date();
                     date.setHours(24);
+                    date.setMinutes(0);
+                    date.setSeconds(0);
                     date.setDate(date.getDate() - i);
 
                     const date2 = new Date();
                     date2.setHours(0);
+                    date2.setMinutes(0);
+                    date2.setSeconds(0);
                     date2.setDate(date2.getDate() - i);
 
                     const newsSet = news.filter(

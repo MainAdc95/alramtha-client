@@ -131,7 +131,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/aze.svg",
-        name: "Azerbaijan",
+        name: "أذربيجان",
         alpha2Code: "AZ",
         capital: "Baku",
     },
@@ -329,7 +329,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/chn.svg",
-        name: "China",
+        name: "الصين",
         alpha2Code: "CN",
         capital: "Beijing",
     },
@@ -1355,7 +1355,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/che.svg",
-        name: "Switzerland",
+        name: "سويسرا",
         alpha2Code: "CH",
         capital: "Bern",
     },
