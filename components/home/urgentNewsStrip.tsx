@@ -14,14 +14,21 @@ const UrgentNewsStrip = ({ strips }: IProps) => {
 
     useEffect(() => {
         const handler = () => {
+            let extra = 0;
+
             if (window.innerWidth <= 1200) {
-                setVol(30);
+                strips.forEach(() => (extra += 2));
+                setVol(extra);
             } else if (window.innerWidth <= 500) {
-                setVol(15);
+                strips.forEach(() => (extra += 1));
+                setVol(extra);
             } else if (window.innerWidth > 1200) {
-                setVol(50);
+                strips.forEach(() => (extra += 3));
+                setVol(extra);
             }
         };
+
+        handler();
 
         window.addEventListener("resize", handler);
 

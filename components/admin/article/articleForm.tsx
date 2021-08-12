@@ -23,6 +23,7 @@ import ImagePicker from "../../../components/admin/image/imagePicker";
 import ImageInput from "../../form/imageInput";
 import TextEditor from "../../form/textEditor";
 import TagForm from "../tag/tagForm";
+import ArticlePreview from "./articlePreview";
 
 // icons
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -60,6 +61,7 @@ const ArticleForm = ({ article, url }: IProps) => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
     const user = useSelector((state: RootReducer) => state.auth.user);
+    const [isPreview, setPreview] = useState<IArticle | null>(null);
     const [imagesPick, setImagesPick] =
         useState<null | { toForm: boolean }>(null);
     const [isThumbnail, setThumbnail] =
@@ -244,6 +246,15 @@ const ArticleForm = ({ article, url }: IProps) => {
     // __________________________ select tag
     const selectNewTag = (tag: ITag) => {
         setState({ ...state, tags: [...state.tags, tag] });
+    };
+
+    // ______________________________ preview
+    const togglePreview = () => {
+        if (isPreview) {
+            return setPreview(null);
+        }
+
+        setPreview(state as any);
     };
 
     return (
@@ -435,6 +446,17 @@ const ArticleForm = ({ article, url }: IProps) => {
                                 />
                             </div>
                         )}
+                        <div>
+                            <Button
+                                fullWidth
+                                onClick={togglePreview}
+                                type="submit"
+                                color="pink"
+                                variant="contained"
+                                loading={loading}
+                                text={"معاينة الخبر"}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -457,6 +479,9 @@ const ArticleForm = ({ article, url }: IProps) => {
                     setState={setState}
                     fieldName="images"
                 />
+            )}
+            {isPreview && (
+                <ArticlePreview close={togglePreview} article={isPreview} />
             )}
         </>
     );

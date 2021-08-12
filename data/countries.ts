@@ -143,7 +143,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/bhr.svg",
-        name: "Bahrain",
+        name: "البحرين",
         alpha2Code: "BH",
         capital: "Manama",
     },
@@ -1313,7 +1313,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/esp.svg",
-        name: "Spain",
+        name: "إسبانيا",
         alpha2Code: "ES",
         capital: "Madrid",
     },
