@@ -17,13 +17,13 @@ const UrgentNewsStrip = ({ strips }: IProps) => {
             let extra = 0;
 
             if (window.innerWidth <= 1200) {
-                strips.forEach(() => (extra += 2));
-                setVol(extra);
-            } else if (window.innerWidth <= 500) {
                 strips.forEach(() => (extra += 1));
                 setVol(extra);
+            } else if (window.innerWidth <= 500) {
+                strips.forEach(() => (extra += 0.5));
+                setVol(extra);
             } else if (window.innerWidth > 1200) {
-                strips.forEach(() => (extra += 3));
+                strips.forEach(() => (extra += 2));
                 setVol(extra);
             }
         };
