@@ -53,7 +53,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/alb.svg",
-        name: "Albania",
+        name: "ألبانيا",
         alpha2Code: "AL",
         capital: "Tirana",
     },
@@ -497,7 +497,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/fin.svg",
-        name: "Finland",
+        name: "فنلندا",
         alpha2Code: "FI",
         capital: "Helsinki",
     },
@@ -677,7 +677,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/civ.svg",
-        name: "Côte d'Ivoire",
+        name: "كوت ديفوار",
         alpha2Code: "CI",
         capital: "Yamoussoukro",
     },

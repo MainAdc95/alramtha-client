@@ -90,7 +90,6 @@ const NewsList = ({ filters, handleStatus, query }: IProps) => {
     const [archiveLoading, setArchiveLoading] = useState(false);
 
     useEffect(() => {
-        console.log(filters);
         switch (filters.status) {
             case "published":
                 setValue(0);
