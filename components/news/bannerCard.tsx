@@ -1,7 +1,6 @@
 import { SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import ImageOpt from "../imageOpt";
-
 import Slider from "../slider";
 import { INews } from "../../types/news";
 
@@ -11,12 +10,13 @@ interface IProps {
 }
 
 const BannerCard = ({ data, type }: IProps) => {
+    console.log(data);
     return (
         <div className="banner-card">
-            {data?.news ? (
+            {data ? (
                 type ? (
                     <Slider spaceBetween={1}>
-                        {data.news.map((news: INews) => (
+                        {data.map((news: INews) => (
                             <SwiperSlide key={news.news_id}>
                                 <div
                                     className="newsContainer"
@@ -31,13 +31,15 @@ const BannerCard = ({ data, type }: IProps) => {
                                 </div>
                                 <Link href={`/news/${news.news_id}`}>
                                     <div className="overlay">
-                                        <a
-                                            style={{
-                                                backgroundColor: `${data.color}`,
-                                            }}
-                                        >
-                                            {data.section_name}
-                                        </a>
+                                        {news.section && (
+                                            <a
+                                                style={{
+                                                    backgroundColor: `${news.section.color}`,
+                                                }}
+                                            >
+                                                {news.section.section_name}
+                                            </a>
+                                        )}
                                         <div className="card-content">
                                             <Link
                                                 href={`/news/${news.news_id}`}

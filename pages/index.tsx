@@ -22,7 +22,6 @@ import SectionNews from "../components/sectionNews";
 import ImageOpt from "../components/imageOpt";
 import { IArticle } from "../types/article";
 import GoogleAds from "../components/googleAds";
-import ArticleList from "../components/articles/articleList";
 
 // tmrNews === todays most read news
 
@@ -33,12 +32,13 @@ interface IProps {
         files: IFile[];
         tmrNews: INews[];
         article: IArticle;
+        sliderNews: INews[];
     };
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections, strips, tmrNews, article, files } = info;
-
+    const { sections, strips, tmrNews, article, files, sliderNews } = info;
+    console.log(sliderNews);
     return (
         <>
             <HeadLayout />
@@ -66,10 +66,7 @@ const Home = ({ info }: IProps) => {
                                 <div
                                     className={`${styles.introItem} ${styles.introItem3}`}
                                 >
-                                    <BannerCard
-                                        data={sections[0]}
-                                        type={true}
-                                    />
+                                    <BannerCard data={sliderNews} type={true} />
                                 </div>
                                 <div
                                     className={`${styles.introItem} ${styles.introItem4}`}
@@ -281,7 +278,6 @@ const Home = ({ info }: IProps) => {
                                 .map((s) => (
                                     <SectionNews key={s.section_id} data={s} />
                                 ))}
-                            <ArticleList />
                         </div>
                     </div>
                 </div>
