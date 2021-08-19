@@ -484,6 +484,11 @@ const Statistics = () => {
                         }}
                     >
                         <Box>
+                            <Typography style={{ color: "red" }} variant="h5">
+                                (بعد الساعة 4 صباحا)
+                            </Typography>
+                        </Box>
+                        <Box ml={3}>
                             <Typography variant="h5">
                                 اجمالي عدد القراءات لليوم: {data?.trtNews}
                             </Typography>

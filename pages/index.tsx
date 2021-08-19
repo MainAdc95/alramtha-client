@@ -37,8 +37,8 @@ interface IProps {
 }
 
 const Home = ({ info }: IProps) => {
-    const { sections, strips, tmrNews, article, files, sliderNews } = info;
-    console.log(sliderNews);
+    const { sections, strips, tmrNews, files, sliderNews } = info;
+    console.log(sections);
     return (
         <>
             <HeadLayout />
@@ -51,7 +51,7 @@ const Home = ({ info }: IProps) => {
                                     className={`${styles.introItem} ${styles.introItem1}`}
                                 >
                                     <BannerCard
-                                        data={sections[1]}
+                                        data={sections[0]}
                                         type={false}
                                     />
                                 </div>
@@ -59,7 +59,7 @@ const Home = ({ info }: IProps) => {
                                     className={`${styles.introItem} ${styles.introItem2}`}
                                 >
                                     <BannerCard
-                                        data={sections[4]}
+                                        data={sections[1]}
                                         type={false}
                                     />
                                 </div>
@@ -88,7 +88,7 @@ const Home = ({ info }: IProps) => {
                                     className={`${styles.introItem} ${styles.introItem6}`}
                                 >
                                     <BannerCard
-                                        data={sections[7]}
+                                        data={sections[4]}
                                         type={false}
                                     />
                                 </div>
@@ -96,7 +96,7 @@ const Home = ({ info }: IProps) => {
                                     className={`${styles.introItem} ${styles.introItem7}`}
                                 >
                                     <BannerCard
-                                        data={sections[6]}
+                                        data={sections[5]}
                                         type={false}
                                     />
                                 </div>
@@ -104,51 +104,17 @@ const Home = ({ info }: IProps) => {
                                     className={`${styles.introItem} ${styles.introItem8}`}
                                 >
                                     <BannerCard
-                                        data={sections[5]}
+                                        data={sections[6]}
                                         type={false}
                                     />
                                 </div>
                                 <div
                                     className={`${styles.introItem} ${styles.introItem9}`}
                                 >
-                                    {article && (
-                                        <div className="banner-card">
-                                            <ImageOpt
-                                                src={
-                                                    (
-                                                        article.thumbnail ||
-                                                        article.created_by
-                                                            .avatar
-                                                    )?.sizes?.m
-                                                }
-                                                objectFit="cover"
-                                                layout="fill"
-                                            />
-                                            <Link
-                                                href={`/articles/${article.article_id}`}
-                                            >
-                                                <div className="overlay">
-                                                    <a
-                                                        style={{
-                                                            backgroundColor:
-                                                                "rgb(1, 224, 1)",
-                                                        }}
-                                                    >
-                                                        كتاب وآراء
-                                                    </a>
-                                                    <div className="card-content">
-                                                        <Link
-                                                            href={`/articles/${article.article_id}`}
-                                                        >
-                                                            <p>
-                                                                {article.title}
-                                                            </p>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    )}
+                                    <BannerCard
+                                        data={sections[7]}
+                                        type={false}
+                                    />
                                 </div>
                             </div>
                         </div>

@@ -209,7 +209,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/bih.svg",
-        name: "Bosnia and Herzegovina",
+        name: "البوسنة والهرسك",
         alpha2Code: "BA",
         capital: "Sarajevo",
     },
@@ -1013,7 +1013,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/nga.svg",
-        name: "Nigeria",
+        name: "نيجيريا",
         alpha2Code: "NG",
         capital: "Abuja",
     },
@@ -1457,7 +1457,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/ukr.svg",
-        name: "Ukraine",
+        name: "أوكرانيا",
         alpha2Code: "UA",
         capital: "Kiev",
     },
