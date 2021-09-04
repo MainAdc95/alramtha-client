@@ -28,15 +28,17 @@ const Navbar = () => {
     // ______________________________________ increment timer
     useEffect(() => {
         const handleCatgBar = (e) => {
-            if (stickyNavbarRef.current) stickyNavbarRef.current.offsetHeight;
+            let offset = 0;
+            if (stickyNavbarRef.current)
+                offset = stickyNavbarRef.current.offsetHeight;
 
-            if (window.pageYOffset > 200) {
+            if (window.pageYOffset > offset) {
                 if (categ.current) {
                     categ.current.style.position = "fixed";
                     document.body.style.paddingTop = "50px";
                 }
             } else if (
-                window.pageYOffset <= 200 &&
+                window.pageYOffset <= offset &&
                 categ.current.style.position === "fixed"
             ) {
                 if (categ.current) {
