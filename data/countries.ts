@@ -1289,7 +1289,7 @@ export const countries = [
     },
     {
         flag: "https://restcountries.eu/data/zaf.svg",
-        name: "South Africa",
+        name: "",
         alpha2Code: "ZA",
         capital: "Pretoria",
     },

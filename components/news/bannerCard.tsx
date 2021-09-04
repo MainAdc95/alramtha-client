@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const BannerCard = ({ data, type }: IProps) => {
-    console.log(data);
     return (
         <div className="banner-card">
             {data ? (

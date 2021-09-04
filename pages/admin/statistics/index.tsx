@@ -285,7 +285,7 @@ const Statistics = () => {
                         (n) => new Date(n.created_at).getFullYear() === y
                     );
 
-                    data.unshift(newsSet.length);
+                    data.push(newsSet.length);
                 }
 
                 return data;

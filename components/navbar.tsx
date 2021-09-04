@@ -23,10 +23,13 @@ const Navbar = () => {
     const classes = useStyles();
     const [time, setTime] = useState(DateTime.now());
     const categ = useRef<any>(null);
+    const stickyNavbarRef = useRef<any>(null);
 
     // ______________________________________ increment timer
     useEffect(() => {
         const handleCatgBar = (e) => {
+            if (stickyNavbarRef.current) stickyNavbarRef.current.offsetHeight;
+
             if (window.pageYOffset > 200) {
                 if (categ.current) {
                     categ.current.style.position = "fixed";
@@ -71,7 +74,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className={classes.root}>
+            <div ref={stickyNavbarRef} className={classes.root}>
                 <div className={classes.appbar}>
                     <Box className={classes.strip}>
                         <div className={classes.stripContent}>

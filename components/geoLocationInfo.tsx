@@ -33,6 +33,8 @@ const GeoLocationInfo = () => {
                 return "ضبابي";
             case "Light rain shower":
                 return "زخات مطر خفيفة";
+            case "Light rain":
+                return "مطر خفيف";
             default:
                 return txt;
         }

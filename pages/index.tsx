@@ -38,7 +38,7 @@ interface IProps {
 
 const Home = ({ info }: IProps) => {
     const { sections, strips, tmrNews, files, sliderNews } = info;
-    console.log(sections);
+
     return (
         <>
             <HeadLayout />
