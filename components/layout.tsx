@@ -27,7 +27,9 @@ const Layout = ({ children }: Props) => {
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
-        root: {},
+        root: {
+            overflowX: "hidden",
+        },
     });
 });
 
