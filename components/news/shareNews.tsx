@@ -13,11 +13,7 @@ const ShareNews = ({ uri }) => {
             <ul>
                 <li>
                     <a>
-                        <FacebookShareButton
-                            url={`https://facebook.com/sharer.php?u=${
-                                domain + uri
-                            }`}
-                        >
+                        <FacebookShareButton url={`${domain + uri}`}>
                             <ImageOpt
                                 src="/facebook.png"
                                 location="local"
@@ -29,11 +25,7 @@ const ShareNews = ({ uri }) => {
                 </li>
                 <li>
                     <a>
-                        <TwitterShareButton
-                            url={`https://twitter.com/intent/tweet?url=${
-                                domain + uri
-                            }`}
-                        >
+                        <TwitterShareButton url={`${domain + uri}`}>
                             <ImageOpt
                                 src="/twitter.png"
                                 location="local"
@@ -45,11 +37,7 @@ const ShareNews = ({ uri }) => {
                 </li>
                 <li>
                     <a>
-                        <WhatsappShareButton
-                            url={`https://web.whatsapp.com/send?text=${
-                                domain + uri
-                            }`}
-                        >
+                        <WhatsappShareButton url={`${domain + uri}`}>
                             <ImageOpt
                                 src="/whatsapp.png"
                                 location="local"
